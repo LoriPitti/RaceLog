@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name="")
+@Table(name="user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,6 +16,6 @@ public class User {
     private String email;
     private String name;
     private String lastname;
-    private int iconType;
+    private int iconType;  //default value = 0
 
 }

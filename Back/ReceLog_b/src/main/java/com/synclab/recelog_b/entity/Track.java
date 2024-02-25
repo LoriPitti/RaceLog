@@ -12,8 +12,8 @@ public class Track {
     private int id;
     private String name;
     private String country;
-    private String imgBack;
-    private String imgFront;
+    private int  imgBackId;
+    private int imgFrontId;
     private String length;
     private String cornerL;
     private String corneR;

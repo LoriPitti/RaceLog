@@ -32,6 +32,13 @@ public class Service {
             System.out.println("Save user: "+ ex.getMessage());
             return false;
         }
+    }
+
+    public boolean deleteByusername(String username, String password) throws UserException {
+       User user =  login(username, password);
+       userRepo.deleteById(user.getId());
+       return true;
+
 
     }
 }

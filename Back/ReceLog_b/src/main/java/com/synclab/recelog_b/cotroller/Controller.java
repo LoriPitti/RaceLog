@@ -39,7 +39,7 @@ public class Controller {
             }
         }
     }
-     
+
 
     @PostMapping("user/signup")
     public String signUp(@RequestBody String json) {
@@ -61,9 +61,33 @@ public class Controller {
         }
 
     }
+
+    @PostMapping("user/delete")
+    public String deleteUser(@RequestBody String json){
+        objectMapper = new ObjectMapper();
+        LogData logData = null;  //TODO --> merge parsing method
+        try {
+            logData = objectMapper.readValue(json, LogData.class);
+            service.deleteByusername(logData.username(), logData.password());
+            return "UserDeleted";
+        } catch (JsonProcessingException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");
+        } catch (UserException e) {
+            switch (e.getMessage()) {
+                case "noFound":
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "L' utente non esiste");
+                case "pswWrong":
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La password è errata, riprovare"); //TODO understand which status send
+                default:
+                    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore sconosciuto");
+            }
+        }
+
+    }
     private String toJson(Object obj) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(obj);
     }
+
 
 }
