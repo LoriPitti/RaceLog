@@ -1,0 +1,74 @@
+<div class="container-fluid">
+  <div class="opaque_filter_back"></div>
+
+  <div class="div_signup container">
+
+    <div class="row">
+      <div class="col-6 c" >
+        <div class="div_icon">
+          <img class="icon" [src]="getIconSrc()" alt="" >
+        </div>
+      </div>
+      <div class="col-2 c c2"  (click)="setIcon(1)" >
+        <div class="div_icon2">
+          <div class="opaque_filter" ></div>
+          <img class="icon" src="assets/icon/1.png" alt=""  >
+        </div>
+
+      </div>
+      <div class="col-2 c c2" (click)="setIcon(2)" >
+        <div class="div_icon2" >
+          <div class="opaque_filter"></div>
+          <img class="icon" src="assets/icon/2.png" alt="" >
+        </div>
+
+      </div>
+      <div class="col-2 c c2" (click)="setIcon(3)" >
+        <div class="div_icon2">
+          <div class="opaque_filter"></div>
+          <img class="icon" src="assets/icon/3.png" alt="" >
+        </div>
+
+      </div>
+    </div>
+    <div class="row r2">
+      <div class="col-md-4 c3 me-3">
+        <label for="user_label" class="form-label">Username</label>
+        <input type="text" class="form-control"  id="user_label" [ngClass]="isValidUsername"
+               placeholder="Username" required [(ngModel)]="username" (input)="onNameChanghe()">
+      </div>
+      <div class="col-md-4 c3 me-3">
+        <label for="psw_label" class="form-label " >Password</label>
+        <input type="text" class="form-control"  id="psw_label" [(ngModel)]="password"  placeholder="Password" required
+               (input)="onPswChange()"  [ngClass]="isPswValid">
+      </div>
+    </div>
+    <div class="row r2">
+      <div class="col-md-4 c3 me-3">
+        <label for="name_label" class="form-label">Nome</label>
+        <input type="text" class="form-control"  id="name_label" [ngClass]="{'is-valid':nome.trim(),
+         'is-invalid':!nome.trim()}" placeholder="Nome" required [(ngModel)]="nome">
+      </div>
+      <div class="col-md-4 c3 me-3">
+        <label for="lastName_label" class="form-label">Cognome</label>
+        <input type="text" class="form-control"  id="lastName_label" [ngClass]="{'is-valid':cognome.trim(),
+         'is-invalid':!cognome.trim()}" placeholder="Cognome" required [(ngModel)]="cognome">
+      </div>
+    </div>
+    <div class="row r2">
+      <div class="col-md-4 c3 me-3">
+        <label for="mail_label" class="form-label">Email </label>
+        <input type="text" class="form-control"  id="mail_label" [ngClass]="{'is-valid':email.trim(),
+         'is-invalid':!email.trim()}" placeholder="Email" required [(ngModel)]="email">
+      </div>
+    </div>
+    <div class="row r2">
+      <div class="col-md-4 c3 c4 me-3">
+        <button class="btn" id="btn_login"  type="button"
+                [disabled]="isBtnDisabled()" (click)="register()">Registrati</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

@@ -1,0 +1,39 @@
+
+.container-fluid{
+  border-color: darkred;
+  border-style: solid;
+  border-width: thick;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.row{
+  border-color: darkred;
+  background-color: #eee;
+  border-style: solid;
+  border-width: thick;
+  min-height: 30vh;
+  width: 80vh;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.h1{
+  display: flex;
+  justify-content: center;
+ /* border-color: darkred;
+  border-style: solid;
+  border-width: thick;*/
+  color: darkred;
+}
+.h2{
+  display: flex;
+  justify-content: center;
+  color: white;
+}
+
+
