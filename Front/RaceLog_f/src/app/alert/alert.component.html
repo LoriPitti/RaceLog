@@ -1,0 +1,23 @@
+<div *ngIf="type==='danger'" class="div_alert container" [ngStyle]="{backgroundColor:'red'}">
+  <div class="row">
+    <div class="col col-10">
+      <p>{{message}}</p>
+    </div>
+    <div class="col col-2">
+      <button class="custom-button" (click)="onChangeHide()">OK</button>
+    </div>
+  </div>
+</div>
+<div *ngIf="type==='success'" class="div_alert container" [ngStyle]="{backgroundColor:'green'}">
+  <div class="row">
+    <div class="col col-10">
+      <p>{{message}}</p>
+    </div>
+    <div class="col col-2">
+      <button class="custom-button" (click)="onChangeHide()">OK</button>
+    </div>
+  </div>
+</div>
+
+
+

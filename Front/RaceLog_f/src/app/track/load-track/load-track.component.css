@@ -1,0 +1,100 @@
+.container-fluid{
+  /*border-color: darkred;
+  border-style: solid;
+  border-width: medium;*/
+  height: 100vh;
+  background: url("/assets/img/wlp3.jpg");
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.opaque_filter{
+  background-color: black;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+}
+.opaque_filter2{
+  background-color: black;
+  position: absolute;
+  height: 80vh;
+  max-width: 100vh;
+  opacity: 0.5;
+  border-radius: 20px;
+  z-index: 1;
+  top: 15vh;
+}
+
+.central_div{
+  padding: 0;
+  top: 15vh;
+  position: absolute;
+  border-color: darkred;
+  border-style: solid;
+  border-width: medium;
+  height: 80vh;
+  max-width: 100vh;
+  border-radius: 20px;
+  z-index: 2;
+}
+
+.row{
+  /*border-color: darkred;
+  border-style: solid;
+  border-width: medium;*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2vh;
+}
+
+
+.c1{
+  max-width: 40vh;
+}
+
+.col_btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.r2{
+ display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-label{
+  color: white;
+  font-size: 2vh;
+}
+
+app-alert{
+  z-index: 2;
+}
+.img_selected{
+  max-height: 10vh;
+  max-width: 10vh;
+
+}
+
+.btn{
+  background-color: darkred; /* Colore di sfondo giallo */
+  color: white; /* Testo bianco */
+  border: none; /* Nessun bordo */
+  padding: 10px 20px; /* Padding per spaziatura */
+  border-radius: 5px; /* Bordo arrotondato */
+  cursor: pointer; /* Cambia il cursore al passaggio */
+  transition: background-color 0.3s ease; /* Transizione al cambiamento di colore di sfondo */
+  font-weight: bold;
+  font-size: 2.5vh;
+  margin-bottom: 2vh;
+
+}
+.btn:hover {
+  background-color: gold;
+}
+

@@ -1,0 +1,68 @@
+.div_alert{
+ /* border-width: medium;
+  border-style: solid;
+  border-color: red;*/
+  position: absolute;
+  top:10vh;
+  max-width: 40vh;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 8vh;
+
+  opacity: 0.6;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin-bottom: 2vh;
+}
+
+
+.custom-button {
+  background-color: darkgrey; /* Colore di sfondo */
+  border: none; /* Rimuovi il bordo */
+  color: white; /* Colore del testo */
+padding:0.5vh 1vh;
+  text-align: center; /* Allineamento del testo */
+  text-decoration: none; /* Rimuovi la sottolineatura */
+  display: inline-block; /* Mostra come blocco */
+  font-size: 2vh; /* Dimensione del carattere */
+  cursor: pointer; /* Mostra un cursore quando si passa sopra il bottone */
+  border-radius: 12px; /* Bordo arrotondato */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombra */
+}
+
+.custom-button:hover {
+  background-color: black; /* Cambia colore al passaggio del mouse */
+}
+
+.col{
+/*  border-width: medium;
+  border-style: solid;
+  border-color: black;*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.row{
+ /* border-width: medium;
+  border-style: solid;
+  border-color: yellow;*/
+  min-height: 8vh;
+  width: 100%;
+
+}
+p{
+  padding-top: 1vh;
+ font-weight: bold;
+  font-size: medium;
+  /*border-width: medium;
+  border-style: solid;
+  border-color: green;*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+

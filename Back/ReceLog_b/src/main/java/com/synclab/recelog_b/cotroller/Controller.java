@@ -9,12 +9,11 @@ import com.synclab.recelog_b.exception.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.synclab.recelog_b.service.Service;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class Controller {
     private ObjectMapper objectMapper;
@@ -31,6 +30,7 @@ public class Controller {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");
         }
     }
+
     @GetMapping("/usernames")
     public String geAllUsernames(){
         try {
@@ -65,20 +65,28 @@ public class Controller {
     public String signUp(@RequestBody String json) {
         objectMapper = new ObjectMapper();
         User user = null;  //TODO --> merge parsing method
+        UserObj userObj = null;
         try {
-            user = objectMapper.readValue(json, User.class);
+            userObj = objectMapper.readValue(json, UserObj.class);
+            user = objectMapper.readValue(userObj.user(), User.class);
+
         } catch (JsonProcessingException e) {
             throw  new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");
+
         }
-        if(service.isUsernameExists(user.getUsername())){
-             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Questo username esiste già");
+        if(service.isUsernameExists(user.getUsername())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "L' utente esiste già");
         }
-        else{
-            if(service.signUpUser(user))
-                throw new ResponseStatusException(HttpStatus.OK, "L' utente è stato registrato");
-            else
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore sconosciuto");
+        if (service.signUpUser(user)) {
+            MessageResponse response = new MessageResponse("Utente Registrato");
+            try {
+                return  toJson(response);
+            } catch (JsonProcessingException e) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");
+            }
         }
+        else
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore sconosciuto");
 
     }
 
@@ -140,6 +148,45 @@ public class Controller {
         } catch (JsonProcessingException e) {
            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");
         }
+    }
+
+    @GetMapping("/tracksname")
+    public String getAllTracksName(){
+        try {
+            return toJson(service.getAllTracksName());
+        } catch (JsonProcessingException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");
+        }
+    }
+    @PostMapping("tracks/load")
+    public String loadTrack(@RequestBody String json) {
+        objectMapper = new ObjectMapper();
+        Track track = null;  //TODO --> merge parsing method
+        TrackObj trackObj = null;
+        try {
+            System.out.println("parsed");
+            track = objectMapper.readValue(json, Track.class);
+
+
+        } catch (JsonProcessingException e) {
+            System.out.println("error" + e.getMessage());
+            throw  new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");
+
+        }
+        if(service.isTrackExist(track.getCountry())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "L' utente esiste già");
+        }
+        if (service.insertNewTrack(track)) {
+            MessageResponse response = new MessageResponse("Utente Registrato");
+            try {
+                return  toJson(response);
+            } catch (JsonProcessingException e) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");
+            }
+        }
+        else
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore sconosciuto");
+
     }
 }
 

@@ -9,6 +9,10 @@ import { HeaderComponent } from './header/header.component';
 import { SignupComponent } from './signup/signup.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import {FormsModule} from "@angular/forms";
+import { AlertComponent } from './alert/alert.component';
+import { LoginComponent } from './login/login.component';
+import { TrackComponent } from './track/track.component';
+import { LoadTrackComponent } from './track/load-track/load-track.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +20,11 @@ import {FormsModule} from "@angular/forms";
     HomeComponent,
     HeaderComponent,
     SignupComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    AlertComponent,
+    LoginComponent,
+    TrackComponent,
+    LoadTrackComponent
   ],
   imports: [
     BrowserModule,

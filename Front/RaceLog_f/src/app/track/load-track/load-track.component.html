@@ -1,0 +1,69 @@
+<div class="container-fluid">
+  <app-alert *ngIf="showAlert === true"[message]="message" [alertType]="alertType"
+             (hideAlert)="onHideChange($event)" ></app-alert>
+  <div class="opaque_filter"></div>
+  <div class="opaque_filter2 container "></div>
+  <div class="container central_div">
+
+    <div class="row ">
+      <div class="col c1">
+        <label for="name_label" class="form-label">Nome del Tracciato</label>
+        <input type="text" class="form-control"  id="name_label" [ngClass]="isValidName"
+               placeholder="Nome del Tracciato" required [(ngModel)]="name" (input)="onNameChange()">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col c1">
+        <label for="country_label" class="form-label">Paese</label>
+        <input type="text" class="form-control"  id="country_label" [ngClass]="{'is-valid':country.trim(),
+         'is-invalid':!country.trim()}" placeholder="Paese" required [(ngModel)]="country" (input)="onCountryChange()">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col c1">
+        <label for="length_label" class="form-label">Lunghezza</label>
+        <input type="text" class="form-control"  id="length_label" [ngClass]="isValidTrackLength" placeholder="Lunghezza"
+               required [(ngModel)]="trackLength" (input)="onTrackLengthChange()">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col c1">
+        <label for="dx_label" class="form-label">Curve a destra</label>
+        <input type="text" class="form-control"  id="dx_label" [ngClass]="isValidDx"
+               placeholder="Curve a destra" required [(ngModel)]="dxTurn" (input)="onDxChange()">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col c1">
+        <label for="sx_label" class="form-label">Curve a sinistra</label>
+        <input type="text" class="form-control"  id="sx_label" [ngClass]="isValidSx"
+               placeholder="Curve a sinistra" required [(ngModel)]="sxTurn" (input)="onSxChange()">
+      </div>
+    </div>
+    <div class="row r2">
+      <div class="col  c2 col-5">
+          <label for="img_front"  class="form-label"> Immagine primaria</label>
+        <input id = "img_front" type="file" value="selectimg" [ngStyle]="{color:'white'}" (change) = "onFileSelected($event, 1)">
+      </div>
+      <div class="col c3 col-3">
+        <img class = "img_selected"  alt="">
+      </div>
+    </div>
+    <div class="row r2">
+      <div class="col  c2 col-5 ">
+        <label for="img_back"  class="form-label"> Immagine secondaria</label>
+        <input id = "img_back" type="file" value="selectimg" [ngStyle]="{color:'white'}"  (change) = "onFileSelected($event, 2)">
+      </div>
+      <div class="col c3 col-3">
+        <img class = "img_selected" alt="">
+      </div>
+    </div>
+    <div class="row r2">
+      <div class="col col_btn">
+        <button class="btn" id="btn_login"  type="button"
+                [disabled]="isBtnDisabled()" (click)="loadTrack()">Registrati</button>
+      </div>
+    </div>
+
+  </div>
+</div>

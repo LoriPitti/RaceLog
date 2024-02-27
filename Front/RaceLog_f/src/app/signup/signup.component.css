@@ -9,7 +9,6 @@
   background-image: url("/assets/img/wlp2.jpg");
   background-size: cover;
   z-index: -1;
-
 }
 
 .div_signup{
@@ -148,4 +147,7 @@ padding: 0;
 }
 .btn:hover {
   background-color: gold;
+}
+app-alert{
+  z-index: 2;
 }

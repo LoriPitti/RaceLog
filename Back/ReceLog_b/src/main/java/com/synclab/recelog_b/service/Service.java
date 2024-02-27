@@ -39,7 +39,6 @@ public class Service {
             userRepo.save(user);
             return true;
         }catch (Exception ex){
-            System.out.println("Save user: "+ ex.getMessage());
             return false;
         }
     }
@@ -77,6 +76,8 @@ public class Service {
     public List<Track> getAllTracks(){
         return trackRepo.findAll();
     }
+
+    public List<String> getAllTracksName(){return trackRepo.getAllTracksName();};
 
 
 }
