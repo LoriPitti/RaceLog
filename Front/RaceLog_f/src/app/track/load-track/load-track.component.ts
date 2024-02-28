@@ -3,6 +3,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {HttpRequestService} from "../../service/httpRequest.service";
 
 import {Track} from "../../Entity/Track";
+import {Form} from "@angular/forms";
 
 @Component({
   selector: 'app-load-track',
@@ -23,8 +24,12 @@ export class LoadTrackComponent implements OnInit{
   isValidTrackLength: string = 'is-invalid';
   isValidSx:string = 'is-invalid';
   isValidDx:string = 'is-invalid';
-  fileBytes1:Uint8Array =new Uint8Array([]);
-  fileBytes2:Uint8Array =new Uint8Array([]);
+  fileBytes1:Uint8Array =new Uint8Array;
+  fileBytes2:Uint8Array =new Uint8Array;
+  fileBlob1:Blob = new Blob();
+  fileBlob2:Blob = new Blob();
+  file1:FormData = new FormData();
+  file2 :FormData = new FormData();
 
   isImg1=false;
 
@@ -95,30 +100,33 @@ export class LoadTrackComponent implements OnInit{
     this.showAlert=false;
   }
 //------------------------------METHOD TO SELECT AND MANAGE IMG ------------------------------------------
-  onFileSelected(event: any, n:number) {
+  onFileSelected(event: any, n: number) {
     if (event.target && event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
+      //controlla che sia un'immagine
       if (this.isImage(file)) {
         const reader = new FileReader();
-        reader.onload = (e: any) => {
-          if(n ==1){
-            console.log("Img1 loaded")
-            this.fileBytes1 = new Uint8Array(reader.result as ArrayBuffer);
-            this.isImg1=true;
-          }
-          else{
-            console.log("Img12 loaded")
-            this.isImg2=true;
-            console.log("img2: "+ this.isImg2)
-            this.fileBytes2 = new Uint8Array(reader.result as ArrayBuffer);
+        reader.onload = () => {
+          console.log("LLLLL");
+          const contentArrayBuffer = reader.result as ArrayBuffer;
+          const blob = new Blob([contentArrayBuffer], { type: file.type });
+          if (n == 1) {
+            this.fileBlob1 = blob;
+            this.isImg1 = true;
+          } else {
+            this.fileBlob2 = blob;
+            this.isImg2 = true;
           }
         };
+
+        // Avvia la lettura del file
         reader.readAsArrayBuffer(file);
       } else {
         this.displayAlert('Il file deve essere un\'immagine');
       }
     }
   }
+
   isImage(file: File): boolean {
     return file.type.startsWith('image/');
   }
@@ -134,8 +142,11 @@ export class LoadTrackComponent implements OnInit{
     return !(this.isValidName === 'is-valid' && this.isValidTrackLength === 'is-valid' && this.isValidDx === 'is-valid' && this.isValidSx === 'is-valid' && this.country.trim() && this.isImg1 && this.isImg2);
   }
 
+
+  //call HTTPService to sent track to backend
   loadTrack() {
-    this.http.loadTrack(new Track(this.name, this.country, this.fileBytes1, this.fileBytes2, parseInt(this.trackLength), parseInt(this.sxTurn),  parseInt(this.dxTurn))).subscribe();
+    this.http.loadTrack(new Track(this.name, this.country, this.fileBlob1, this.fileBlob2, parseInt(this.trackLength), parseInt(this.sxTurn),  parseInt(this.dxTurn))).subscribe();
 
   }
+
 }

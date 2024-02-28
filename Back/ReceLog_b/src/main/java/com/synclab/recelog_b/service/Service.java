@@ -10,6 +10,7 @@ import com.synclab.recelog_b.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -79,5 +80,9 @@ public class Service {
 
     public List<String> getAllTracksName(){return trackRepo.getAllTracksName();};
 
+    public Track getTrackByName(String name){
+
+      return trackRepo.findByName(name);
+}
 
 }

@@ -1,6 +1,7 @@
 package com.synclab.recelog_b.repository;
 
 import com.synclab.recelog_b.entity.Track;
+import com.synclab.recelog_b.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -12,4 +13,5 @@ public interface TrackRepo extends JpaRepository<Track, Integer> {
     @Query("select name from Track ")
     List<String> getAllTracksName();
 
+    Track findByName(String name);
 }

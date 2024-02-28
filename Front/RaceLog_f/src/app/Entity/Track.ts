@@ -1,9 +1,11 @@
+import {Form} from "@angular/forms";
+
 export class Track {
   constructor(
     private name: string,
     private country: string,
-    private imgBack: Uint8Array,
-    private imgFront: Uint8Array,
+    private imgBack: Blob,
+    private imgFront: Blob,
     private tLength: number,
     private cornerL: number,
     private cornerR: number
@@ -20,12 +22,12 @@ export class Track {
   }
 
   // Getter per l'immagine posteriore
-  get getImgBack(): Uint8Array {
+  get getImgBack(): Blob{
     return this.imgBack;
   }
 
   // Getter per l'immagine frontale
-  get getImgFront(): Uint8Array {
+  get getImgFront(): Blob {
     return this.imgFront;
   }
 
