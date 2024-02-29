@@ -13,6 +13,7 @@ import { AlertComponent } from './alert/alert.component';
 import { LoginComponent } from './login/login.component';
 import { TrackComponent } from './track/track.component';
 import { LoadTrackComponent } from './track/load-track/load-track.component';
+import { CardComponent } from './card/card.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { LoadTrackComponent } from './track/load-track/load-track.component';
     AlertComponent,
     LoginComponent,
     TrackComponent,
-    LoadTrackComponent
+    LoadTrackComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,

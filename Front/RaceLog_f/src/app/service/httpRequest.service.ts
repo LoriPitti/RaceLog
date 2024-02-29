@@ -1,11 +1,13 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {catchError, map, Observable, of} from "rxjs";
+import {catchError, map, Observable, of, throwError} from "rxjs";
 import {Track} from "../Entity/Track";
+import {TrackDisplay} from "../Entity/TrackDisplay";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Injectable({providedIn:'root'})
 export class HttpRequestService{
-  constructor(private http:HttpClient) {
+  constructor(private http:HttpClient, private sanitizer: DomSanitizer) {
   }
 
 
@@ -39,34 +41,40 @@ export class HttpRequestService{
   }
 
   //------------------------------------------SERVICE FOR TRACK
-  getTracks(name:string): Observable<any> {
-    return this.http.get<any>("http://localhost:8080/track/" + name)
+  getSingleTrack(name:string): Observable<any> {
+    return this.http.get<any>("http://localhost:8080/track/" + name )
       .pipe(
-        map(data => {
-          let track = new Track(
-            data.name,
-            data.country,
-            new Blob([data.getImgBack], { type : 'plain/text' }),
-            new Blob([data.getImgFront], { type : 'plain/text' }),
-            parseInt(data.length),
-            parseInt(data.cornerL),
-            parseInt(data.cornerR))
-            console.log("val:"+data.getImgBack)
-          }),
-        catchError(err => {
-          let msg:string  = '';
-          switch (err.status){
-            case 404:
-              msg = 'Pista non esistente';
-              break;
-            case 500:
-              msg ="Internal Server Error";
-              break;
-            default:
-              msg='Unknown error';
-              break;
+        map(response=>{
+            let trackDisplay:TrackDisplay = {
+              name : response.name,
+              country : response.country,
+              imgBackUrl : this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64,' + response.imgBack),
+              imgFrontUrl : this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64,' + response.imgFront),
+              tLength : response.length,
+              cornerL : response.cornerL,
+              cornerR : response.cornerR
+            }
+            return trackDisplay
           }
-          return of(msg);
+        )
+      );
+  }
+
+  getAllTracks(): Observable<TrackDisplay[]> {
+    return this.http.get<any[]>("http://localhost:8080/tracks")
+      .pipe(
+        map(response => {
+          return response.map(item => ({
+            name: item.name,
+            country: item.country,
+            imgBackUrl: this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64,' + item.imgBack),
+            imgFrontUrl: this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64,' + item.imgFront),
+            tLength: item.length,
+            cornerL: item.cornerL,
+            cornerR: item.cornerR,
+
+          }
+          ));
         })
       );
   }
@@ -80,14 +88,14 @@ export class HttpRequestService{
     formData.append('cornerR', track.getCornerR.toString());
     formData.append('imgBack', track.getImgBack, 'back.jpg'); // Aggiungi l'immagine 'imgBack' come file
     formData.append('imgFront', track.getImgFront, 'front.jpg');
-    return this.http.post<Uint8Array>("http://localhost:8080/admin/track/load", formData )
+    return this.http.post<any>("http://localhost:8080/admin/track/load", formData )
       .pipe(
-        map(response=> {console.log(response);return response}),
+        map(response=> {return 'Pista inserita correttamente'}),
         catchError(err => {
           let msg: string = '';
           switch (err.status) {
             case 400:
-              msg = 'L\'utente è già stato inserito';
+              msg = 'La pista è già stata inserita';
               break;
             case 500:
               msg = 'Internal Server Error';
@@ -96,13 +104,10 @@ export class HttpRequestService{
               msg = 'Errore Sconosciuto';
               break;
           }
-        return of(msg);
+        return throwError(()=>msg);
       }));
   }
-  private generateFormDataFromBlob(formData:FormData, blob: Blob, fileName: string): FormData {
 
 
-    return formData;
-  }
 
 }

@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {HttpRequestService} from "../service/httpRequest.service";
 import {User} from "../Entity/User";
 import {Track} from "../Entity/Track";
+import {DomSanitizer, SafeUrl} from '@angular/platform-browser'
+import {TrackDisplay} from "../Entity/TrackDisplay";
 
 
 @Component({
@@ -11,22 +13,36 @@ import {Track} from "../Entity/Track";
 })
 export class TrackComponent implements OnInit{
 
-  imgUrl:string = '';
-  constructor(private http: HttpRequestService) {
+  imgUrlFront:SafeUrl = '';
+  imgUrlBack:SafeUrl = '';
+  title:string = '';
+  country: string = '';
+  tracks:TrackDisplay[] = [];
+  constructor(private http: HttpRequestService, private sanitizer: DomSanitizer) {
   }
 
   ngOnInit(): void {
-    this.http.getTracks('TEST').subscribe({
-      next: (response: Track) => {
-        const imgBackBlob = response.getImgBack; // Assicurati che getImgBack() restituisca un Blob valido
-        console.log(typeof response.getImgBack)
-          this.imgUrl = URL.createObjectURL(new Blob([imgBackBlob], { type: 'text/plain' })); // Assicurati che createObjectURL venga chiamato con un Blob
-
-      },
-      error: (err) => {
-        console.log(err.message);
+    this.http.getAllTracks().subscribe(
+      response => {
+        this.tracks = response;
       }
-    });
+    )
   }
+    /*this.http.getSingleTrack('Monza').subscribe({
+   next: (response:TrackDisplay) => {
+     this.title = response.name;
+       this.country = response.country;
+       this.imgUrlFront  =response.imgFrontUrl;
+       this.imgUrlBack = response.imgBackUrl;
+
+   },
+   error: (err) => {
+     console.log(err.message);
+   }
+ });
+  }*/
+
+
+
 
 }

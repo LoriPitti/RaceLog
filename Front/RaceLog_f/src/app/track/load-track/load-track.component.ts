@@ -4,6 +4,7 @@ import {HttpRequestService} from "../../service/httpRequest.service";
 
 import {Track} from "../../Entity/Track";
 import {Form} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-load-track',
@@ -36,14 +37,21 @@ export class LoadTrackComponent implements OnInit{
   isImg2=false;
 
 
-  constructor(private http: HttpRequestService) {
+  constructor(private http: HttpRequestService,private  router:Router, private route:ActivatedRoute) {
+  }
+  ngOnInit(): void {
+    if(this.route.snapshot.params['d'] === '1')
+      this.displayAlert('Pista inserita correttamente', 'success');
+    this.http.getAllTracksName().subscribe(data=>{
+      this.tracksName=data;
+    });
   }
 
 
-
+//-----------------------------MENAGE THE INPUT DATA-------------------------------------------------
   onNameChange() {
-    if(this.tracksName.filter(name=>name === this.name).length !=0){
-      this.displayAlert('Questa pista è già stata inserita')
+    if(this.tracksName.filter(name=>name.toLowerCase() === this.name.toLowerCase()).length !=0){
+      this.displayAlert('Questa pista è già stata inserita', 'danger')
       this.isValidName='is-invalid';
     }
     else if(!this.name.trim())
@@ -51,7 +59,6 @@ export class LoadTrackComponent implements OnInit{
     else
       this.isValidName='is-valid';
   }
-
   onCountryChange() {
 
   }
@@ -63,7 +70,7 @@ export class LoadTrackComponent implements OnInit{
         return;
       }
     }
-    this.displayAlert('La lunghezza deve essere numerica');
+    this.displayAlert('La lunghezza deve essere numerica','danger');
     this.isValidTrackLength='is-invalid'
   }
   onSxChange() {
@@ -74,7 +81,7 @@ export class LoadTrackComponent implements OnInit{
         return;
       }
     }
-    this.displayAlert('Numero di curve non valido');
+    this.displayAlert('Numero di curve non valido','danger');
     this.isValidSx='is-invalid'
   }
 
@@ -86,28 +93,22 @@ export class LoadTrackComponent implements OnInit{
         return;
       }
     }
-  this.displayAlert('Numero di curve non valido');
+  this.displayAlert('Numero di curve non valido', 'danger');
     this.isValidDx='is-invalid'
   }
 
-  ngOnInit(): void {
-    this.http.getAllTracksName().subscribe(data=>{
-      this.tracksName=data;
-    });
-  }
 
   onHideChange($event: boolean) {
     this.showAlert=false;
   }
-//------------------------------METHOD TO SELECT AND MANAGE IMG ------------------------------------------
+//------------------------------------------METHOD TO SELECT AND MANAGE IMG ------------------------------------------
   onFileSelected(event: any, n: number) {
     if (event.target && event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
-      //controlla che sia un'immagine
+      //check if it's an image
       if (this.isImage(file)) {
         const reader = new FileReader();
         reader.onload = () => {
-          console.log("LLLLL");
           const contentArrayBuffer = reader.result as ArrayBuffer;
           const blob = new Blob([contentArrayBuffer], { type: file.type });
           if (n == 1) {
@@ -122,31 +123,46 @@ export class LoadTrackComponent implements OnInit{
         // Avvia la lettura del file
         reader.readAsArrayBuffer(file);
       } else {
-        this.displayAlert('Il file deve essere un\'immagine');
+        this.displayAlert('Il file deve essere un\'immagine', 'danger');
       }
     }
   }
-
   isImage(file: File): boolean {
     return file.type.startsWith('image/');
   }
 
-  //----------------------------------SHOW ALERT
-  private displayAlert(msg:string){
+  //-------------------------------------------SHOW ALERT------------------------
+  private displayAlert(msg:string, type:'danger'|'success'){
     this.showAlert=true;
-    this.alertType='danger';
+    this.alertType=type;
     this.message=msg;
   }
 
+  //-------------------------------------------BTN METHOD-----------------------------------------------------------
   isBtnDisabled() {
     return !(this.isValidName === 'is-valid' && this.isValidTrackLength === 'is-valid' && this.isValidDx === 'is-valid' && this.isValidSx === 'is-valid' && this.country.trim() && this.isImg1 && this.isImg2);
   }
 
-
   //call HTTPService to sent track to backend
   loadTrack() {
-    this.http.loadTrack(new Track(this.name, this.country, this.fileBlob1, this.fileBlob2, parseInt(this.trackLength), parseInt(this.sxTurn),  parseInt(this.dxTurn))).subscribe();
+    this.http.loadTrack(new Track(this.name, this.country, this.fileBlob1, this.fileBlob2, parseInt(this.trackLength), parseInt(this.sxTurn),  parseInt(this.dxTurn)))
+      .subscribe({
+        next: (response=>{
+          console.log(response)
+            this.reloadCurrentRoute();
+        }),
+        error: (msg => {
+          this.displayAlert(msg, 'danger');
+        })
+      });
 
+  }
+  reloadCurrentRoute() {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { d: '1' },
+      queryParamsHandling: 'merge'
+    });
   }
 
 }

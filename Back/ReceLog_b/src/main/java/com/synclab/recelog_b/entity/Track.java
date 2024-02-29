@@ -5,14 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Arrays;
-import java.util.Base64;
 
 @Entity
 @Data
 @Table(name="track")
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class Track {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,6 +23,4 @@ public class Track {
     private int cornerL;
     private int cornerR;
 
-    public Track(String name, String country, byte[] imgBackContent, byte[] imgFrontContent, int length, int cornerL, int cornerR) {
-    }
 }

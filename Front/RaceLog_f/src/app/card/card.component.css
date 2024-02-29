@@ -1,0 +1,79 @@
+.div{
+  /*border-color: red;
+   border-style: solid;
+   border-width: thick;*/
+  max-height: 100vh;
+  overflow: hidden;
+}
+.c{
+  border-color: yellow;
+  border-style: solid;
+  border-width: thick;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+ul {
+  list-style-type: none; /* Rimuove i puntini dall'elenco */
+  padding-left: 0;
+}
+
+.opaque-filter {
+  position: absolute;
+  background-color: black;
+  z-index: 1;
+  height: 100%; /* Adatta l'altezza all'intero contenitore */
+  width: 100%;
+  opacity: 0.7;
+
+}
+.row{
+  /*border-style: solid;
+  border-width: thick;
+  border-color: blue;*/
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  margin-top: 5vh;
+}
+.r{
+  border-style: solid;
+  border-width: thin;
+  border-color: yellow;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 55%;
+}
+
+.btn{
+  background-color: darkred; /* Colore di sfondo giallo */
+  color: white; /* Testo bianco */
+  border: none; /* Nessun bordo */
+  padding: 10px 20px; /* Padding per spaziatura */
+  border-radius: 5px; /* Bordo arrotondato */
+  cursor: pointer; /* Cambia il cursore al passaggio */
+  transition: background-color 0.3s ease; /* Transizione al cambiamento di colore di sfondo */
+  font-weight: bold;
+  font-size: medium;
+
+}
+.btn:hover {
+  background-color: gold; /* Cambia il colore di sfondo al passaggio del mouse */
+}
+
+.img_front{
+  max-width: 40vh;
+  max-height: 90vh;
+  background-size: cover;
+}
+
+.card_info{
+  display: flex;
+justify-content: center;
+  align-items: center;
+  width: 40vh
+
+}
+

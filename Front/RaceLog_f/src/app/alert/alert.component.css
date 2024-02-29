@@ -3,11 +3,11 @@
   border-style: solid;
   border-color: red;*/
   position: absolute;
-  top:10vh;
+  top:8vh;
   max-width: 40vh;
   left: 50%;
   transform: translateX(-50%);
-  height: 8vh;
+  height: 5vh;
 
   opacity: 0.6;
   border-radius: 10px;
@@ -54,7 +54,7 @@ padding:0.5vh 1vh;
 
 }
 p{
-  padding-top: 1vh;
+  padding-top: 1.5vh;
  font-weight: bold;
   font-size: medium;
   /*border-width: medium;

@@ -2,8 +2,8 @@
   <app-alert *ngIf="showAlert === true"[message]="message" [alertType]="alertType"
              (hideAlert)="onHideChange($event)" ></app-alert>
   <div class="opaque_filter"></div>
-  <div class="opaque_filter2 container "></div>
   <div class="container central_div">
+    <!--div class="opaque_filter2 container"></div-->
 
     <div class="row ">
       <div class="col c1">
@@ -42,7 +42,7 @@
     </div>
     <div class="row r2">
       <div class="col  c2 col-5">
-          <label for="img_front"  class="form-label"> Immagine primaria</label>
+          <label for="img_front"  class="form-label"> Immagine di sfondo</label>
         <input id = "img_front" type="file" value="selectimg" [ngStyle]="{color:'white'}" (change) = "onFileSelected($event, 1)">
       </div>
       <div class="col c3 col-3">
@@ -51,7 +51,7 @@
     </div>
     <div class="row r2">
       <div class="col  c2 col-5 ">
-        <label for="img_back"  class="form-label"> Immagine secondaria</label>
+        <label for="img_back"  class="form-label"> Immagine schema pista</label>
         <input id = "img_back" type="file" value="selectimg" [ngStyle]="{color:'white'}"  (change) = "onFileSelected($event, 2)">
       </div>
       <div class="col c3 col-3">

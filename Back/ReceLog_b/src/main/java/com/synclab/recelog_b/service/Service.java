@@ -3,6 +3,7 @@ package com.synclab.recelog_b.service;
 import com.synclab.recelog_b.cotroller.UserData;
 import com.synclab.recelog_b.entity.Image;
 import com.synclab.recelog_b.entity.Track;
+import com.synclab.recelog_b.exception.TrackException;
 import com.synclab.recelog_b.exception.UserException;
 import com.synclab.recelog_b.repository.TrackRepo;
 import com.synclab.recelog_b.repository.UserRepo;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Blob;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -80,9 +82,11 @@ public class Service {
 
     public List<String> getAllTracksName(){return trackRepo.getAllTracksName();};
 
-    public Track getTrackByName(String name){
+    public Track getTrackByName(String name) throws TrackException {
+        if(!isTrackExist(name))
+            throw  new TrackException("La pista non esiste");
+        return  trackRepo.findByName(name);
 
-      return trackRepo.findByName(name);
-}
+    }
 
 }

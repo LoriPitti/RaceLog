@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.synclab.recelog_b.entity.Image;
 import com.synclab.recelog_b.entity.Track;
 import com.synclab.recelog_b.entity.User;
+import com.synclab.recelog_b.exception.TrackException;
 import com.synclab.recelog_b.exception.UserException;
+import org.apache.logging.log4j.util.Base64Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.synclab.recelog_b.service.Service;
 import org.springframework.http.HttpStatus;
@@ -14,14 +16,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.sql.Blob;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import java.util.stream.Stream;
+
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -122,11 +127,6 @@ public class Controller {
         }
     }
 
-    private String toJson(Object obj) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(obj);
-    }
-
     @PostMapping("/user/update/update")
     public String updateUser(@RequestBody String json) {
         //TODO capire come organizzare la fase di update
@@ -135,7 +135,7 @@ public class Controller {
 
     // --------------------------------------------ADMIN SECTION----------------------------------------------------
     @PostMapping("/admin/track/load")
-    public ResponseEntity<String> insertNewTrack(
+    public ResponseEntity<Integer> insertNewTrack(
             @RequestParam("name") String name,
             @RequestParam("country") String country,
             @RequestParam("imgBack") MultipartFile imgBack,
@@ -158,15 +158,24 @@ public class Controller {
             System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nella lettura dei file");
         }
-        service.insertNewTrack(new Track(name, country,imgBackContent, imgFrontContent, length, cornerL, cornerR));
-        return ResponseEntity.ok("Pista inserita con successo");
+        service.insertNewTrack(new Track(1,name, country,imgBackContent, imgFrontContent, length, cornerL, cornerR));
+        return ResponseEntity.ok(200);
     }
 
-    //--------------------------------------------GENERAL ----------------------------------------------------------
+    //-------------------------------------------- GENERAL ----------------------------------------------------------
     @GetMapping("/tracks")
     public String getAllTracks(){
         try {
-            return toJson(service.getAllTracks());
+            List<Track> tracks = service.getAllTracks();
+            List<TrackData> trackData = new ArrayList<>();
+            tracks.forEach(track -> {
+                    trackData.add(new TrackData(track.getName(), track.getCountry(),
+                            Base64.getEncoder().encodeToString(track.getImgBack()),
+                            Base64.getEncoder().encodeToString(track.getImgFront()),
+                            String.valueOf(track.getLength()), String.valueOf(track.getCornerL()), String.valueOf(track.getCornerR())));
+            });
+            return toJson(trackData);
+
         } catch (JsonProcessingException e) {
            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");
         }
@@ -180,18 +189,33 @@ public class Controller {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");
         }
     }
+
     @GetMapping("/track/{name}")
-    public String getTrackByName(@PathVariable String name){
-        try{
-           Track track = service.getTrackByName(name);
-            String imgFront64 = Base64.getEncoder().encodeToString(track.getImgFront());
-            
-        }catch (JsonProcessingException e){
-            throw  new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "errore nel parsing di json");
+    public String getTrackByName(@PathVariable String name)  {
+        Track track = null;
+        try {
+            track = service.getTrackByName(name);
+        } catch (TrackException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La pista non è stata inserita nel database");
         }
+        byte[] imgBack= track.getImgBack();
+        byte[] imgFront= track.getImgFront();
+//        return "{\"img\" : \""+Base64.getEncoder().encodeToString(imgBack)+"\"}";
+        return "{\"name\":\""+track.getName() + "\"," +
+                "\"country\" : \""+track.getCountry() + "\"," +
+                "\"imgBack\" : \"" +Base64.getEncoder().encodeToString(imgBack)+"\"," +
+                "\"imgFront\" : \""+Base64.getEncoder().encodeToString(imgFront)+"\"," +
+                "\"length\" : \""+track.getLength() + "\"," +
+                "\"cornerL\" : \""+track.getCornerL() +"\","+
+                "\"cornerR\" : \"" +track.getCornerR()+"\"}";
     }
 
 
+
+    private String toJson(Object obj) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(obj);
+    }
 
 }
 

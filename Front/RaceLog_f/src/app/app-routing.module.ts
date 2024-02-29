@@ -12,7 +12,7 @@ const routes: Routes = [
   {path: 'signup', component: SignupComponent},
   {path: 'login', component: LoginComponent},
   {path:'tracks', component: TrackComponent},
-  {path: 'tracks/load', component: LoadTrackComponent},
+  {path: 'tracks/load/:d', component: LoadTrackComponent},
   {path:'not-found', component: NotFoundComponent},
   {path: '**', redirectTo: '/not-found'}
 ];

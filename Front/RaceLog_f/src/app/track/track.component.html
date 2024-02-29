@@ -1,3 +1,15 @@
-<p>track works!</p>
+<div class="container-fluid">
+<div class="ul" *ngFor="let track of tracks">
+  <div class="li">
+    <app-card [title]="track.name"
+              [subtitle]="track.country"
+              [srcImageBack]="track.imgBackUrl"
+              [srcImageFront]="track.imgFrontUrl"
+              [tLength]="track.tLength"
+              [cornerL]="track.cornerL"
+              [cornerR]="track.cornerR"></app-card>
+  </div>
+</div>
+</div>
 
-<img [src]="imgUrl" alt="Immagine">
+
