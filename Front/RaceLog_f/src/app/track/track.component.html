@@ -1,7 +1,23 @@
 <div class="container-fluid">
-<div class="ul" *ngFor="let track of tracks">
+  <div id="arrow" (click)="scrollToTop()"></div>
+  <div class="div-search">
+    <div class="row">
+      <div class="col col-9">
+        <app-card-index [type]="'t'" (elId)="setElId($event)"></app-card-index>
+      </div>
+      <div class="col col-3">
+        <button class="btn btn-outline-success" type="submit" (click)="scroll()">Visualizza</button>
+      </div>
+    </div>
+  </div>
+<div class="ul"  *ngFor="let track of tracks">
+  <div *ngIf="tracks.length === 0" class="spinner-border text-danger" id="spinner" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
   <div class="li">
-    <app-card [title]="track.name"
+
+    <app-card id="{{track.name}}"
+              [title]="track.name"
               [subtitle]="track.country"
               [srcImageBack]="track.imgBackUrl"
               [srcImageFront]="track.imgFrontUrl"
@@ -11,5 +27,9 @@
   </div>
 </div>
 </div>
+
+
+
+
 
 

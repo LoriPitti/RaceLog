@@ -1,15 +1,14 @@
-<div class="container-fluid div">
-  <div class="row" >
-    <div class="col c" [style.background-image]="'url('+srcImageBack+ ')'" >
-      <!--div class = opaque-filter  [ngStyle]="{ 'height.px': getHeightOfBackgroundImage()}"></div-->
-      <div class="card card_info text-bg-dark text-center" style=" z-index: 2;">
-        <img [src]="srcImageFront"  class="card-img-top img_front" alt="Immagine" >
-        <div class="card-body c_body">
-          <h3 class="card-title" >{{title | uppercase}}</h3>
-          <h4 class="card-text" style="color: darkred">{{subtitle}}</h4>
-          <a href="#" class="btn btn-primary">Mostra</a>
-        </div>
-      </div>
+<div class="container-fluid">
+  <img [src]="srcImageBack" alt="Immagine reale della pista" class="img-fluid img-back">
+  <div class="opaque-filter"></div>
+  <div class="card text-bg-dark text-center div-card">
+    <img [src]="srcImageFront" alt="Schema del tracciato" class="img-front">
+    <div class="card-body c_body">
+      <h3 class="card-title" >{{title | uppercase}}</h3>
+      <h4 class="card-text" style="color: darkred">{{subtitle}}</h4>
+      <a href="#" class="btn btn-primary">Mostra</a>
     </div>
+
   </div>
+
 </div>

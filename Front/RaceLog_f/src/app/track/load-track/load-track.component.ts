@@ -38,9 +38,10 @@ export class LoadTrackComponent implements OnInit{
 
 
   constructor(private http: HttpRequestService,private  router:Router, private route:ActivatedRoute) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false  //TODO --> RESOLVE DEPRECATED METHON
   }
   ngOnInit(): void {
-    if(this.route.snapshot.params['d'] === '1')
+    if(this.route.snapshot.queryParams['insert'] === 'true')
       this.displayAlert('Pista inserita correttamente', 'success');
     this.http.getAllTracksName().subscribe(data=>{
       this.tracksName=data;
@@ -50,7 +51,8 @@ export class LoadTrackComponent implements OnInit{
 
 //-----------------------------MENAGE THE INPUT DATA-------------------------------------------------
   onNameChange() {
-    if(this.tracksName.filter(name=>name.toLowerCase() === this.name.toLowerCase()).length !=0){
+    //confronto eliminato anche gli spazi bianchi
+    if(this.tracksName.filter(name=>name.replace(/\s/g, '').toLowerCase() === this.name.replace(/\s/g, '').toLowerCase()).length !=0){
       this.displayAlert('Questa pista è già stata inserita', 'danger')
       this.isValidName='is-invalid';
     }
@@ -149,7 +151,7 @@ export class LoadTrackComponent implements OnInit{
       .subscribe({
         next: (response=>{
           console.log(response)
-            this.reloadCurrentRoute();
+          this.router.navigate(['tracks/load'], {queryParams: {insert: 'true'}});
         }),
         error: (msg => {
           this.displayAlert(msg, 'danger');
@@ -157,12 +159,6 @@ export class LoadTrackComponent implements OnInit{
       });
 
   }
-  reloadCurrentRoute() {
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { d: '1' },
-      queryParamsHandling: 'merge'
-    });
-  }
+
 
 }

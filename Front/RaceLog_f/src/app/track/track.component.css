@@ -3,4 +3,74 @@
   border-color: red;
   border-width: medium;*/
   height: 100vh;
+  padding: 0;
+}
+.li{
+  margin-top: 1vh;
+}
+.div-search{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /*border-color: gold;
+  border-style: solid;
+  border-width: medium;*/
+  margin-top: 1vh;
+
+}
+.col{
+  /*border-color: gold;
+  border-style: solid;
+  border-width: medium;*/
+  display: flex;
+  align-items: center;
+}
+.col-9{
+display: flex;
+  justify-content: right;
+}
+.row{
+  /*border-color: green;
+  border-style: solid;
+  border-width: medium;*/
+  width: 50vh;
+}
+
+
+.btn{
+  font-size: 2vh;
+  border-color: darkred;
+  background: darkred;
+  color: white;
+  border-width: medium;
+  transition: background-color 0.3s ease; /* Transizione al cambiamento di colore di sfondo */
+}
+.btn:hover{
+  background: gold;
+  color: white;
+}
+
+app-card{
+  z-index: 2;
+}
+
+#arrow{
+  border-width: thin;
+  border-color: darkred;
+  border-style: solid;
+  width: 5vh;
+  height: 5vh;
+  border-radius: 30px;
+  background-color: darkred;
+  position: fixed;
+  z-index: 3;
+  right: 2vh;
+  bottom: 2vh;
+  visibility: hidden;
+  background-image: url("/assets/icon/arrow.png");
+  background-size: cover;
+}
+
+#spinner{
+  position: absolute;
 }

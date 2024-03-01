@@ -14,6 +14,7 @@ import { LoginComponent } from './login/login.component';
 import { TrackComponent } from './track/track.component';
 import { LoadTrackComponent } from './track/load-track/load-track.component';
 import { CardComponent } from './card/card.component';
+import { CardIndexComponent } from './card/card-index/card-index.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { CardComponent } from './card/card.component';
     LoginComponent,
     TrackComponent,
     LoadTrackComponent,
-    CardComponent
+    CardComponent,
+    CardIndexComponent
   ],
   imports: [
     BrowserModule,

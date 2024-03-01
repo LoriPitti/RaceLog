@@ -1,50 +1,41 @@
-.div{
-  /*border-color: red;
-   border-style: solid;
-   border-width: thick;*/
-  max-height: 100vh;
-  overflow: hidden;
-}
-.c{
-  border-color: yellow;
+.container-fluid{
+  /*border-color: blue;
   border-style: solid;
-  border-width: thick;
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-}
-
-ul {
-  list-style-type: none; /* Rimuove i puntini dall'elenco */
-  padding-left: 0;
-}
-
-.opaque-filter {
-  position: absolute;
-  background-color: black;
-  z-index: 1;
-  height: 100%; /* Adatta l'altezza all'intero contenitore */
-  width: 100%;
-  opacity: 0.7;
-
-}
-.row{
-  /*border-style: solid;
-  border-width: thick;
-  border-color: blue;*/
-  background-size: cover;
-  background-position: center;
-  overflow: hidden;
-  margin-top: 5vh;
-}
-.r{
-  border-style: solid;
-  border-width: thin;
-  border-color: yellow;
+  border-width: medium;*/
+  height: 50vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 55%;
+  overflow: hidden;
+  padding: 0;
+}
+.img-back{
+  width: 100%;
+  object-fit: cover;
+  height: 100%;
+}
+.img-front{
+
+}
+.img-front:hover{
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+.opaque-filter {
+ /* border-style: solid;
+  border-color: black;
+  border-width: medium;*/
+  height: 50vh;
+  width: 100%;
+  position: absolute;
+  background: black;
+  opacity: 0.7;
+}
+.div-card{
+  position: absolute;
+  height: 50vh;
+  width: 40vh;
 }
 
 .btn{
@@ -57,23 +48,8 @@ ul {
   transition: background-color 0.3s ease; /* Transizione al cambiamento di colore di sfondo */
   font-weight: bold;
   font-size: medium;
-
 }
+
 .btn:hover {
-  background-color: gold; /* Cambia il colore di sfondo al passaggio del mouse */
+  background-color: gold;
 }
-
-.img_front{
-  max-width: 40vh;
-  max-height: 90vh;
-  background-size: cover;
-}
-
-.card_info{
-  display: flex;
-justify-content: center;
-  align-items: center;
-  width: 40vh
-
-}
-

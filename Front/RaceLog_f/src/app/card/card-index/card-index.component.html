@@ -1,0 +1,6 @@
+<div class="container">
+  <select class="form-select select" id="inputGroupSelect02" [(ngModel)]="element" (change)="gotTo()">
+    <option class="option"selected>Cerca un tracciato ...</option>
+        <option  *ngFor="let el of elements" >{{el}}</option>
+  </select>
+</div>
