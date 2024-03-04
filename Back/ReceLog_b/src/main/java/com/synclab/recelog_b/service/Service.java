@@ -1,19 +1,16 @@
 package com.synclab.recelog_b.service;
 
 import com.synclab.recelog_b.cotroller.UserData;
-import com.synclab.recelog_b.entity.Image;
+import com.synclab.recelog_b.entity.Car;
 import com.synclab.recelog_b.entity.Track;
 import com.synclab.recelog_b.exception.TrackException;
 import com.synclab.recelog_b.exception.UserException;
+import com.synclab.recelog_b.repository.CarRepo;
 import com.synclab.recelog_b.repository.TrackRepo;
 import com.synclab.recelog_b.repository.UserRepo;
 import com.synclab.recelog_b.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.Blob;
-import java.sql.SQLOutput;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +20,8 @@ public class Service {
     UserRepo userRepo;
     @Autowired
     TrackRepo trackRepo;
+    @Autowired
+    CarRepo carRepo;
 
     public User login(String username, String password) throws UserException {
        User user = userRepo.findByUsername(username);
@@ -66,9 +65,11 @@ public class Service {
 
 
     //---------------------------------ADMIN SECTION----------------------------------------------------------
-    public boolean insertNewTrack(Track track){
+    public void insertNewTrack(Track track){
             trackRepo.save(track);
-            return true;
+    }
+    public void insertNewCar(Car car){
+        carRepo.save(car);
     }
 
     public boolean isTrackExist(String name){
@@ -76,6 +77,7 @@ public class Service {
 
     }
 
+    //-----------------------------TRACK SECTION---------------------------------------------
     public List<Track> getAllTracks(){
         return trackRepo.findAll();
     }
@@ -88,5 +90,9 @@ public class Service {
         return  trackRepo.findByName(name);
 
     }
-
+    //------------------------------CAR SECTION----------------------------------------------------
+    public List<String> getAllCarsName(){return carRepo.getAllCarsName();};
+    public List<Car> getAllCars(){
+        return carRepo.findAll();
+    }
 }

@@ -1,6 +1,9 @@
 <div class="container">
   <select class="form-select select" id="inputGroupSelect02" [(ngModel)]="element" (change)="gotTo()">
-    <option class="option"selected>Cerca un tracciato ...</option>
+    <option class="option"selected>
+      <p *ngIf="type=='t'">Cerca un tracciato ...</p>
+      <p *ngIf="type=='c'">Cerca una vettura ...</p>
+    </option>
         <option  *ngFor="let el of elements" >{{el}}</option>
   </select>
 </div>

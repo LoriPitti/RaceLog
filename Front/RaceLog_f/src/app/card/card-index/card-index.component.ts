@@ -22,6 +22,12 @@ export class CardIndexComponent implements OnInit{
         console.log(response)
       });
     }
+    else{
+      this.http.getAllCarsName().subscribe(response=>{
+        this.elements = response;
+        console.log(response)
+      });
+    }
   }
 
   gotTo() {

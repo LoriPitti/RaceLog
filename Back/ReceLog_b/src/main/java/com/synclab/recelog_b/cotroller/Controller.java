@@ -2,6 +2,7 @@ package com.synclab.recelog_b.cotroller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.synclab.recelog_b.entity.Car;
 import com.synclab.recelog_b.entity.Image;
 import com.synclab.recelog_b.entity.Track;
 import com.synclab.recelog_b.entity.User;
@@ -161,8 +162,35 @@ public class Controller {
         service.insertNewTrack(new Track(1,name, country,imgBackContent, imgFrontContent, length, cornerL, cornerR));
         return ResponseEntity.ok(200);
     }
+    @PostMapping("/admin/car/load")
+    public ResponseEntity<Integer> insertNewCar(
+            @RequestParam("name") String name,
+            @RequestParam("brand") String brand,
+            @RequestParam("imgBack") MultipartFile imgBack,
+            @RequestParam("imgFront") MultipartFile imgFront,
+            @RequestParam("year") int year
+    ) {
+        System.out.println("riceuto");
+        byte[] imgBackContent;
+        byte[] imgFrontContent;
+        if (imgBack.isEmpty() || imgFront.isEmpty()) {
+            System.out.println("file vuoti");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "I file immagine non possono essere vuoti");
+        }
+        try {
+            imgBackContent = imgBack.getBytes();
+            imgFrontContent = imgFront.getBytes();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nella lettura dei file");
+        }
+        service.insertNewCar(new Car(1,name, brand,imgBackContent, imgFrontContent, year));
+        return ResponseEntity.ok(200);
+    }
 
-    //-------------------------------------------- GENERAL ----------------------------------------------------------
+
+
+    //-------------------------------------------- TRACK SECTION ----------------------------------------------------------
     @GetMapping("/tracks")
     public String getAllTracks(){
         try {
@@ -217,6 +245,32 @@ public class Controller {
         return objectMapper.writeValueAsString(obj);
     }
 
+    //-----------------------------------------CAR SECTION
+    @GetMapping("/carsname")
+    public String getAllCarsName(){
+        try {
+            return toJson(service.getAllCarsName());
+        } catch (JsonProcessingException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");
+        }
+    }
+    @GetMapping("/cars")
+    public String getAllCars(){
+        try {
+            List<Car> cars = service.getAllCars();
+            List<CarData> carsData = new ArrayList<>();
+            cars.forEach(car -> {
+                carsData.add(new CarData(car.getName(), car.getBrand(),
+                        Base64.getEncoder().encodeToString(car.getImgBack()),
+                        Base64.getEncoder().encodeToString(car.getImgFront()),
+                        String.valueOf(car.getYear())));
+            });
+            return toJson(carsData);
+
+        } catch (JsonProcessingException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");
+        }
+    }
 }
 
 

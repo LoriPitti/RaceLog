@@ -15,6 +15,8 @@ import { TrackComponent } from './track/track.component';
 import { LoadTrackComponent } from './track/load-track/load-track.component';
 import { CardComponent } from './card/card.component';
 import { CardIndexComponent } from './card/card-index/card-index.component';
+import { CarComponent } from './car/car.component';
+import { LoadCarComponent } from './car/load-car/load-car.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { CardIndexComponent } from './card/card-index/card-index.component';
     TrackComponent,
     LoadTrackComponent,
     CardComponent,
-    CardIndexComponent
+    CardIndexComponent,
+    CarComponent,
+    LoadCarComponent
   ],
   imports: [
     BrowserModule,

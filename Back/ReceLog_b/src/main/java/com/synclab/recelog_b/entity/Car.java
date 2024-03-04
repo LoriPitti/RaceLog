@@ -5,21 +5,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-@Entity
 @Data
-@Table(name="track")
-@AllArgsConstructor
 @NoArgsConstructor
-public class Track {
+@AllArgsConstructor
+@Table(name="car")
+@Entity
+public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
-    private String country;
+    private String brand;
     private byte[] imgBack;
     private byte[] imgFront;
-    private int length;
-    private int cornerL;
-    private int cornerR;
+    private int year;
 }

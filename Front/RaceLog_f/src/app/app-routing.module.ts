@@ -8,11 +8,17 @@ import {LoadTrackComponent} from "./track/load-track/load-track.component";
 import {TrackComponent} from "./track/track.component";
 import {AlertComponent} from "./alert/alert.component";
 import {CardIndexComponent} from "./card/card-index/card-index.component";
+import {CarComponent} from "./car/car.component";
+import {LoadCarComponent} from "./car/load-car/load-car.component";
 
 const routes: Routes = [
   {path:'', component:HomeComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'login', component: CardIndexComponent},
+  {path: 'cars', component:CarComponent},
+  {path:'cars/load', component:LoadCarComponent, children:[
+      {path: 'insert', component : AlertComponent}
+    ]},
   {path:'tracks', component: TrackComponent},
   {path: 'tracks/load', component: LoadTrackComponent, children :[
       {path: 'insert', component : AlertComponent}

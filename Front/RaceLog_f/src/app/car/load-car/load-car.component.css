@@ -3,7 +3,7 @@
   border-style: solid;
   border-width: medium;*/
   height: 100vh;
-  background: url("/assets/img/imola.jpg");
+  background: url("/assets/img/wlp3.jpg");
   background-size: cover;
   display: flex;
   align-items: center;
@@ -29,16 +29,14 @@
   border-color: darkred;
   border-style: solid;
   border-width: medium;
-  min-height: 80vh;
+  min-height: 60vh;
   max-width: 100vh;
   border-radius: 20px;
   z-index: 2;
 }
 
 .row{
-  /*border-color: darkred;
-  border-style: solid;
-  border-width: medium;*/
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -50,13 +48,15 @@
   max-width: 40vh;
 }
 
+
+
 .col_btn{
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .r2{
- display: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -92,8 +92,6 @@ app-alert{
   background-color: gold;
 }
 
-
 .form-control{
   font-size: 2vh;
 }
-

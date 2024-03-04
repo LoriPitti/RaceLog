@@ -1,0 +1,49 @@
+<div class="container-fluid">
+  <app-alert *ngIf="showAlert === true"[message]="message" [alertType]="alertType"
+             (hideAlert)="onHideChange($event)" ></app-alert>
+  <div class="opaque_filter"></div>
+  <div class="container central_div">
+    <!--div class="opaque_filter2 container"></div-->
+
+    <div class="row ">
+      <div class="col c1">
+        <label for="name_label" class="form-label">Nome della vettura</label>
+        <input type="text" class="form-control"  id="name_label" [ngClass]="isValidName"
+               placeholder="Nome della vettura" required [(ngModel)]="name" (input)="onNameChange()">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col c1">
+        <label for="brand_label" class="form-label">Marca della vettura</label>
+        <input type="text" class="form-control"  id="brand_label" [ngClass]="{'is-valid':brand.trim(),
+         'is-invalid':!brand.trim()}" placeholder="Marca della vettura" required [(ngModel)]="brand" (input)="onBrandChange()">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col c1">
+        <label for="year_label" class="form-label">Anno</label>
+        <input type="text" class="form-control"  id="year_label" [ngClass]="isValidYear" placeholder="Anno"
+               required [(ngModel)]="year" (input)="onYearChange()">
+      </div>
+    </div>
+    <div class="row r2">
+      <div class="col  c2 col-5">
+        <label for="img_front"  class="form-label"> Immagine di sfondo vettura reale</label>
+        <input id = "img_front" type="file" value="selectimg" [ngStyle]="{color:'white'}" (change) = "onFileSelected($event, 1)">
+      </div>
+    </div>
+    <div class="row r2">
+      <div class="col  c2 col-5 ">
+        <label for="img_back"  class="form-label"> Immagine principale vettura ACC</label>
+        <input id = "img_back" type="file" value="selectimg" [ngStyle]="{color:'white'}"  (change) = "onFileSelected($event, 2)">
+      </div>
+    </div>
+    <div class="row r2">
+      <div class="col col_btn">
+        <button class="btn" id="btn_login"  type="button"
+                [disabled]="isBtnDisabled()" (click)="loadTrack()">Inserisci</button>
+      </div>
+    </div>
+
+  </div>
+</div>

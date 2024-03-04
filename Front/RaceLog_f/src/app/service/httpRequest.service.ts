@@ -4,6 +4,8 @@ import {catchError, map, Observable, of, throwError} from "rxjs";
 import {Track} from "../Entity/Track";
 import {TrackDisplay} from "../Entity/TrackDisplay";
 import {DomSanitizer} from "@angular/platform-browser";
+import {Car} from "../Entity/Car";
+import {CarDisplay} from "../Entity/CarDisplay";
 
 @Injectable({providedIn:'root'})
 export class HttpRequestService{
@@ -17,6 +19,9 @@ export class HttpRequestService{
   }
   getAllTracksName(): Observable<string[]> {
     return this.http.get<string[]>("http://localhost:8080/tracksname");
+  }
+  getAllCarsName(): Observable<string[]> {
+    return this.http.get<string[]>("http://localhost:8080/carsname");
   }
 
   signup(user: string): Observable<any> {
@@ -40,7 +45,7 @@ export class HttpRequestService{
     );
   }
 
-  //------------------------------------------SERVICE FOR TRACK
+  //------------------------------------------SERVICE FOR TRACK-----------------------------------------------
   getSingleTrack(name:string): Observable<any> {
     return this.http.get<any>("http://localhost:8080/track/" + name )
       .pipe(
@@ -78,6 +83,24 @@ export class HttpRequestService{
         })
       );
   }
+
+  //--------------------------------------SERVICE FOR CAR------------------------------------
+  getAllCars(): Observable<CarDisplay[]> {
+    return this.http.get<any[]>("http://localhost:8080/cars")
+      .pipe(
+        map(response => {
+          return response.map(item => ({
+              name: item.name,
+              brand: item.brand,
+              imgBackUrl: this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64,' + item.imgBack),
+              imgFrontUrl: this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64,' + item.imgFront),
+              year: item.year
+
+            }
+          ));
+        })
+      );
+  }
   //-------------------------------------------SERVICE FOR ADMIN---------------------------
   loadTrack(track: Track){
     let formData = new FormData();
@@ -107,6 +130,34 @@ export class HttpRequestService{
         return throwError(()=>msg);
       }));
   }
+
+  loadCar(car: Car){
+    let formData = new FormData();
+    formData.append('name', car.getName());
+    formData.append('brand', car.getBrand());
+    formData.append('imgBack', car.getImgBack(), 'back.jpg'); // Aggiungi l'immagine 'imgBack' come file
+    formData.append('imgFront', car.getImgFront(), 'front.jpg');
+    formData.append('year', car.getYear().toString());
+    return this.http.post<any>("http://localhost:8080/admin/car/load", formData )
+      .pipe(
+        map(response=> {return 'Vettura inserita correttamente'}),
+        catchError(err => {
+          let msg: string = '';
+          switch (err.status) {
+            case 400:
+              msg = 'La vettura è già stata inserita';
+              break;
+            case 500:
+              msg = 'Internal Server Error';
+              break;
+            default:
+              msg = 'Errore Sconosciuto';
+              break;
+          }
+          return throwError(()=>msg);
+        }));
+  }
+
 
 
 

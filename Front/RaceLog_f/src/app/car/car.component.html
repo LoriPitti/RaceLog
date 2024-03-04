@@ -1,0 +1,31 @@
+
+<div class="container-fluid">
+  <div id="arrow" (click)="scrollToTop()"></div>
+  <div class="div-search">
+    <div class="row">
+      <div class="col col-9">
+        <app-card-index [type]="'c'" (elId)="setElId($event)"></app-card-index>
+      </div>
+      <div class="col col-3">
+        <button class="btn btn-outline-success" type="submit" (click)="scroll()">Visualizza</button>
+      </div>
+    </div>
+  </div>
+  <div class="ul"  *ngFor="let car of cars">
+    <div *ngIf="cars.length === 0" class="spinner-border text-danger" id="spinner" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <div class="li">
+
+      <app-card id="{{car.name}}"
+                [title]="car.name"
+                [subtitle]="car.brand"
+                [srcImageBack]="car.imgBackUrl"
+                [srcImageFront]="car.imgFrontUrl"
+                [tLength]="car.year"></app-card>
+    </div>
+  </div>
+</div>
+
+
+
