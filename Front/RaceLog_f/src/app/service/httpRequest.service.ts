@@ -6,6 +6,7 @@ import {TrackDisplay} from "../Entity/TrackDisplay";
 import {DomSanitizer} from "@angular/platform-browser";
 import {Car} from "../Entity/Car";
 import {CarDisplay} from "../Entity/CarDisplay";
+import {User} from "../Entity/User";
 
 @Injectable({providedIn:'root'})
 export class HttpRequestService{
@@ -42,6 +43,35 @@ export class HttpRequestService{
         }
         return of(msg);
       })
+    );
+  }
+  login(username: string, password: string){
+    return this.http.post<any | string>("http://localhost:8080/user/login", {
+      username: username,
+      password: password
+    }).pipe(
+      map(response => {
+          return new User(username, password, response.email,
+                          response.name, response.lastname, response.iconType );
+      }),catchError(err => {
+        let msg: string = '';
+        switch (err.status) {
+          case 404:
+            msg = 'L\'utente non esiste ';
+            break;
+          case 500:
+            msg = 'Internal Server Error';
+            break;
+          case 400:
+            msg = 'La password è errata'
+            break;
+          default:
+            msg = 'Errore Sconosciuto';
+            break;
+        }
+        return of(msg);
+      })
+
     );
   }
 

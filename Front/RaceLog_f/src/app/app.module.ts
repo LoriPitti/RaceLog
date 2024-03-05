@@ -17,6 +17,10 @@ import { CardComponent } from './card/card.component';
 import { CardIndexComponent } from './card/card-index/card-index.component';
 import { CarComponent } from './car/car.component';
 import { LoadCarComponent } from './car/load-car/load-car.component';
+import { PersonalComponent } from './login/personal/personal.component';
+import { MyProfileComponent } from './login/personal/my-profile/my-profile.component';
+import { RecordsComponent } from './login/personal/records/records.component';
+import { GlobalComponent } from './login/personal/global/global.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +36,11 @@ import { LoadCarComponent } from './car/load-car/load-car.component';
     CardComponent,
     CardIndexComponent,
     CarComponent,
-    LoadCarComponent
+    LoadCarComponent,
+    PersonalComponent,
+    MyProfileComponent,
+    RecordsComponent,
+    GlobalComponent,
   ],
   imports: [
     BrowserModule,

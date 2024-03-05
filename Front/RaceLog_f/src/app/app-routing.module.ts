@@ -10,11 +10,20 @@ import {AlertComponent} from "./alert/alert.component";
 import {CardIndexComponent} from "./card/card-index/card-index.component";
 import {CarComponent} from "./car/car.component";
 import {LoadCarComponent} from "./car/load-car/load-car.component";
+import {PersonalComponent} from "./login/personal/personal.component";
+import {MyProfileComponent} from "./login/personal/my-profile/my-profile.component";
+import {RecordsComponent} from "./login/personal/records/records.component";
+import {GlobalComponent} from "./login/personal/global/global.component";
 
 const routes: Routes = [
   {path:'', component:HomeComponent},
   {path: 'signup', component: SignupComponent},
-  {path: 'login', component: CardIndexComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'login/:user', component:PersonalComponent,children:[
+      {path: 'profile', component: MyProfileComponent},
+      {path: 'records', component: RecordsComponent},
+      {path: 'global', component: GlobalComponent}
+    ]},
   {path: 'cars', component:CarComponent},
   {path:'cars/load', component:LoadCarComponent, children:[
       {path: 'insert', component : AlertComponent}

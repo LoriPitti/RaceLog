@@ -1,2 +1,30 @@
+<app-header [login]="true"  [logout] = false [signup] ="true"></app-header>
+<div class="container-fluid">
+  <app-alert *ngIf="showAlert === true"[message]="message" [alertType]="alertType"
+             (hideAlert)="onHideChange($event)" ></app-alert>
+  <div class="opaque_filter_back"></div>
+  <div class="div_signup container">
+    <div class="row">
+      <h2>Accedi nella tua area personale:</h2>
+    </div>
+    <div class="row r2">
+      <div class="col-md-4 c3 me-3">
+        <label for="user_label" class="form-label">Username</label>
+        <input type="text" class="form-control"  id="user_label" [ngClass]="isValidUsername"
+               placeholder="Username" required [(ngModel)]="username" (input)="onUsernameChange()">
+      </div>
+      <div class="col-md-4 c3 me-3">
+        <label for="psw_label" class="form-label " >Password</label>
+        <input type="text" class="form-control"  id="psw_label" [(ngModel)]="password"  placeholder="Password" required
+               (input)="onPswChange()"  [ngClass]="isPswValid">
+      </div>
+    </div>
+    <div class="row r2">
+      <div class="col-md-4 c3 c4 me-3">
+        <button class="btn" id="btn_login"  type="button"
+                [disabled]="isBtnDisabled()" (click)="login()">Accedi</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-<h2>kdjrf</h2>
