@@ -7,5 +7,6 @@ import {Component, Input} from '@angular/core';
 })
 export class HeaderComponent{
   @Input('log')isLogged = false;
+  @Input()darkNavBar = false;
 
 }

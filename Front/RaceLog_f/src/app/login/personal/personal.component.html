@@ -1,3 +1,14 @@
-<app-header [log]="true"></app-header>
 
-<router-outlet></router-outlet>
+<div class="container-main">
+  <app-header [log]="true" [darkNavBar]="false"></app-header>
+  <div class="opaque_filter"></div>
+  <app-badge></app-badge>
+
+  <div class="router-content" style="z-index: 3">
+    <router-outlet></router-outlet>
+  </div>
+
+  <video src="assets/video/onboard.mp4" class="video_back" type="video/mp4" autoplay loop></video>
+
+</div>
+

@@ -1,0 +1,35 @@
+.container{
+  /*border-width: medium;
+  border-color: darkred;
+  border-style: solid;*/
+  min-height: 8vh;
+  z-index: 1;
+  border-radius: 10px;
+  margin-top: 1vh;
+  display: flex;
+  padding: 0;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 40vh;
+  margin-right: 1vh;
+}
+.row{
+  display: flex;
+  justify-content: center;
+  align-self: center;
+}
+.col{
+  display: flex;
+  align-items: center;
+}
+.c-icon{
+  justify-content: right;
+  z-index: 1;
+}
+.c-user{
+  justify-content: left;
+}
+h2{
+}
+

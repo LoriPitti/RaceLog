@@ -1,14 +1,10 @@
 package com.synclab.recelog_b.service;
 
 import com.synclab.recelog_b.cotroller.UserData;
-import com.synclab.recelog_b.entity.Car;
-import com.synclab.recelog_b.entity.Track;
+import com.synclab.recelog_b.entity.*;
 import com.synclab.recelog_b.exception.TrackException;
 import com.synclab.recelog_b.exception.UserException;
-import com.synclab.recelog_b.repository.CarRepo;
-import com.synclab.recelog_b.repository.TrackRepo;
-import com.synclab.recelog_b.repository.UserRepo;
-import com.synclab.recelog_b.entity.User;
+import com.synclab.recelog_b.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -22,7 +18,13 @@ public class Service {
     TrackRepo trackRepo;
     @Autowired
     CarRepo carRepo;
+    @Autowired
+    WetRepo wetRepo;
+    @Autowired
+    DryRepo dryRepo;
 
+
+    //-----------------------------USER SECTION----------------------------------------
     public User login(String username, String password) throws UserException {
        User user = userRepo.findByUsername(username);
        if(user==null)
@@ -61,6 +63,21 @@ public class Service {
 
     public List<String> getAllUsernames(){
         return userRepo.getAllUsernames();
+    }
+    //----------------------------------UER RECORD SECTION--------------------------------------------------------
+    public void insertNewDryRecord(Dry_record record){dryRepo.save(record);}
+    public void insertNewWetRecord(Wet_record record){wetRepo.save(record);}
+    public List<Dry_record> getUserDryRecord(String  username) throws UserException {
+        if(isUsernameExists(username)){
+                return dryRepo.findAllByUsername(username);
+        }else
+            throw  new UserException("user not exist");
+    }
+    public List<Wet_record> getUserWetRecord(String  username) throws UserException {
+        if(isUsernameExists(username)){
+            return wetRepo.findAllByUsername(username);
+        }else
+            throw  new UserException("user not exist");
     }
 
 

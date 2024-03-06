@@ -2,10 +2,7 @@ package com.synclab.recelog_b.cotroller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.synclab.recelog_b.entity.Car;
-import com.synclab.recelog_b.entity.Image;
-import com.synclab.recelog_b.entity.Track;
-import com.synclab.recelog_b.entity.User;
+import com.synclab.recelog_b.entity.*;
 import com.synclab.recelog_b.exception.TrackException;
 import com.synclab.recelog_b.exception.UserException;
 import org.apache.logging.log4j.util.Base64Util;
@@ -134,6 +131,56 @@ public class Controller {
         return "/";
     }
 
+    //----------------------------USER RECORD SECTION
+    @GetMapping("user/records/get")
+    public String getUserRecords(@RequestParam("username")String username,@RequestParam("type") String type)  {
+        if(type.equals("dry")){
+            try {
+                return toJson(service.getUserDryRecord(username));
+
+            } catch (UserException e) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "L' utente non esiste");
+            } catch (JsonProcessingException e) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");
+            }
+        }else if(type.equals("wet")){
+            try {
+                //call the service
+                return toJson(service.getUserWetRecord(username));
+
+            } catch (UserException e) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "L' utente non esiste");
+            } catch (JsonProcessingException e) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");
+            }
+
+        }else
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "tipo invalido");
+    }
+    @PostMapping("user/records/dry/post")
+    public String insertUserDryRecord(@RequestBody String json){
+        objectMapper = new ObjectMapper();
+        try {
+            Dry_record dry_record = objectMapper.readValue(json, Dry_record.class);
+            service.insertNewDryRecord(dry_record);
+            return "recordInsert";
+        } catch (JsonProcessingException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");
+        }
+    }
+    @PostMapping("user/records/wet/post")
+    public String insertUserWetRecord(@RequestBody String json){
+        objectMapper = new ObjectMapper();
+        try {
+            Wet_record wet_record = objectMapper.readValue(json, Wet_record.class);
+            service.insertNewWetRecord(wet_record);
+            return "recordInsert";
+        } catch (JsonProcessingException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");
+        }
+    }
+
+
     // --------------------------------------------ADMIN SECTION----------------------------------------------------
     @PostMapping("/admin/track/load")
     public ResponseEntity<Integer> insertNewTrack(
@@ -245,7 +292,7 @@ public class Controller {
         return objectMapper.writeValueAsString(obj);
     }
 
-    //-----------------------------------------CAR SECTION
+    //-----------------------------------------CAR SECTION---------------------------------------------------------
     @GetMapping("/carsname")
     public String getAllCarsName(){
         try {

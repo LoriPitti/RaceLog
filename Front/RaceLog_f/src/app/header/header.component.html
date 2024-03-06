@@ -1,24 +1,31 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg"  data-bs-theme="dark">
   <div class="container-fluid">
     <a class="navbar-brand">RACELOG</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse " id="navbarNavAltMarkup">
-      <div class="navbar-nav  justify-content-center"> <!-- Aggiunta della classe justify-content-center -->
-        <a class="nav-link active" aria-current="page" routerLink=''>Home</a>
-        <a class="nav-link" [routerLink]="['/tracks']">Tracks</a>
-        <a class="nav-link" [routerLink]="['/cars']">Cars</a>
-        <a class="nav-link" [routerLink]="['/login']" *ngIf="!isLogged">Login</a>
-        <a class="nav-link" routerLink = ""  *ngIf="isLogged">Logout</a>
-        <a class="nav-link" [routerLink]="['/signup']" *ngIf="!isLogged">Signup</a>
-        <a class="nav-link" [routerLink]="['/tracks/load']" [queryParams]="{insert:false}">Upload tracks</a>
-        <a class="nav-link" [routerLink]="['/cars/load']" [queryParams]="{insert:false}">Upload cars</a>
+    <div class="collapse navbar-collapse " id="navbarNavAltMarkup" >
+      <div class="navbar-nav  justify-content-center" > <!-- Aggiunta della classe justify-content-center -->
+        <a class="nav-link "  routerLink=''
+           [ngClass]="{'font-white': !darkNavBar, 'font-black':darkNavBar}">Home</a>
+        <a class="nav-link" [routerLink]="['/tracks']"
+           [ngClass]="{'font-white': !darkNavBar, 'font-black':darkNavBar}">Tracks</a>
+        <a class="nav-link" [routerLink]="['/cars']"
+           [ngClass]="{'font-white': !darkNavBar, 'font-black':darkNavBar}">Cars</a>
+        <a class="nav-link a-log" [routerLink]="['/login']" *ngIf="!isLogged"
+           [ngClass]="{'font-white': !darkNavBar, 'font-black':darkNavBar}"><p class="a-log">Login</p></a>
+        <a class="nav-link" [routerLink]="['/signup']" *ngIf="!isLogged"
+           [ngClass]="{'font-white': !darkNavBar, 'font-black':darkNavBar}">Signup</a>
+        <a class="nav-link" [routerLink]="['/tracks/load']" [queryParams]="{insert:false}"
+           [ngClass]="{'font-white': !darkNavBar, 'font-black':darkNavBar}">Upload tracks</a>
+        <a class="nav-link" [routerLink]="['/cars/load']" [queryParams]="{insert:false}"
+           [ngClass]="{'font-white': !darkNavBar, 'font-black':darkNavBar}">Upload cars</a>
       </div>
       <div class="personal-navbar" *ngIf="isLogged">
         <a  class="a-personal nav-link" [routerLink]="['/login/:id/profile']">My profile</a>
-        <a  class="a-personal nav-link" [routerLink]="['/login/:id/records']">My records</a>
+        <a  class="a-personal nav-link" [routerLink]="['/login/:id/records']" style="color: red">My records</a>
         <a  class="a-personal nav-link" [routerLink]="['/login/:id/global']">Global</a>
+        <a  class="a-personal nav-link" >Logout</a>
       </div>
     </div>
   </div>

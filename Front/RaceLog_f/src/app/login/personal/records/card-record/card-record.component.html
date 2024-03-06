@@ -1,0 +1,45 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col c-title">
+      <h1>{{trackName}}</h1>
+    </div>
+  </div>
+  <div class="row r-svg">
+    <div class="col c-title">
+      <div class="toggle" (click)="toggleRecords()">
+        <svg cIcon name="cilArrowThickFromTop" size="xl"  class ="icon" id="{{svg_id}}" ></svg>
+      </div>
+    </div>
+  </div>
+  <div class="row row-body" *ngIf="toggle">
+    <div class="row r-line"></div>
+    <div class="row r-type">
+      <div class="col c1">
+        <h2>Dry</h2>
+      </div>
+      <div class="col col-1">
+        <div class="div separator"></div>
+      </div>
+      <div class="col c1">
+        <h2>Wet</h2>
+      </div>
+    </div>
+    <div class="row r-records">
+      <div class="col c-records">
+        <ul *ngFor="let car of dryCars">
+          <li class="li_cars">
+            <app-car-card-record [car]="car" [records]="dryRecords"  [track]="trackName"></app-car-card-record>
+          </li>
+          <li class="div line"></li>
+        </ul>
+      </div>
+      <div class="col c-records">
+        <ul *ngFor="let car of wetCars">
+          <li>
+            <app-car-card-record [car]="car" [records]="wetRecords" [track]="trackName"></app-car-card-record>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

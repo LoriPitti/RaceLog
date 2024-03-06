@@ -151,3 +151,10 @@ padding: 0;
 app-alert{
   z-index: 2;
 }
+
+app-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 9999; /* Assicura che l'header sia sopra gli altri elementi sulla pagina */
+}

@@ -1,1 +1,7 @@
-<p>records works!</p>
+<div class="container-fluid">
+  <ul class="scrollable-list">
+    <li class="li" *ngFor="let track of finalTrackList">
+      <app-card-record [trackName]="track" [dry]="dryRecords"  [wet]="wetRecords" [id]="track + 'id'"></app-card-record>
+    </li>
+  </ul>
+</div>

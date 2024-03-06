@@ -21,6 +21,11 @@ import { PersonalComponent } from './login/personal/personal.component';
 import { MyProfileComponent } from './login/personal/my-profile/my-profile.component';
 import { RecordsComponent } from './login/personal/records/records.component';
 import { GlobalComponent } from './login/personal/global/global.component';
+import { BadgeComponent } from './login/personal/badge/badge.component';
+import { CardRecordComponent } from './login/personal/records/card-record/card-record.component';
+
+import {IconDirective, IconSetService} from "@coreui/icons-angular";
+import { CarCardRecordComponent } from './login/personal/records/card-record/car-card-record/car-card-record.component';
 
 @NgModule({
   declarations: [
@@ -41,14 +46,20 @@ import { GlobalComponent } from './login/personal/global/global.component';
     MyProfileComponent,
     RecordsComponent,
     GlobalComponent,
+    BadgeComponent,
+    CardRecordComponent,
+    CarCardRecordComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    IconDirective
   ],
-  providers: [],
+  providers: [
+    IconSetService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

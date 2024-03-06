@@ -1,0 +1,28 @@
+.container-fluid{
+ /* border-color: red;
+  border-width: medium;
+  border-style: solid;*/
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  z-index: 3;
+  padding: 0;
+}
+
+ul{
+  margin-top: 10vh;
+  padding: 0;
+}
+li{
+  margin-top: 5vh;
+  padding: 0;
+}
+h3{
+  color: white;
+}
+.scrollable-list {
+  max-height: 80vh;
+  overflow-y: auto;
+  overflow-x:hidden;
+}

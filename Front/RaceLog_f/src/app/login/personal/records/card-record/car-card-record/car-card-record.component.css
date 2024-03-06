@@ -1,0 +1,50 @@
+.container{
+  width: 100%;
+}
+.c-car{
+  background-color: darkred;
+  margin-bottom: 2vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+
+}
+.col {
+  padding: 0;
+}
+.row{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /*border-color: dodgerblue;
+  border-style: solid;
+  border-width: medium;*/
+  padding-top: 1vh;
+}
+
+h3{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+ul{
+
+  max-width: 15vh;
+}
+
+li{
+  list-style: none;
+
+
+}
+p{
+  display: flex;
+  background-color: lightslategray;
+  border-radius: 10px;
+  justify-content: center;
+  color: white;
+  font-size: 2vh;
+}
+

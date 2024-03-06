@@ -1,8 +1,10 @@
-<app-header [login]="true"  [logout] = false [signup] ="true"></app-header>
+
 <div class="container-fluid">
+
   <app-alert *ngIf="showAlert === true"[message]="message" [alertType]="alertType"
              (hideAlert)="onHideChange($event)" ></app-alert>
   <div class="opaque_filter_back"></div>
+  <app-header [log]="false" [darkNavBar]="false"></app-header>
   <div class="div_signup container">
     <div class="row">
       <h2>Accedi nella tua area personale:</h2>

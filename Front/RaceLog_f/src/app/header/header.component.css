@@ -1,21 +1,27 @@
+
 .navbar-nav .nav-link {
   font-size:2.5vh; /* Imposta la dimensione del carattere di base */
   transition: font-size 0.2s; /* Aggiungi una transizione fluida alla dimensione del carattere */
+  margin-left: 2vh;
+  font-style: italic;
 }
 
 .navbar-nav .nav-link:hover {
   font-size: 3vh; /* Ingrandisci il carattere al passaggio del mouse */
 }
+.navbar-brand{
+  color: red;
+  font-weight: bold;
+}
 
 .personal-navbar{
-  border-style: solid;
+  /*border-style: solid;
   border-color: darkred;
-  border-width: medium;
+  border-width: medium;*/
   margin-left: auto;
   border-radius: 10px;
   display: flex;
-  padding: 1vh;
-  padding-left: 2vh;
+  padding: 1vh 1vh 1vh 2vh;
 }
 
 .a-personal{
@@ -23,7 +29,17 @@
   font-size: 2.5vh;
   cursor: pointer;
   transition: font-size 0.2s;
+  color: white;
 }
 .a-personal:hover{
   font-size: 3vh;
+}
+.a-log{
+color: red;
+}
+.font-white{
+  color:white;
+}
+.font-black{
+  color: black;
 }
