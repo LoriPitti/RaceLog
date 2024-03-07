@@ -1,5 +1,9 @@
 .container{
   width: 100%;
+  border-bottom-style: solid;
+  border-bottom-width: medium;
+  border-bottom-color: lightslategray;
+  max-width: 20vh;
 }
 .c-car{
   background-color: darkred;
@@ -8,8 +12,10 @@
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-
+  max-width: 15vh;
+  cursor: pointer;
 }
+
 .col {
   padding: 0;
 }
@@ -30,8 +36,10 @@ h3{
 
 }
 ul{
-
-  max-width: 15vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
 }
 
 li{
@@ -40,6 +48,8 @@ li{
 
 }
 p{
+  padding-left: 2vh;
+  padding-right: 2vh;
   display: flex;
   background-color: lightslategray;
   border-radius: 10px;

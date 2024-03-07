@@ -1,15 +1,17 @@
 <div class="container">
-    <div class="row">
-      <div class="col c-car">
+    <div class="row r-title" >
+      <div class="col c-car" (click)="hideShowTimes()">
         <h3>{{carName}}</h3>
       </div>
-      <div class="col c-time">
-        <ul *ngFor="let time of timeList" class="ul_time">
-          <li class="li">
-              <p>{{ time }}</p>
-          </li>
-        </ul>
-      </div>
     </div>
+  <div class="row r-times">
+    <div class="col c-time" *ngIf="showTimes">
+      <ul *ngFor="let time of timeList" class="ul_time">
+        <li class="li">
+          <p>{{ time }}</p>
+        </li>
+      </ul>
+    </div>
+  </div>
 
 </div>

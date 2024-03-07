@@ -39,3 +39,15 @@ app-badge{
   position: relative;
   z-index: 2;
 }
+
+.row{
+  margin-top: 15vh;
+/* border-color: red;
+  border-width: medium;
+  border-style: solid;*/
+  position: relative;
+  z-index: 2;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}

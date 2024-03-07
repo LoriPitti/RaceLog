@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {IconSetService} from "@coreui/icons-angular";
 import {HttpRequestService} from "../../../service/httpRequest.service";
-import {cilArrowThickFromBottom, cilArrowThickFromTop} from "@coreui/icons";
+import {cilArrowThickFromBottom, cilArrowThickFromTop, cilPlaylistAdd, cilPlus} from "@coreui/icons";
 import {DryWet_record} from "../../../Entity/DryWet_record";
 
 @Component({
@@ -15,7 +15,7 @@ export class RecordsComponent implements OnInit{
   wetRecords:DryWet_record[] = [];
   finalTrackList:string[] = [];
   constructor(   public iconSet : IconSetService, private  http:HttpRequestService) {
-    iconSet.icons = {cilArrowThickFromTop, cilArrowThickFromBottom}
+    iconSet.icons = {cilArrowThickFromTop, cilArrowThickFromBottom, cilPlaylistAdd, cilPlus}
   }
 
   ngOnInit(): void {

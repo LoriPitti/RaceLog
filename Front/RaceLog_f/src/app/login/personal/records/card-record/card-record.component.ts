@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {IconsComponent} from "../../../../icons/icons.component";
 import {IconSetService} from "@coreui/icons-angular";
-import {cilArrowThickFromBottom, cilArrowThickFromTop} from "@coreui/icons";
+import {cilArrowThickFromBottom, cilArrowThickFromTop, cilPlaylistAdd, cilPlus} from "@coreui/icons";
 import {HttpRequestService} from "../../../../service/httpRequest.service";
 import {DryWet_record} from "../../../../Entity/DryWet_record";
 
@@ -21,7 +21,7 @@ export class CardRecordComponent implements OnInit{
 
 
   constructor(   public iconSet : IconSetService, private  http:HttpRequestService) {
-    iconSet.icons = {cilArrowThickFromTop, cilArrowThickFromBottom}
+    iconSet.icons = {cilArrowThickFromTop, cilArrowThickFromBottom, cilPlaylistAdd, cilPlus}
   }
 
   ngOnInit(): void {

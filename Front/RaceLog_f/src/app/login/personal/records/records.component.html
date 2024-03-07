@@ -1,7 +1,17 @@
 <div class="container-fluid">
-  <ul class="scrollable-list">
-    <li class="li" *ngFor="let track of finalTrackList">
-      <app-card-record [trackName]="track" [dry]="dryRecords"  [wet]="wetRecords" [id]="track + 'id'"></app-card-record>
-    </li>
-  </ul>
+  <div class="row r-icon">
+    <div class="div_icon">
+      <svg cIcon name="cilPlus" size="xl" title="add" id="addIcon"></svg>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <ul class="scrollable-list">
+        <li class="li" *ngFor="let track of finalTrackList">
+          <app-card-record [trackName]="track" [dry]="dryRecords"  [wet]="wetRecords" [id]="track + 'id'"></app-card-record>
+        </li>
+      </ul>
+    </div>
+  </div>
+
 </div>

@@ -15,12 +15,17 @@ export class CarCardRecordComponent implements  OnInit{
   @Input()track:string = '';
   @Input('records') recordList: DryWet_record[] = [];
   timeList:string[] = [];
+  showTimes =false;
 
   private extractTime(){
     this.recordList.forEach(record=>{
       if(record.getCar() === this.carName && record.getTrack() ===this.track)
         this.timeList.push(record.getTime());
     })
+  }
+
+  hideShowTimes(){
+    this.showTimes = !this.showTimes;
   }
 
 }

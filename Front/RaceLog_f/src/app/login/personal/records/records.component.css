@@ -3,7 +3,6 @@
   border-width: medium;
   border-style: solid;*/
   min-height: 100vh;
-  display: flex;
   justify-content: center;
   width: 100%;
   z-index: 3;
@@ -11,8 +10,10 @@
 }
 
 ul{
-  margin-top: 10vh;
+  margin-top: 0;
   padding: 0;
+  list-style: none;
+
 }
 li{
   margin-top: 5vh;
@@ -22,7 +23,40 @@ h3{
   color: white;
 }
 .scrollable-list {
-  max-height: 80vh;
+  max-height: 65vh;
   overflow-y: auto;
   overflow-x:hidden;
+  padding-left:5vh;
+  padding-right: 5vh;
+  padding-top: 0;
 }
+
+#addIcon{
+  color: #eeeeee;
+  z-index: 2;
+  /* border-width: medium;
+   border-color: lightslategray;
+   border-style: solid; */
+  border-radius: 25px;
+}
+.div_icon{
+  border-width: medium;
+  border-color: lightslategray;
+  border-style: solid;
+  width: 10vh;
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 25px;
+}
+.r-icon{
+  margin-top: 12vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+
