@@ -1,12 +1,10 @@
 .container-fluid{
- /* border-color: red;
-  border-width: medium;
-  border-style: solid;*/
-  min-height: 100vh;
+  max-height: 100vh;
   justify-content: center;
   width: 100%;
   z-index: 3;
   padding: 0;
+
 }
 
 ul{
@@ -16,8 +14,8 @@ ul{
 
 }
 li{
-  margin-top: 5vh;
   padding: 0;
+  margin-bottom: 2vh;
 }
 h3{
   color: white;
@@ -29,6 +27,9 @@ h3{
   padding-left:5vh;
   padding-right: 5vh;
   padding-top: 0;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+
 }
 
 #addIcon{
@@ -38,6 +39,16 @@ h3{
    border-color: lightslategray;
    border-style: solid; */
   border-radius: 25px;
+  transition: 1.0s ease;
+}
+#deleteIcon{
+  color: #eeeeee;
+  z-index: 2;
+  /* border-width: medium;
+   border-color: lightslategray;
+   border-style: solid; */
+  border-radius: 25px;
+  transition: 1.0s ease;
 }
 .div_icon{
   border-width: medium;
@@ -50,12 +61,142 @@ h3{
   justify-content: center;
   border-radius: 25px;
 }
+
 .r-icon{
   margin-top: 12vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+.add-row{
+  margin-top: 2vh;
+}
+
+.c-input{
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin-bottom: 2vh;
+
+}
+.c1{
+  justify-content: center;
+}
+.c2{
+  justify-content: center;
+}
+.c3{
+  justify-content: center;
+  padding: 0;
+}
+.c-icon{
+  display: flex;
+  align-items: center;
+}
+
+#timeInput{
+  max-width: 15vh;
+  font-size: 2vh;
+  margin-right: 1vh;
+}
+.insertIcon{
+  width: 10vh;
+}
+.ic1{
+  justify-content: right;
+}
+
+.div_icon-2{
+  width: 6vh;
+  height: 6vh;
+  cursor: pointer;
+  transition: 0.5s ease;
+  margin-left: 2vh;
+}
+.div_icon-2:hover{
+  transform: scale(1.1);
+}
+#confirmIcon{
+  color: green;
+}
+
+#undoIcon{
+color: darkred;
+}
+
+.div-form{
+  border-style: solid;
+  border-color: darkred;
+  border-width: medium;
+  padding-left: 2vh;
+  padding-right: 2vh;
+  padding-bottom: 2vh;
+  border-radius: 15px;
+  background-color: black;
+  opacity: 0.8;
+}
+.r-form{
+  margin-top: 2vh;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.c-form{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h2{
+  margin-top: 1vh;
+  color: white;
+  display: flex;
+  align-items: center;justify-content: center;
+  font-size: 3vh;
+}
+
+mat-slide-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+p{
+  font-size: 2.2vh;
+  padding-top: 1vh;
+  padding-left: 1vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+}
+
+.btn{
+  background-color: darkred; /* Colore di sfondo giallo */
+  color: white; /* Testo bianco */
+  border: none; /* Nessun bordo */
+  padding: 10px 20px; /* Padding per spaziatura */
+  border-radius: 5px; /* Bordo arrotondato */
+  cursor: pointer; /* Cambia il cursore al passaggio */
+  transition: background-color 0.3s ease; /* Transizione al cambiamento di colore di sfondo */
+  font-weight: bold;
+  font-size: 2.5vh;
+}
+.btn:hover {
+  background-color: gold;
+}
+.alert{
+  z-index: 3;
+  width: 40vh;
+}
+.r-alert{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
 
 
 

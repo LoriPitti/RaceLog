@@ -12,6 +12,7 @@ export class CardIndexComponent implements OnInit{
   @Input()type:'t'|'c' = 't';
   element:string = '';
   @Output()elId = new EventEmitter<string>();
+  @Input()isDisabled = true;
 
   constructor(private http:HttpRequestService) {
   }

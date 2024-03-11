@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.synclab.recelog_b.entity.*;
 import com.synclab.recelog_b.exception.TrackException;
 import com.synclab.recelog_b.exception.UserException;
-import org.apache.logging.log4j.util.Base64Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.synclab.recelog_b.service.Service;
 import org.springframework.http.HttpStatus;
@@ -14,16 +13,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
-import java.sql.Blob;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
-import java.util.stream.Stream;
 
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -158,25 +152,30 @@ public class Controller {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "tipo invalido");
     }
     @PostMapping("user/records/dry/post")
-    public String insertUserDryRecord(@RequestBody String json){
+    public ResponseEntity<Integer> insertUserDryRecord(@RequestBody String json){
         objectMapper = new ObjectMapper();
         try {
             Dry_record dry_record = objectMapper.readValue(json, Dry_record.class);
+            System.out.println(dry_record.getUsername());
             service.insertNewDryRecord(dry_record);
-            return "recordInsert";
+            return ResponseEntity.ok(200);
         } catch (JsonProcessingException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");
+        } catch (Exception e) {
+            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "Il record è gia inserito");
         }
     }
     @PostMapping("user/records/wet/post")
-    public String insertUserWetRecord(@RequestBody String json){
+    public ResponseEntity<Integer> insertUserWetRecord(@RequestBody String json){
         objectMapper = new ObjectMapper();
         try {
             Wet_record wet_record = objectMapper.readValue(json, Wet_record.class);
             service.insertNewWetRecord(wet_record);
-            return "recordInsert";
+            return ResponseEntity.ok(200);
         } catch (JsonProcessingException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");
+        } catch (Exception e) {
+            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "Il record è gia inserito");
         }
     }
 
@@ -217,7 +216,6 @@ public class Controller {
             @RequestParam("imgFront") MultipartFile imgFront,
             @RequestParam("year") int year
     ) {
-        System.out.println("riceuto");
         byte[] imgBackContent;
         byte[] imgFrontContent;
         if (imgBack.isEmpty() || imgFront.isEmpty()) {

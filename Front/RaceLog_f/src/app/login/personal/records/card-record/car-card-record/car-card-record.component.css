@@ -33,6 +33,8 @@ h3{
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 3vh;
+  padding-top: 1vh;
 
 }
 ul{
@@ -48,13 +50,12 @@ li{
 
 }
 p{
-  padding-left: 2vh;
-  padding-right: 2vh;
   display: flex;
   background-color: lightslategray;
   border-radius: 10px;
   justify-content: center;
   color: white;
-  font-size: 2vh;
+  font-size: 3vh;
+  padding: 0.5vh 2vh 0.5vh 2vh;
 }
 

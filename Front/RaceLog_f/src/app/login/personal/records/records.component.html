@@ -1,14 +1,104 @@
 <div class="container-fluid">
+  <div class="row r-alert">
+    <app-alert class="alert" *ngIf="showAlert" [message]="message" [alertType]="alertType"
+               (hideAlert)="onHideChange($event)" ></app-alert>
+  </div>
   <div class="row r-icon">
-    <div class="div_icon">
+    <div class="div_icon" (click)="showDiv('add')">
       <svg cIcon name="cilPlus" size="xl" title="add" id="addIcon"></svg>
+    </div>
+    <div class="div_icon" (click)="showDiv('delete')">
+    <svg cIcon name="cilX" size="xl" title="add" id="deleteIcon"></svg>
+  </div>
+  </div>
+  <div class="row r-form" *ngIf="showAddDiv">
+    <div class="col c-form">
+      <div class="div-form">
+        <div class="row"><h2>Inserisci un nuovo tempo</h2></div>
+        <div class="row add-row">
+          <div class="col c-input c1">
+            <app-card-index [type]="'t'"  (elId)="setCarTrack($event, 't')"></app-card-index>
+          </div>
+          <div class="col c-input c2">
+            <app-card-index [type]="'c'" (elId)="setCarTrack($event, 'c')"></app-card-index>
+          </div>
+        </div>
+        <div class="row add-row">
+          <div class="col c-input c3">
+            <input type="text" class="form-control"  id="timeInput" aria-label="Dollar amount (with dot and two decimal places)" placeholder="01.01.000"
+                   [(ngModel)]="time" (input)="onTimeChange()" [ngClass]="isValidTime">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-slide-toggle  [color]="'red'" class="slide" [(ngModel)]="type">
+              <p *ngIf="type">Dry</p>
+              <p *ngIf="!type">Wet</p>
+            </mat-slide-toggle>
+          </div>
+        </div>
+        <div class="row add-row">
+          <div class="col c-icon ic1">
+            <button class="btn" id="btn_insert"  type="button" [disabled]="isBtnDisabled()"
+             (click)="insertRecord()">Inserisci</button>
+          </div>
+          <div class="col c-icon ic2">
+            <div class="div_icon div_icon-2" (click)="closeDiv()">
+              <svg cIcon name="cilX" size="xl" title="add" id="undoIcon" ></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row r-form" *ngIf="showDeleteDiv">
+    <div class="col c-form">
+      <div class="div-form">
+        <div class="row"><h2>Elimina un tempo registrato</h2></div>
+        <div class="row">
+          <div class="col">
+            <mat-slide-toggle  [color]="'red'" class="slide" [(ngModel)]="typeDelete">
+              <p *ngIf="typeDelete">Dry</p>
+              <p *ngIf="!typeDelete">Wet</p>
+            </mat-slide-toggle>
+          </div>
+        </div>
+        <div class="row add-row">
+          <div class="col c-input c1">
+            <select *ngIf="typeDelete" class="form-select select" id="inputDryRecord">
+              <option class="option"selected>
+                <p > Dry record...</p>
+              </option>
+              <option  *ngFor="let dry of dryRecords"></option>
+            </select>
+            <select  *ngIf="!typeDelete" class="form-select select" id="inputWetRecord">
+              <option class="option"selected>
+                <p >Wet record...</p>
+              </option>
+              <option  ></option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row add-row">
+          <div class="col c-icon ic1">
+            <button class="btn" id="btn_insert"  type="button" [disabled]="isBtnDisabled()"
+                    (click)="insertRecord()">Inserisci</button>
+          </div>
+          <div class="col c-icon ic2">
+            <div class="div_icon div_icon-2" (click)="closeDiv()">
+              <svg cIcon name="cilX" size="xl" title="add" id="undoIcon" ></svg>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="row">
     <div class="col">
       <ul class="scrollable-list">
-        <li class="li" *ngFor="let track of finalTrackList">
-          <app-card-record [trackName]="track" [dry]="dryRecords"  [wet]="wetRecords" [id]="track + 'id'"></app-card-record>
+        <li class="li" *ngFor="let track of finalTrackList;let i= index">
+          <app-card-record [trackName]="track" [dry]="dryRecords"  [wet]="wetRecords" [id]="i.toString()"></app-card-record>
         </li>
       </ul>
     </div>

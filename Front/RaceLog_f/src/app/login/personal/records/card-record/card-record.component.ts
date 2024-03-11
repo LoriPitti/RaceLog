@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IconsComponent} from "../../../../icons/icons.component";
 import {IconSetService} from "@coreui/icons-angular";
-import {cilArrowThickFromBottom, cilArrowThickFromTop, cilPlaylistAdd, cilPlus} from "@coreui/icons";
+import {cilArrowThickFromBottom, cilArrowThickFromTop, cilCheck, cilPlaylistAdd, cilPlus, cilX} from "@coreui/icons";
 import {HttpRequestService} from "../../../../service/httpRequest.service";
 import {DryWet_record} from "../../../../Entity/DryWet_record";
 
@@ -11,36 +11,36 @@ import {DryWet_record} from "../../../../Entity/DryWet_record";
   styleUrl: './card-record.component.css'
 })
 export class CardRecordComponent implements OnInit{
-  toggle = false;
   @Input()trackName: string ='';
   @Input('dry') dryRecords:DryWet_record[] = [];
   @Input('wet') wetRecords:DryWet_record[] = [];
   dryCars:string[] = [];
   wetCars:string[]=[];
   @Input('id')svg_id: string = '';
+  toggle:boolean = false;
+  rotateState = 0; //to track the icon rotation
 
 
   constructor(   public iconSet : IconSetService, private  http:HttpRequestService) {
-    iconSet.icons = {cilArrowThickFromTop, cilArrowThickFromBottom, cilPlaylistAdd, cilPlus}
+    iconSet.icons = {cilArrowThickFromTop, cilArrowThickFromBottom, cilPlaylistAdd, cilPlus, cilCheck, cilX}
   }
 
   ngOnInit(): void {
       this.extractCars()
   }
 
-  toggleRecords() {
-    this.toggle = !this.toggle;
+  rotateIcon(){
     const icon = document.getElementById(this.svg_id);
-   if(this.toggle){
-     if(icon){
-       icon.style.transform = "rotate(-180deg)";
-     }
-   }else{
-     if(icon){
-       icon.style.transform = "rotate(0deg)";
-     }
-   }
+    this.toggle = !this.toggle
+    if(icon)
+      if(this.toggle) {
+        icon.style.transform = "rotate(-180deg)";
+      }else {
+        icon.style.transform = "rotate(0deg)";
+      }
+
   }
+
 
   private extractCars(){
     let cars:Set<string> = new Set(); //set to prevent duplciate value
@@ -58,4 +58,5 @@ export class CardRecordComponent implements OnInit{
   }
 
 
+  protected readonly parseInt = parseInt;
 }

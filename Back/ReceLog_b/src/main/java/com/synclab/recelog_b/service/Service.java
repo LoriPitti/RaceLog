@@ -65,8 +65,15 @@ public class Service {
         return userRepo.getAllUsernames();
     }
     //----------------------------------UER RECORD SECTION--------------------------------------------------------
-    public void insertNewDryRecord(Dry_record record){dryRepo.save(record);}
-    public void insertNewWetRecord(Wet_record record){wetRepo.save(record);}
+    public void insertNewDryRecord(Dry_record record) throws Exception {
+        if(dryRepo.findRecord(record.getUsername(), record.getTrack(), record.getCar(), record.getTime()) != null)
+            throw new Exception("alreadyInsert");
+        dryRepo.save(record);
+    }
+    public void insertNewWetRecord(Wet_record record) throws Exception {
+        if(wetRepo.findRecord(record.getUsername(), record.getTrack(), record.getCar(), record.getTime()) != null)
+            throw new Exception("alreadyInsert");
+        wetRepo.save(record);}
     public List<Dry_record> getUserDryRecord(String  username) throws UserException {
         if(isUsernameExists(username)){
                 return dryRepo.findAllByUsername(username);

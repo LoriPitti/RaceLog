@@ -1,5 +1,5 @@
 <div class="container">
-  <select class="form-select select" id="inputGroupSelect02" [(ngModel)]="element" (change)="gotTo()">
+  <select class="form-select select" id="inputGroupSelect02" [(ngModel)]="element" (change)="gotTo()" [disabled]="isDisabled">
     <option class="option"selected>
       <p *ngIf="type=='t'">Cerca un tracciato ...</p>
       <p *ngIf="type=='c'">Cerca una vettura ...</p>

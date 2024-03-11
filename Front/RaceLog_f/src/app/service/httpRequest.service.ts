@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpParams, HttpResponse} from "@angular/common/http";
 import {catchError, map, Observable, of, throwError} from "rxjs";
 import {Track} from "../Entity/Track";
 import {TrackDisplay} from "../Entity/TrackDisplay";
@@ -101,6 +101,36 @@ export class HttpRequestService{
         throw new Error(msg)
       })
     );
+  }
+
+  insertNewRecord(username:string, track:string, car:string, time:string, type:'w'|'d'){
+    let url:string;
+    if(type == 'd')
+      url = "http://localhost:8080/user/records/dry/post";
+    else
+      url = "http://localhost:8080/user/records/wet/post";
+    return this.http.post<HttpResponse<any>>(url, {
+      'username': username,
+      'track': track,
+      'car': car,
+      'time': time
+    }).pipe(map((response:HttpResponse<any>) => {
+      console.log(response)
+      return 'Record registrato';
+    }), catchError(err => {
+      let msg: string = '';
+      switch (err.status) {
+        case 400:
+          msg = "Record già inserito";
+          break;
+        case 500:
+          msg = 'Internal Server Error';
+          break;
+        default:
+          msg = "Errore sconosciuto";
+      }
+      throw new Error(msg)
+    }))
   }
 
 
