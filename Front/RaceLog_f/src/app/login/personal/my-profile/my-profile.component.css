@@ -1,9 +1,7 @@
 
 .container-fluid{
-  border-style: solid;
-  border-color: red;
-  border-width: medium;
-  height: 80vh;
+
+  min-height : 80vh;
   margin-top: 10vh;
 }
 
@@ -15,6 +13,7 @@
   padding-bottom: 4vh;
   background-color: black;
   opacity: 0.8;
+  max-width: 60vh;
 }
 .form-label{
   color: white;
@@ -24,7 +23,7 @@
   border-radius: 10px;
 }
 .r-form{
-  margin-top: 4vh;
+  margin-top: 2vh;
   display: flex;
   justify-content: center;
 
@@ -36,7 +35,9 @@
 .form-control{
   max-width: 25vh;
 }
-
+.row{
+  padding: 2vh
+}
 
 .btn{
   background-color: darkred; /* Colore di sfondo giallo */
@@ -52,4 +53,29 @@
 }
 .btn:hover {
   background-color: gold;
+}
+.r-btn{
+  display: flex;
+  justify-content: center;
+  align-self: center;
+}
+.c-btn{
+  padding: 0;
+  max-width: 15vh;
+  margin-left: 2vh;
+}
+.icon{
+  width: 4vh;
+  transition: 0.5s ease;
+  color: grey;
+}
+.col-icon{
+  max-width: 3vh;
+  padding: 0;
+}
+.col-icon:hover{
+  cursor: pointer;
+}
+.col-icon:hover  .icon{
+  transform: scale(1.2);
 }

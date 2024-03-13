@@ -1,41 +1,61 @@
 
 <div class="container-fluid">
+  <div class="row r-btn">
+    <div class="col c-btn">
+      <button type="button" *ngIf = "!modify" class="btn" (click)="modifyData()"> Modifica</button>
+    </div>
+    <div class="col c-btn" *ngIf = "modify">
+      <button type="button"  class="btn" [disabled]="isSaveDisabled()" (click)="saveData()"> Salva modifiche</button>
+    </div>
+    <div class="col c-btn" *ngIf = "modify">
+      <button type="button"  class="btn"  (click)="modify=!modify">Annulla</button>
+    </div>
+  </div>
   <div class="row">
     <div class="col">
       <div class="container info">
         <div class="row r-form">
           <div class="col col-form">
             <label for="name_label" class="form-label">Nome</label>
-            <input type="text" class="form-control"  id="name_label" [ngClass]=""
-                   placeholder="Username"   [value]="name" [disabled]="true">
+            <input type="text" class="form-control"  id="name_label" [ngClass]="isValidName"
+                   placeholder="Username"  [(ngModel)]="name" [value]="name" [disabled]="!modify"
+            (input)="onNameChange()">
           </div>
         </div>
         <div class="row r-form">
           <div class="col col-form">
             <label for="lastname_label" class="form-label">Cognome</label>
-            <input type="text" class="form-control"  id="lastname_label" [ngClass]=""
-                   placeholder="Cognome"   [value]="lastname" [disabled]="true">
+            <input type="text" class="form-control"  id="lastname_label" [ngClass]="isValidLastname"
+                   placeholder="Cognome"   [(ngModel)]="lastname" [value]="lastname" [disabled]="!modify"
+                (input)="onLastNameChange()">
           </div>
         </div>
         <div class="row- r-form">
           <div class="col col-form">
             <label for="mail_label" class="form-label">Email</label>
-            <input type="text" class="form-control"  id="mail_label" [ngClass]=""
-                   placeholder="Email"   [value]="email"  [disabled]="true">
+            <input type="text" class="form-control"  id="mail_label" [ngClass]="isValidEmail"
+                   placeholder="Email"   [(ngModel)]="email" [value]="email"  [disabled]="!modify"
+                   (input)="onEmailChange()">
           </div>
         </div>
         <div class="row r-form">
           <div class="col col-form">
             <label for="password_label" class="form-label">Password</label>
-            <input type="text" class="form-control"  id="password_label" [ngClass]=""
-                   placeholder="Password"    [value]="password" [disabled]="true">
+            <input  [type]="pswType"  class="form-control"  id="password_label" [ngClass]="isValidPassword"
+                   placeholder="Password"    [(ngModel)]="password"  [value]="password" [disabled]="!modify"
+                    (input)="onPasswordChange()">
+          </div>
+          <div class="col col-icon" (click)="hideShowPasswords()">
+            <svg  class="icon" cIcon name="cilLowVision" size="xl" title="hide" id="hideShow" ></svg>
           </div>
         </div>
+        <div class="row r-form" *ngIf="modify">
+          <div class="col col-form">
+            <label for="passwordConfirm_label" class="form-label">Conferma Password</label>
+            <input [type]="pswType" class="form-control"  id="passwordConfirm_label" [ngClass]="isValidPassword2"
+                   placeholder="---"    [(ngModel)]="password2"  (input)="onPassword2Change()">
+          </div>
       </div>
-    </div>
-    <div class="col c-btn">
-     <button type="button" *ngIf = "!modify"> Modifica</button>
-      <button type="button" *ngIf = "modify"> Salva modifiche</button>
     </div>
   </div>
 </div>

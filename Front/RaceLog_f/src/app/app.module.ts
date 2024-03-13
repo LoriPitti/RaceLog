@@ -29,6 +29,7 @@ import { CarCardRecordComponent } from './login/personal/records/card-record/car
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatDialogActions, MatDialogContent} from "@angular/material/dialog";
+import { AnalyticsComponent } from './login/personal/records/analytics/analytics.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import {MatDialogActions, MatDialogContent} from "@angular/material/dialog";
     BadgeComponent,
     CardRecordComponent,
     CarCardRecordComponent,
+    AnalyticsComponent,
   ],
   imports: [
     BrowserModule,

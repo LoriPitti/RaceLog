@@ -24,8 +24,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
+  padding-top: 1vh;
 }
+
 .c-records{
   flex-grow: 1;
 }
@@ -83,6 +84,18 @@ li{
   height: 0.2vh;
   width: 30vh;
 }
+.r-title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 
-
+.graphIcon{
+  margin-left: 2vh;
+  color: #eeeeee;
+}
+.c-t:hover .graphIcons{
+  cursor: pointer;
+  color: yellow;
+}
