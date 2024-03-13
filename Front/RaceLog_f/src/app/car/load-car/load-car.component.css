@@ -5,7 +5,6 @@
   height: 100vh;
   background: url("/assets/img/wlp3.jpg");
   background-size: cover;
-  display: flex;
   align-items: center;
   justify-content: center;
   padding: 0;
@@ -13,7 +12,6 @@
 
 
 app-header {
-  position: fixed;
   top: 0;
   width: 100%;
   z-index: 9999; /* Assicura che l'header sia sopra gli altri elementi sulla pagina */
@@ -32,7 +30,7 @@ app-header {
   opacity: 0.7;
   overflow: hidden;
   padding: 0;
-  top: 15vh;
+  margin-top:5vh;
   /*position: absolute;*/
   border-color: darkred;
   border-style: solid;
@@ -102,4 +100,6 @@ app-alert{
 
 .form-control{
   font-size: 2vh;
+}
+.div_icon{
 }

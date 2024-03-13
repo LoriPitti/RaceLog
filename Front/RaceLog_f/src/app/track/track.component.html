@@ -4,10 +4,10 @@
   <div id="arrow" (click)="scrollToTop()"></div>
   <div class="div-search">
     <div class="row">
-      <div class="col col-9">
-        <app-card-index [type]="'t'" (elId)="setElId($event)"></app-card-index>
+      <div class="col ">
+        <app-card-index [type]="'t'" (elId)="setElId($event)" [isDisabled]="false"></app-card-index>
       </div>
-      <div class="col col-3">
+      <div class="col col-btn">
         <button class="btn btn-outline-success" type="submit" (click)="scroll()">Visualizza</button>
       </div>
     </div>

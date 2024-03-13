@@ -25,18 +25,12 @@
   border-width: medium;*/
   display: flex;
   align-items: center;
-}
-.col-9{
-  display: flex;
-  justify-content: right;
-}
-.row{
-  /*border-color: green;
-  border-style: solid;
-  border-width: medium;*/
-  width: 50vh;
+  margin-bottom: 1vh;
 }
 
+.c-btn{
+  margin-left: 2vh;
+}
 
 .btn{
   font-size: 2vh;

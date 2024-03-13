@@ -3,8 +3,10 @@ package com.synclab.recelog_b.cotroller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.synclab.recelog_b.entity.*;
+import com.synclab.recelog_b.exception.RecordException;
 import com.synclab.recelog_b.exception.TrackException;
 import com.synclab.recelog_b.exception.UserException;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.synclab.recelog_b.service.Service;
 import org.springframework.http.HttpStatus;
@@ -178,9 +180,37 @@ public class Controller {
             throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "Il record è gia inserito");
         }
     }
+    @DeleteMapping("user/records/dry/delete")
+    public ResponseEntity<Integer> deleteDryRecord(@RequestBody String json) {
+        objectMapper = new ObjectMapper();
+        try {
+            Dry_record dry_record = objectMapper.readValue(json, Dry_record.class);
+            service.deleteRecord(dry_record.getUsername(), dry_record.getTrack(), dry_record.getCar(), dry_record.getTime(), "dry");
+            return ResponseEntity.ok(200);
+        } catch (JsonProcessingException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");
+
+        } catch (RecordException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Il record non esiste");
+        }
+    }
+    @DeleteMapping("user/records/wet/delete")
+    public ResponseEntity<Integer> deleteWetRecord(@RequestBody String json) {
+        objectMapper = new ObjectMapper();
+        try {
+            Dry_record dry_record = objectMapper.readValue(json, Dry_record.class);
+            service.deleteRecord(dry_record.getUsername(), dry_record.getTrack(), dry_record.getCar(), dry_record.getTime(), "wet");
+            return ResponseEntity.ok(200);
+        } catch (JsonProcessingException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");
+
+        } catch (RecordException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Il record non esiste");
+        }
+    }
 
 
-    // --------------------------------------------ADMIN SECTION----------------------------------------------------
+        // --------------------------------------------ADMIN SECTION----------------------------------------------------
     @PostMapping("/admin/track/load")
     public ResponseEntity<Integer> insertNewTrack(
             @RequestParam("name") String name,

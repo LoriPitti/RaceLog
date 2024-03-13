@@ -132,8 +132,39 @@ export class HttpRequestService{
       throw new Error(msg)
     }))
   }
-
-
+  deleteRecord(username: string, track:string, car:string, time:string, type:'w' |'d'){
+    let url:string;
+    if(type ==='d'){
+      url =  "http://localhost:8080/user/records/dry/delete";
+    }
+    else{
+      url =  "http://localhost:8080/user/records/wet/delete";
+    }
+    const body = {
+      'username' : username,
+      'track' : track,
+      'car' : car,
+      'time' : time
+    }
+    return this.http.delete<any>(url, {body : body}).pipe(
+      map((response:HttpResponse<any>)=>{
+        console.log(response)
+        return 'Record eliminato';
+      }),catchError(err =>{
+        let msg: string = '';
+        switch (err.status) {
+          case 400:
+            msg = "Record non esistente";
+            break;
+          case 500:
+            msg = 'Internal Server Error';
+            break;
+          default:
+            msg = "Errore sconosciuto";
+        }
+        throw new Error(msg)
+      }));
+  }
   //------------------------------------------SERVICE FOR TRACK-----------------------------------------------
   getSingleTrack(name:string): Observable<any> {
     return this.http.get<any>("http://localhost:8080/track/" + name )

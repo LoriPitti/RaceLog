@@ -19,38 +19,27 @@ body{
   object-fit: cover;
   position:absolute;
 }
-
-.home_text{
-  z-index:1 ;
-  /*border-style: solid;
-  border-width: thick;
-  border-color: red;*/
-  height: 10vh;
+.div{
+  position: absolute;
+  margin-left: 50%;
+  transform: translateX(-50%);
   margin-top: 30vh;
-  display: flex;
-  padding: 2vh;
 }
-.row{
-  z-index: 0;
-}
-.title{
-  /*border-style: solid;
-    border-color: #660c02;
-    border-width: medium;*/
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 7vh;
-  color: white;
 
-}
-.subtitle{
+.col{
   display: flex;
   justify-content: center;
   align-items: center;
+}
+h1{
+  color:white;
+  font-size: 7vh;
+  line-height: 8vh;
+}
+h2{
+  color:red;
   font-size: 4vh;
-  font-weight: bold;
-  color: red;
+  line-height: 5vh;
 }
 
 .opaque_filter{
@@ -64,7 +53,6 @@ body{
   height: 100%;
   opacity: 0.8;
 }
-
 
 
 

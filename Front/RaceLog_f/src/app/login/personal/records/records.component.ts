@@ -25,6 +25,8 @@ export class RecordsComponent implements OnInit{
   dryRecords :DryWet_record[] = [];
   wetRecords:DryWet_record[] = [];
   finalTrackList:string[] = [];
+  trackWet:string[] = [];
+  trackDry:string[] = [];
   showAddDiv:boolean = false;
   showDeleteDiv = false;
   car:string = '';
@@ -39,6 +41,20 @@ export class RecordsComponent implements OnInit{
   alertType = 'danger';
   times:string[] = [];
   carSelectorDisabled = true;
+  trackDelete:string = ''; //<- track and car selected to be deleted
+  carDelete:string ='';
+  timeDelete = '';
+  isValidDeleteTrack = false;
+  isValidDeleteCar = false;
+  carDeleteSelectorDisabled = true;
+  timeDeleteDisabled =true;
+  isValidDeleteTime = false;
+   dryCars: string[] =[];
+   wetCars:string[] = [];
+  timeDryList:string[] = [];
+  timeWetList:string[] = [];
+  isBtnDeleteDisabled = true;
+
 
   constructor(   public iconSet : IconSetService, private  http:HttpRequestService, private router:Router) {
     iconSet.icons = {cilArrowThickFromTop, cilArrowThickFromBottom, cilPlaylistAdd, cilPlus, cilCheck, cilX}
@@ -72,33 +88,104 @@ export class RecordsComponent implements OnInit{
       }
     });
   }
-//-------------------------------------------------------------------------------
+//-------------------------------------------METHODs TO EXTRACT TRACK, CARS  AND TIME  TO DELETE------------------------------------
   private extractTracks(){
     let trackList1:string[] = [];
     //extract track from dry record
     this.dryRecords.forEach(record=>{
       trackList1.push(record.getTrack());
     })
+    this.trackDry = Array.from(new Set(trackList1)); //<- set dry tracks
 
     let trackList2:string[] = [];
     //extract track from wet record
     this.wetRecords.forEach(record=>{
       trackList2.push(record.getTrack());
     })
+    this.trackWet = Array.from(new Set(trackList2)); //<- set wet tracks
     this.finalTrackList =  Array.from(new Set(trackList1.concat(trackList2)));
   }
+  private extractCars(){
+    let cars:Set<string> = new Set(); //set to prevent duplciate value
+    //if DRY
+    if(this.typeDelete){
+      this.dryRecords.forEach(element=>{
+        if(element.getTrack() === this.trackDelete)
+          cars.add(element.getCar());
+      })
+      this.dryCars = Array.from(cars); //<- set dry cars
+       cars.clear();
+    }else{ //IF WET
+      this.wetRecords.forEach(element=>{
+        if(element.getTrack() === this.trackDelete)
+          cars.add(element.getCar());
+      })
+      this.wetCars = Array.from(cars);
+    }
+  }
 
+  setDeleteTrackCar(type:'t'|'c') {
+    if (type === 't') {
+      console.log(this.trackDelete)
+      if (!this.trackDelete.trim() || this.trackDelete.substring(0, 5) == 'Selez') {
+        this.isValidDeleteTrack = false;
+        this.carDeleteSelectorDisabled = true;
+        this.carDelete = '';
+      } else {
+        this.isValidDeleteTrack = true;
+        this.carDeleteSelectorDisabled = false;
+        this.extractCars();
+      }
+    } else { //setting the car
+      if (!this.carDelete.trim() || this.carDelete.substring(0, 5) == 'Selez') {
+        this.isValidDeleteTrack = false;
+        this.timeDeleteDisabled = true;
+        this.timeDelete = '';
+      }
+      else {
+        this.isValidDeleteCar = true;
+        this.timeDeleteDisabled=false;
+        this.extractTime();
+      }
+    }
+  }
+  private extractTime(){
+    if(this.typeDelete){
+      this.dryRecords.forEach(record=>{
+        if(record.getCar() === this.carDelete && record.getTrack() ===this.trackDelete)
+          this.timeDryList.push(record.getTime());
+      })
+    }
+    else{
+      this.wetRecords.forEach(record=>{
+        if(record.getCar() === this.carDelete && record.getTrack() ===this.trackDelete)
+          this.timeWetList.push(record.getTime());
+      })
+    }
+  }
+  public setTime(){
+    if(!this.timeDelete.trim() || this.time.substring(0, 5) == 'Selez') {
+      this.isValidDeleteTime = false;
+      this.isBtnDeleteDisabled = true;
+    }else{
+      this.isValidDeleteTime = true;
+      this.isBtnDeleteDisabled = false;
+    }
+  }
+
+  //-----------------ADD/DELETE--------------------------
   showDiv(type:string) {
     let id:string;
     if(type === 'add'){
-      this.showAddDiv = !this.showAddDiv;
+     this.showAddDiv = !this.showAddDiv;
+      this.showDeleteDiv = false;
       id="addIcon";
     }
     else{
-      this.showDeleteDiv =!this.showDeleteDiv;
+      this.showDeleteDiv =!this.showDeleteDiv
+      this.showAddDiv = false;
       id="deleteIcon";
     }
-
     const icon = document.getElementById(id);
     if(this.showAddDiv){
       if(icon)
@@ -108,22 +195,22 @@ export class RecordsComponent implements OnInit{
       if(icon)
         icon.style.transform = "rotate(0deg)"
     }
+  } //show DELETE or ADD DIV
+  closeDiv() {
+    this.time = ''
+    this.isValidTime = '';
+    if(this.showDeleteDiv)
+      this.showDeleteDiv = false;
+    if(this.showAddDiv)
+      this.showAddDiv = false;
   }
+
   setCarTrack($event: string, type:'t'|'c'){
     if(type ==='t'){
       this.track = $event;
       //if is not valid track
-      if(!this.track.trim()  || this.track.substring(0, 5) == 'Cerca' ) {
-        this.isValidTrack = false;
-        this.carSelectorDisabled=true;
-      }
-      else{
-        this.isValidTrack = true;
-        this.carSelectorDisabled = false; //enable car selector
-      }
+      this.isValidTrack = !(!this.track.trim() || this.track.substring(0, 5) == 'Cerca');
     }
-
-
     else
       this.car = $event;
   }
@@ -149,13 +236,28 @@ export class RecordsComponent implements OnInit{
     this.isValidTime='is-invalid';
   } //time validetion
   isBtnDisabled() {
-    if((!this.track.trim()  || this.track.substring(0, 5) == 'Cerca' ) || ( !this.car.trim() || this.car.substring(0,5) === 'Cerca' ) || this.isValidTime==='is-invalid') {
+    if((!this.isValidTrack) || ( !this.car.trim() || this.car.substring(0,5) === 'Cerca' ) || this.isValidTime==='is-invalid') {
       return true;
     }
     else
       return false;
   }
-
+  deletRecord() {
+    let type:'d'|'w';
+    if(this.typeDelete)
+      type = 'd';
+    else
+      type = 'w';
+        this.http.deleteRecord(this.username, this.trackDelete, this.carDelete, this.timeDelete, type).subscribe({
+          next:(response) =>{
+            console.log('Message: ', response);
+            this.displayAlert(response, 'success');
+            this.router.navigate(['login/'+this.username+'/records']).then(() => {window.location.reload()})
+          },error:(err)=>{
+            this.displayAlert(err.message, 'danger');
+          }
+        })
+  }
   //------------------------------REGISTER NEW RECORD------------------------------
 
   insertRecord() {
@@ -176,11 +278,7 @@ export class RecordsComponent implements OnInit{
     })
   }
 
-  closeDiv() {
-    this.time = ''
-    this.isValidTime = '';
-    this.showAddDiv = !this.showAddDiv;
-  }
+
 
   onHideChange($event: boolean) {
     this.showAlert=false;
@@ -190,5 +288,7 @@ export class RecordsComponent implements OnInit{
     this.alertType=type;
     this.message=msg;
   }
+
+
 
 }

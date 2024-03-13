@@ -19,22 +19,14 @@
 
 }
 .col{
-  /*border-color: gold;
-  border-style: solid;
-  border-width: medium;*/
   display: flex;
   align-items: center;
+  margin-bottom: 1vh;
 }
-.col-9{
-display: flex;
-  justify-content: right;
+.col-btn{
+  margin-left: 2vh;
 }
-.row{
-  /*border-color: green;
-  border-style: solid;
-  border-width: medium;*/
-  width: 50vh;
-}
+
 
 
 .btn{

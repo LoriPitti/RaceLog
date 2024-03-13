@@ -2,6 +2,7 @@ package com.synclab.recelog_b.service;
 
 import com.synclab.recelog_b.cotroller.UserData;
 import com.synclab.recelog_b.entity.*;
+import com.synclab.recelog_b.exception.RecordException;
 import com.synclab.recelog_b.exception.TrackException;
 import com.synclab.recelog_b.exception.UserException;
 import com.synclab.recelog_b.repository.*;
@@ -87,6 +88,25 @@ public class Service {
             throw  new UserException("user not exist");
     }
 
+    public void deleteRecord(String username, String track, String car, String time, String type) throws RecordException {
+        if(type.equals("dry")) {
+            Integer id = dryRepo.selectId(username, track, car, time);
+            if (id == null)
+                throw new RecordException("Dry track not exist");
+            else
+                dryRepo.deleteById(id);
+            System.out.println("delete");
+        }
+        else if(type.equals("wet")){
+            System.out.println("wer");
+            Integer id = wetRepo.selectId(username, track, car, time);
+            if (id == null)
+                throw new RecordException("Wet track not exist");
+            else
+                wetRepo.deleteById(id);
+            System.out.println("delete");
+        }
+    }
 
     //---------------------------------ADMIN SECTION----------------------------------------------------------
     public void insertNewTrack(Track track){
@@ -119,4 +139,5 @@ public class Service {
     public List<Car> getAllCars(){
         return carRepo.findAll();
     }
+
 }

@@ -17,10 +17,10 @@
         <div class="row"><h2>Inserisci un nuovo tempo</h2></div>
         <div class="row add-row">
           <div class="col c-input c1">
-            <app-card-index [type]="'t'"  (elId)="setCarTrack($event, 't')"></app-card-index>
+            <app-card-index [type]="'t'"  (elId)="setCarTrack($event, 't')" [isDisabled]="false"></app-card-index>
           </div>
           <div class="col c-input c2">
-            <app-card-index [type]="'c'" (elId)="setCarTrack($event, 'c')"></app-card-index>
+            <app-card-index [type]="'c'" (elId)="setCarTrack($event, 'c')" [isDisabled]="false"></app-card-index>
           </div>
         </div>
         <div class="row add-row">
@@ -64,30 +64,58 @@
           </div>
         </div>
         <div class="row add-row">
-          <div class="col c-input c1">
-            <select *ngIf="typeDelete" class="form-select select" id="inputDryRecord">
-              <option class="option"selected>
-                <p > Dry record...</p>
+          <div class="col c-input">
+            <select *ngIf="typeDelete" class="form-select select" id="Dry" [(ngModel)]="trackDelete" (change)="setDeleteTrackCar('t')">
+              <option class="option" selected><p>Seleziona tracciato dry</p>
               </option>
-              <option  *ngFor="let dry of dryRecords"></option>
+              <option *ngFor="let dryTrack of trackDry">{{dryTrack}}</option>
             </select>
-            <select  *ngIf="!typeDelete" class="form-select select" id="inputWetRecord">
-              <option class="option"selected>
-                <p >Wet record...</p>
+            <select *ngIf="!typeDelete" class="form-select select" id="inputTrackWet" [(ngModel)]="trackDelete" (change)="setDeleteTrackCar('t')">
+              <option class="option" selected><p>Seleziona tracciato wet</p>
               </option>
-              <option  ></option>
+              <option *ngFor="let wetTrack of trackWet">{{wetTrack}}</option>
+            </select>
+          </div>
+          <div class="col c-input c1">
+            <select *ngIf="typeDelete" [(ngModel)]="carDelete" (change)="setDeleteTrackCar('c')" [disabled]="carDeleteSelectorDisabled" class="form-select select" id="inputCar">
+              <option class="option" selected>
+                <p> Seleziona vettura...</p>
+              </option>
+              <option *ngFor="let car of dryCars">{{car}}</option>
+            </select>
+            <select *ngIf="!typeDelete" [(ngModel)]="carDelete"  (change)="setDeleteTrackCar('c')"[disabled]="carDeleteSelectorDisabled" class="form-select select" id="inputCar">
+              <option class="option" selected>
+                <p> Seleziona vettura...</p>
+              </option>
+              <option *ngFor="let car of wetCars">{{car}}</option>
             </select>
           </div>
         </div>
-
         <div class="row add-row">
+          <div class="col c-input c1">
+            <select *ngIf="typeDelete" class="form-select select" id="inputTimeDeleteDry" [(ngModel)]="timeDelete"  [disabled]="timeDeleteDisabled">
+              <option class="option"selected>
+                <p >Seleziona il tempo da eliminare ...</p>
+              </option>
+              <option   *ngFor="let time of timeDryList">{{time}}</option>
+            </select>
+            <select *ngIf ="!typeDelete" class="form-select select" id="inputTimeDeleteWet" [(ngModel)]="timeDelete"  [disabled]="timeDeleteDisabled">
+              <option class="option"selected>
+                <p >Seleziona il tempo da eliminare ...</p>
+              </option>
+              <option   *ngFor="let time of timeWetList">{{time}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="row add-row" >
           <div class="col c-icon ic1">
-            <button class="btn" id="btn_insert"  type="button" [disabled]="isBtnDisabled()"
-                    (click)="insertRecord()">Inserisci</button>
+            <button class="btn" id="btn_delete" type="button" [disabled]="isBtnDeleteDisabled"
+                    (click)="deletRecord()" [(ngModel)]="timeDelete">Elimina
+            </button>
           </div>
           <div class="col c-icon ic2">
             <div class="div_icon div_icon-2" (click)="closeDiv()">
-              <svg cIcon name="cilX" size="xl" title="add" id="undoIcon" ></svg>
+              <svg cIcon name="cilX" size="xl" title="add" id="undoIcon"></svg>
             </div>
           </div>
         </div>

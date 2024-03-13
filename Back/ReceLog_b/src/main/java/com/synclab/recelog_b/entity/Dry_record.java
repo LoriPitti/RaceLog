@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "dry_record")
+
 public class Dry_record {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
