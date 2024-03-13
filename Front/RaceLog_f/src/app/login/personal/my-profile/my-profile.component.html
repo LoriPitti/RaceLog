@@ -1,1 +1,41 @@
 
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="container info">
+        <div class="row r-form">
+          <div class="col col-form">
+            <label for="name_label" class="form-label">Nome</label>
+            <input type="text" class="form-control"  id="name_label" [ngClass]=""
+                   placeholder="Username"   [value]="name" [disabled]="true">
+          </div>
+        </div>
+        <div class="row r-form">
+          <div class="col col-form">
+            <label for="lastname_label" class="form-label">Cognome</label>
+            <input type="text" class="form-control"  id="lastname_label" [ngClass]=""
+                   placeholder="Cognome"   [value]="lastname" [disabled]="true">
+          </div>
+        </div>
+        <div class="row- r-form">
+          <div class="col col-form">
+            <label for="mail_label" class="form-label">Email</label>
+            <input type="text" class="form-control"  id="mail_label" [ngClass]=""
+                   placeholder="Email"   [value]="email"  [disabled]="true">
+          </div>
+        </div>
+        <div class="row r-form">
+          <div class="col col-form">
+            <label for="password_label" class="form-label">Password</label>
+            <input type="text" class="form-control"  id="password_label" [ngClass]=""
+                   placeholder="Password"    [value]="password" [disabled]="true">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col c-btn">
+     <button type="button" *ngIf = "!modify"> Modifica</button>
+      <button type="button" *ngIf = "modify"> Salva modifiche</button>
+    </div>
+  </div>
+</div>

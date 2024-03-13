@@ -1,0 +1,55 @@
+
+.container-fluid{
+  border-style: solid;
+  border-color: red;
+  border-width: medium;
+  height: 80vh;
+  margin-top: 10vh;
+}
+
+.info{
+  border-style: solid;
+  border-color: lightslategray;
+  border-width: medium;
+  border-radius: 15px;
+  padding-bottom: 4vh;
+  background-color: black;
+  opacity: 0.8;
+}
+.form-label{
+  color: white;
+  font-size: 2.5vh;
+  background-color: gray;
+  padding: 1vh;
+  border-radius: 10px;
+}
+.r-form{
+  margin-top: 4vh;
+  display: flex;
+  justify-content: center;
+
+}
+.col-form{
+  max-width: 30vh;
+  padding-left: 1vh;
+}
+.form-control{
+  max-width: 25vh;
+}
+
+
+.btn{
+  background-color: darkred; /* Colore di sfondo giallo */
+  color: white; /* Testo bianco */
+  border: none; /* Nessun bordo */
+  padding: 10px 20px; /* Padding per spaziatura */
+  border-radius: 5px; /* Bordo arrotondato */
+  cursor: pointer; /* Cambia il cursore al passaggio */
+  transition: background-color 0.3s ease; /* Transizione al cambiamento di colore di sfondo */
+  font-weight: bold;
+  font-size: 2.5vh;
+
+}
+.btn:hover {
+  background-color: gold;
+}

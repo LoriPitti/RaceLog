@@ -48,12 +48,12 @@ export class HttpRequestService{
     );
   }
   login(username: string, password: string){
-    return this.http.post<any | string>("http://localhost:8080/user/login", {
+    return this.http.post<any>("http://localhost:8080/user/login", {
       username: username,
       password: password
     }).pipe(
       map(response => {
-          return new User(username, password, response.email,
+          return new User(username, password, response,
                           response.name, response.lastname, response.iconType );
       }),catchError(err => {
         let msg: string = '';
@@ -71,10 +71,32 @@ export class HttpRequestService{
             msg = 'Errore Sconosciuto';
             break;
         }
-        return of(msg);
+      throw new Error(msg)
       })
 
     );
+  }
+
+  getUserData(username:string){
+    const params = new HttpParams()
+      .set("username", username);
+    return this.http.get<any>("http://localhost:8080/user", {params:params}).pipe(
+      map(response=>{ console.log(response.username); return new User(response.username, response.password, response.email, response.name, response.lastname, response.iconType)}),
+      catchError(err=> {
+        let msg: string = '';
+        switch (err.status) {
+          case 400:
+            msg = "L' utente non esiste";
+            break;
+          case 500:
+            msg = 'Internal Server Error';
+            break;
+          default:
+            msg = "Errore sconosciuto";
+        }
+        throw  new Error(msg);
+      })
+    )
   }
 
   //--------------------------------------USER RECORD---------------------------------------------------------

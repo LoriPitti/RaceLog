@@ -1,4 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, Input, OnInit} from '@angular/core';
+import {User} from "../../../Entity/User";
+import {HttpRequestService} from "../../../service/httpRequest.service";
+import {UserService} from "../../../service/UserService";
 
 @Component({
   selector: 'app-badge',
@@ -6,11 +9,18 @@ import {Component, OnInit} from '@angular/core';
   styleUrl: './badge.component.css'
 })
 export class BadgeComponent implements  OnInit{
-  iconSrc:string = '/assets/icon/1.png';
-  username:string = 'Username';
-
+  username:string = '';
+  iconSrc = '/assets/icon/';
+  constructor(private http: HttpRequestService, private userService:UserService) {
+  }
   ngOnInit(): void {
-    //TODO READ COOKIE
+    const user= localStorage.getItem('username');
+    const src = localStorage.getItem('iconType');
+    if(user != null)
+      this.username = user;
+    if(src!=null)
+      this.iconSrc += src + '.png';
+
   }
 
 }

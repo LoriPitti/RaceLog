@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {HttpRequestService} from "../service/httpRequest.service";
 import {User} from "../Entity/User";
 import {ActivatedRoute, Router} from "@angular/router";
+import {AuthService} from "../service/AuthService";
+import {error} from "@angular/compiler-cli/src/transformers/util";
+import {UserService} from "../service/UserService";
 
 @Component({
   selector: 'app-login',
@@ -19,7 +22,8 @@ export class LoginComponent  implements OnInit{
   showAlert=false;
   alertType='danger';
   message:string='';
-  constructor(private http:HttpRequestService, private router:Router, private route:ActivatedRoute) {
+  constructor(private http:HttpRequestService, private  userService:UserService, private router:Router, private route:ActivatedRoute,
+              private authService:AuthService) {
   }
   ngOnInit(): void {
     //get all usernames
@@ -52,14 +56,21 @@ export class LoginComponent  implements OnInit{
 
   }
   login(): void {
-    this.http.login(this.username, this.password).subscribe(response =>{
-      if(typeof response == "string"){
-        this.displayAlert(response, 'danger');
+    this.http.login(this.username, this.password).subscribe({
+      next: (response) => {
+        localStorage.setItem('username', response.getUsername);
+        localStorage.setItem('iconType', response.getIconType.toString());
+        this.userService.setUserData({username: response.getUsername, password:response.getPassword,
+                                      email:response.getEmail, name:response.getName, lastname:response.getLastname, iconType:response.getIconType })
+        this.authService.login();
+        this.router.navigate(['login/',this.username,'profile']);
+      },error: (err)=> {
+        this.displayAlert(err.message, 'danger');
       }
-      else{
-          this.router.navigate(['login/',this.username,'profile'])
-      }
-    });
+    })
+
+
+
   }
 
 

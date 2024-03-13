@@ -28,6 +28,7 @@ import {IconDirective, IconSetService} from "@coreui/icons-angular";
 import { CarCardRecordComponent } from './login/personal/records/card-record/car-card-record/car-card-record.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {MatDialogActions, MatDialogContent} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -59,6 +60,8 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
     FormsModule,
     IconDirective,
     MatSlideToggleModule,
+    MatDialogContent,
+    MatDialogActions,
   ],
   providers: [
     IconSetService,

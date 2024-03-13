@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {Component, inject, Input, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {IconSetService} from "@coreui/icons-angular";
 import {HttpRequestService} from "../../../service/httpRequest.service";
 import {
@@ -21,7 +21,7 @@ import {Router} from "@angular/router";
   styleUrl: './records.component.css'
 })
 export class RecordsComponent implements OnInit{
-  @Input()username = 'LoriPitti';
+  username= '';
   dryRecords :DryWet_record[] = [];
   wetRecords:DryWet_record[] = [];
   finalTrackList:string[] = [];
@@ -62,6 +62,9 @@ export class RecordsComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    const user = localStorage.getItem('username');
+    if(user!=null)
+      this.username = user;
     this.loadDryRecords();
   }
   //------------------HTTP SERVICE----------------------------------------------------------
@@ -74,7 +77,6 @@ export class RecordsComponent implements OnInit{
       },error: (error) =>{
         console.log(error.message);
       }
-
     });
   }
   private loadWetRecords(){

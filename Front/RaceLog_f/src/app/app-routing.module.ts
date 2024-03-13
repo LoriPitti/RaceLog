@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {inject, NgModule} from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {SignupComponent} from "./signup/signup.component";
 import {HomeComponent} from "./home/home.component";
@@ -14,12 +14,13 @@ import {PersonalComponent} from "./login/personal/personal.component";
 import {MyProfileComponent} from "./login/personal/my-profile/my-profile.component";
 import {RecordsComponent} from "./login/personal/records/records.component";
 import {GlobalComponent} from "./login/personal/global/global.component";
+import {loginGuardGuard} from "./guard/login-guard.guard";
 
 const routes: Routes = [
   {path:'', component:HomeComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'login/:user', component:PersonalComponent,children:[
+  {path: 'login/:user', component:PersonalComponent, canActivateChild:[loginGuardGuard], children:[
       {path: 'profile', component: MyProfileComponent},
       {path: 'records', component: RecordsComponent},
       {path: 'global', component: GlobalComponent}

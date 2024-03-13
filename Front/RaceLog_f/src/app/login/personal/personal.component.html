@@ -1,11 +1,22 @@
 
 <div class="container-main">
-  <app-header [log]="true" [darkNavBar]="false"></app-header>
+  <app-header  [darkNavBar]="false" (loggedOut)="logOut($event)"></app-header>
   <div class="opaque_filter"></div>
   <app-badge></app-badge>
+ <div class="div dialog" *ngIf="showAlert">
+   <div class="row r-dialog"><h2>Sei sicoro di volerti disconnetter?</h2></div>
+   <div class=" row r-dialog">
+     <div class="col">
+       <button type="button" class="btn" (click)="confirmLogOut()">Si</button>
+     </div>
+     <div class="col">
+       <button type="button" class="btn" (click)="abortLogOut()">No</button>
+     </div>
+   </div>
+ </div>
 
   <div class="router-content" style="z-index: 3">
-    <router-outlet></router-outlet>
+    <router-outlet ></router-outlet>
   </div>
 
   <video src="assets/video/onboard.mp4" class="video_back" type="video/mp4" autoplay loop></video>

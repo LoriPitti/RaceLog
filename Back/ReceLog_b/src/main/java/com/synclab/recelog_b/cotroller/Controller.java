@@ -39,6 +39,14 @@ public class Controller {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");
         }
     }
+    @GetMapping("/user") //TODO-- > farlo solo se loggato (spring security)
+    public String getUserData(@RequestParam("username")String username) {
+        try {
+            return toJson(service.getUserData(username));
+        } catch (JsonProcessingException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");
+        }
+    }
 
     @GetMapping("/usernames")
     public String geAllUsernames() {

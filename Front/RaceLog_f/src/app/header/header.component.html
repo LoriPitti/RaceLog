@@ -19,10 +19,12 @@
            [ngClass]="{'font-white': !darkNavBar, 'font-black':darkNavBar}">Upload cars</a>
       </div>
       <div class="personal-navbar" *ngIf="isLogged">
-        <a  class="a-personal nav-link" [routerLink]="['/login/:id/profile']">My profile</a>
+        <a  class="a-personal nav-link" [routerLink]="['/login/:id/profile']"
+            [ngClass]="{'font-white': !darkNavBar, 'font-black':darkNavBar}">My profile</a>
         <a  class="a-personal nav-link" [routerLink]="['/login/:id/records']" style="color: red">My records</a>
-        <a  class="a-personal nav-link" [routerLink]="['/login/:id/global']">Global</a>
-        <a  class="a-personal nav-link" >Logout</a>
+        <a  class="a-personal nav-link" [routerLink]="['/login/:id/global']"
+            [ngClass]="{'font-white': !darkNavBar, 'font-black':darkNavBar}">Global</a>
+        <a  class="a-personal nav-link" (click)="logOut()">Logout</a>
       </div>
       <div class="personal-navbar" *ngIf="!isLogged">
         <a class="a-personal  nav-link a-log" [routerLink]="['/login']" *ngIf="!isLogged"

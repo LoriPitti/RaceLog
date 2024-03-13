@@ -65,6 +65,8 @@ public class Service {
     public List<String> getAllUsernames(){
         return userRepo.getAllUsernames();
     }
+
+    public User getUserData(String username){return userRepo.findByUsername(username);}
     //----------------------------------UER RECORD SECTION--------------------------------------------------------
     public void insertNewDryRecord(Dry_record record) throws Exception {
         if(dryRepo.findRecord(record.getUsername(), record.getTrack(), record.getCar(), record.getTime()) != null)
