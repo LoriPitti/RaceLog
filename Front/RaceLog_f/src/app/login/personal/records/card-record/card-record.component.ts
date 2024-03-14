@@ -12,6 +12,8 @@ import {
 } from "@coreui/icons";
 import {HttpRequestService} from "../../../../service/httpRequest.service";
 import {DryWet_record} from "../../../../Entity/DryWet_record";
+import {ActivatedRoute, Router} from "@angular/router";
+import {relative} from "@angular/compiler-cli";
 
 @Component({
   selector: 'app-card-record',
@@ -29,7 +31,7 @@ export class CardRecordComponent implements OnInit{
   rotateState = 0; //to track the icon rotation
 
 
-  constructor(   public iconSet : IconSetService, private  http:HttpRequestService) {
+  constructor(   public iconSet : IconSetService, private  http:HttpRequestService, private router:Router, private route:ActivatedRoute) {
     iconSet.icons = {cilArrowThickFromTop, cilArrowThickFromBottom, cilPlaylistAdd, cilPlus, cilCheck, cilX, cilGraph}
   }
 
@@ -67,4 +69,14 @@ export class CardRecordComponent implements OnInit{
 
 
   protected readonly parseInt = parseInt;
+
+
+  //OPENA ANALYTIC COMPONENT
+  goToAnalytics() {
+    console.log(this.route.url)
+    console.log('is-logged'+ localStorage.getItem('isLogged'))
+    this.router.navigate(['analytics/'+this.trackName], {relativeTo:this.route});
+  }
+
+
 }

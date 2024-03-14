@@ -135,7 +135,7 @@ public class Controller {
         return "/";
     }
 
-    //----------------------------USER RECORD SECTION
+    //----------------------------USER RECORD SECTION----
     @GetMapping("user/records/get")
     public String getUserRecords(@RequestParam("username")String username,@RequestParam("type") String type)  {
         if(type.equals("dry")){
@@ -216,6 +216,17 @@ public class Controller {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Il record non esiste");
         }
     }
+
+    @GetMapping("user/records/times")
+    public String getTimesByTrack(@RequestParam("username") String username, @RequestParam("track") String track, @RequestParam String type){
+        try {
+            return toJson(service.getTimesByTrack(username, track, type));
+        } catch (JsonProcessingException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error while parsing to json");
+        }
+
+    }
+
 
 
         // --------------------------------------------ADMIN SECTION----------------------------------------------------
@@ -321,7 +332,18 @@ public class Controller {
                 "\"cornerR\" : \"" +track.getCornerR()+"\"}";
     }
 
+    @GetMapping("/track/cars")
+    public String getCarsByTrack(@RequestParam("username") String username, @RequestParam("track") String track, @RequestParam("type") String type){
+        if(!type.equals("wet") && !type.equals("dry")){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "type not supported");
+        }
+        try {
+            return toJson(service.getCarsByTrack(username,track, type));
+        } catch (JsonProcessingException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "error while parsing json");
+        }
 
+    }
 
     private String toJson(Object obj) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();

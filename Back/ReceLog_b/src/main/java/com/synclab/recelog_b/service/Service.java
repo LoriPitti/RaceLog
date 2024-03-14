@@ -1,5 +1,6 @@
 package com.synclab.recelog_b.service;
 
+import com.synclab.recelog_b.cotroller.CarTimes;
 import com.synclab.recelog_b.cotroller.UserData;
 import com.synclab.recelog_b.entity.*;
 import com.synclab.recelog_b.exception.RecordException;
@@ -8,6 +9,7 @@ import com.synclab.recelog_b.exception.UserException;
 import com.synclab.recelog_b.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -110,6 +112,21 @@ public class Service {
         }
     }
 
+    public List<CarTimes> getTimesByTrack(String username, String track, String type){
+        List<String> times = new ArrayList<>();
+        if(type.equals("dry"))
+            times= dryRepo.getTimesFromTrack(username,track);
+        else
+            times  = wetRepo.getTimesFromTrack(username,track);
+        //convert into a CarTimes obj
+        List<CarTimes> carTimes = new ArrayList<>();
+        for (String element : times) {
+            String[] parts = element.split(",");
+            carTimes.add(new CarTimes(parts[0], parts[1]));
+        }
+        return carTimes;
+    }
+
     //---------------------------------ADMIN SECTION----------------------------------------------------------
     public void insertNewTrack(Track track){
             trackRepo.save(track);
@@ -135,6 +152,13 @@ public class Service {
             throw  new TrackException("La pista non esiste");
         return  trackRepo.findByName(name);
 
+    }
+
+    public List<String> getCarsByTrack(String username, String track, String type){
+        if(type.equals("dry"))
+            return dryRepo.getCarsByTrack(username, track);
+        else
+            return wetRepo.getCarsByTrack(username, track);
     }
     //------------------------------CAR SECTION----------------------------------------------------
     public List<String> getAllCarsName(){return carRepo.getAllCarsName();};

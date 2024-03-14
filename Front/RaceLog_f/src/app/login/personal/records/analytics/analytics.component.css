@@ -1,0 +1,94 @@
+.container-fluid{
+  margin-top: 10vh;
+  height: 80vh;
+  border-color:red ;
+  border-style: solid;
+  border-width: medium;
+  overflow-y: auto;
+}
+.main{
+  border-color:grey ;
+  border-style: solid;
+  border-width: medium;
+  padding:4vh 2vh 4vh 2vh;
+  border-radius: 2vh;
+  background-color: black;
+
+  max-height: 80vh;
+}
+
+.btn{
+  background-color: grey; /* Colore di sfondo giallo */
+  color: white;
+  border: none;
+  padding:1vh 2vh 1vh 2vh;
+  border-radius: 5px; /* Bordo arrotondato */
+  cursor: pointer; /* Cambia il cursore al passaggio */ /* Transizione al cambiamento di colore di sfondo */
+  font-weight: bold;
+  transition: 0.5s ease;
+}
+.btn1{
+  font-size: 2.5vh;
+}
+.btn1:hover {
+  transform: scale(1.1);
+}
+.backRed{
+  background-color: darkred;
+}
+.btn-secondary{
+min-width:15vh;
+  font-weight: normal;
+}
+.row{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.col-btn{
+  display: flex;
+  align-items: center;
+  padding:1vh 2vh 0.5vh 2vh;
+ /* border-width: medium;
+  border-style: solid;
+  border-color: red;*/
+}
+.c-d{
+  justify-content: left;
+  max-width: 10vh;
+  margin-left: 3vh;
+}
+.c-w{
+  justify-content: left;
+  max-width: 10vh;
+}
+.col-drop{
+  justify-content: center;
+}
+p{
+  display: flex;
+  justify-content: center;
+  font-size: 2vh;
+}
+ul{
+  padding-top: 1.5vh;
+  width: 15vh;
+}
+li:hover{
+}
+h1{
+  color: red;
+  font-size: 5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+li{
+  cursor: pointer;
+}
+
+.div-chart{
+  margin-top: 4vh;
+
+  background-color: black;
+}

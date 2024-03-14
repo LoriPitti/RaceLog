@@ -16,5 +16,11 @@ public interface DryRepo extends JpaRepository<Dry_record, Integer> {
 
     @Query("select id from Dry_record  where  username = ?1  and track = ?2 and car = ?3 and time = ?4")
     Integer selectId(String username, String track, String car, String time);
-    void deleteById(int id);
+
+    @Query("select distinct car from Dry_record  where username =?1 and track=?2")
+    List<String> getCarsByTrack(String username, String track);
+
+    @Query("select car, time from Dry_record  where username =?1 and track=?2")
+    List<String> getTimesFromTrack(String username, String track);
+
 }

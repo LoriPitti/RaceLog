@@ -9,6 +9,7 @@ import {CarDisplay} from "../Entity/CarDisplay";
 import {User} from "../Entity/User";
 import {error} from "@angular/compiler-cli/src/transformers/util";
 import {DryWet_record} from "../Entity/DryWet_record";
+import {CarTimes} from "../Entity/CarTimes";
 
 @Injectable({providedIn:'root'})
 export class HttpRequestService{
@@ -187,6 +188,30 @@ export class HttpRequestService{
         throw new Error(msg)
       }));
   }
+  getTimesForTrack(username:string, track:string, type:string){
+    const params = new HttpParams()
+      .set("username", username)
+      .set("track", track)
+      .set("type", type);
+    return this.http.get<any[]>("http://localhost:8080/user/records/times",{params:params}).pipe(
+      map(response=>{
+        return response.map(item=> new CarTimes(item.car, item.time))
+    }),catchError(err => {
+        let msg: string = '';
+        switch (err.status) {
+          case 400:
+            msg ="L' utente non esiste";
+            break;
+          case 500:
+            msg = 'Internal Server Error';
+            break;
+          default:
+            msg  = "Errore sconosciuto";
+        }
+        throw new Error(msg)
+      })
+    )
+  }
   //------------------------------------------SERVICE FOR TRACK-----------------------------------------------
   getSingleTrack(name:string): Observable<any> {
     return this.http.get<any>("http://localhost:8080/track/" + name )
@@ -224,6 +249,31 @@ export class HttpRequestService{
           ));
         })
       );
+  }
+  getCarsByTrack(username:string, track:string, type:string){
+    const params = new HttpParams()
+      .set("username", username)
+      .set("track", track)
+      .set("type", type);
+    return this.http.get<any[]>("http://localhost:8080/track/cars",{params:params} ).pipe(
+      map(response=>{
+        return response;
+      }),catchError(err => {
+        let msg: string = '';
+        switch (err.status) {
+          case 400:
+            msg = " Richista non valida";
+            break;
+          case 500:
+            msg = 'Internal Server Error';
+            break;
+          default:
+            msg = "Errore sconosciuto";
+        }
+        throw new Error(msg);
+      }
+    ))
+
   }
 
   //--------------------------------------SERVICE FOR CAR------------------------------------

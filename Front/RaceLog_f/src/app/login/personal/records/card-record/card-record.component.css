@@ -41,6 +41,7 @@
 h1{
   color: red;
   font-size: 4vh;
+  margin-left: 6vh;
 }
 h2{
   color: white;
@@ -66,8 +67,8 @@ h2{
 .icon{
   height: 3vh;
   color: lightslategray;
-  transition: 1s ease;
   margin-bottom: 1vh;
+  transition: 1s ease;
 }
 ul{
   list-style: none;
@@ -90,12 +91,23 @@ li{
   align-items: center;
 }
 
-
-.graphIcon{
-  margin-left: 2vh;
-  color: #eeeeee;
-}
-.c-t:hover .graphIcons{
+.d-graph{
+  margin-left: 3vh;
   cursor: pointer;
-  color: yellow;
+}
+#graphIcon{
+  color:grey;
+  transition: 0.5s ease;
+
+}
+.d-graph:hover #graphIcon{
+  transform: scale(1.2);
+  color:yellow;
+}
+.toggle{
+  cursor: pointer;
+}
+.toggle:hover .icon{
+  color:yellow;
+  transform: scale(1.1);
 }

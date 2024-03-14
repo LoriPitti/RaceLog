@@ -2,7 +2,9 @@
   <div class="row r-title">
     <div class="col c-title c-t">
       <h1>{{trackName}}</h1>
-      <svg cIcon name="cilGraph" size="sm" class="graphIcon"></svg>
+      <div class="div d-graph" (click)="goToAnalytics()">
+        <svg cIcon name="cilGraph" size="sm"  id="graphIcon"></svg>
+      </div>
     </div>
   </div>
   <div class="row r-svg">

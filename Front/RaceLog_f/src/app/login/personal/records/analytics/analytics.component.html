@@ -1,1 +1,56 @@
-<p>analytics works!</p>
+<div class="container-fluid">
+  <div class="main">
+    <div class="row"><div class="col"><h1>{{track}}</h1></div></div>
+    <div class="row r-btn">
+      <div class="col col-btn c-d ">
+        <button type = button class="btn btn1" (click)="showDry()"  [ngClass]="{backRed : dry}">Dry</button>
+      </div>
+      <div class="col col-btn c-w ">
+        <button type = button class="btn btn1" (click)="showWet()" [ngClass]="{backRed : wet}">Wet</button>
+      </div>
+      <div *ngIf="dry" class="col col-btn col-drop dr">
+        <div class="dropdown" >
+          <button class="btn btn-secondary  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ car }}
+          </button>
+          <ul  class="dropdown-menu dropdown-menu-dark" >
+            <li *ngFor="let carDry of dryCars" (click)="setCar(carDry)"><p>{{carDry}}</p></li>
+          </ul>
+        </div>
+      </div>
+      <div *ngIf="wet" class="col col-btn col-drop wet">
+        <div class="dropdown" >
+          <button class="btn btn-secondary  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ car }}
+          </button>
+          <ul  class="dropdown-menu dropdown-menu-dark" >
+            <li *ngFor="let carWet of wetCars" (click)="setCar(carWet)"><p>{{carWet}}</p></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container div-chart">
+      <div [chart]="timesChart">
+
+      </div>
+      <div class="row">
+        <div class="col">AVG</div>
+      </div>
+
+      <div class="row">
+        <div class="col">AVG</div>
+      </div>
+
+      <div class="row">
+        <div class="col">AVG</div>
+      </div>
+
+      <div class="row">
+        <div class="col">AVG</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+

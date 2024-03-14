@@ -14,6 +14,10 @@ public interface WetRepo extends JpaRepository<Wet_record, Integer> {
 
     @Query("select id from Wet_record  where  username = ?1  and track = ?2 and car = ?3 and time = ?4")
     Integer selectId(String username, String track, String car, String time);
-    void deleteById(int id);
+    @Query("select distinct car from Wet_record  where username =?1 and track=?2")
+    List<String> getCarsByTrack(String username, String track);
+
+    @Query("select car, time from Wet_record  where username =?1 and track=?2")
+    List<String> getTimesFromTrack(String username, String track);
 }
 

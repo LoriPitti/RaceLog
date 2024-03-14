@@ -15,6 +15,7 @@ import {MyProfileComponent} from "./login/personal/my-profile/my-profile.compone
 import {RecordsComponent} from "./login/personal/records/records.component";
 import {GlobalComponent} from "./login/personal/global/global.component";
 import {loginGuardGuard} from "./guard/login-guard.guard";
+import {AnalyticsComponent} from "./login/personal/records/analytics/analytics.component";
 
 const routes: Routes = [
   {path:'', component:HomeComponent},
@@ -23,7 +24,8 @@ const routes: Routes = [
   {path: 'login/:user', component:PersonalComponent, canActivateChild:[loginGuardGuard], children:[
       {path: 'profile', component: MyProfileComponent},
       {path: 'records', component: RecordsComponent},
-      {path: 'global', component: GlobalComponent}
+      {path: 'records/analytics/:track', component:AnalyticsComponent},
+      {path: 'global', component: GlobalComponent},
     ]},
   {path: 'cars', component:CarComponent},
   {path:'cars/load', component:LoadCarComponent, children:[
