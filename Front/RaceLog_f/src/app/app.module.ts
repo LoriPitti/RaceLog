@@ -31,7 +31,7 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatDialogActions, MatDialogContent} from "@angular/material/dialog";
 import { AnalyticsComponent } from './login/personal/records/analytics/analytics.component';
 import {ChartModule} from 'angular-highcharts';
-import {DatePipe} from "@angular/common";
+import {DatePipe, NgOptimizedImage} from "@angular/common";
 
 
 @NgModule({
@@ -68,6 +68,7 @@ import {DatePipe} from "@angular/common";
     MatDialogContent,
     MatDialogActions,
     ChartModule,
+    NgOptimizedImage,
   ],
   providers: [
     IconSetService,

@@ -5,6 +5,9 @@ import {ActivatedRoute} from "@angular/router";
 import {CarTimes} from "../../../../Entity/CarTimes";
 import {Chart} from "angular-highcharts";
 import {DatePipe} from "@angular/common";
+import {TrackDisplay} from "../../../../Entity/TrackDisplay";
+import {SafeUrl} from "@angular/platform-browser";
+
 
 @Component({
   selector: 'app-analytics',
@@ -26,10 +29,18 @@ export class AnalyticsComponent implements OnInit{
   timesData2:Date[] = [];
   timesData3:string[] = [];
   timesChart = new Chart();
+  trackImgSrc:SafeUrl = '';
+  bestLap ='1.45.55'
+  avgLap= '1.50.55'
+  totLaps = 5
+  totAllLaps = 10;
+  avgAllLaps = '1.51.33';
 
 
   constructor(private http:HttpRequestService, private route:ActivatedRoute, private datePipe: DatePipe) {
   }
+
+  //-----------------------------API CALLS---------------------------------------------
   ngOnInit(): void {
     let track = this.route.snapshot.paramMap.get('track');
     if(track == null)
@@ -39,7 +50,10 @@ export class AnalyticsComponent implements OnInit{
       username = '';
     this.username = username;
     this.track = track;
+    //start getting the tracks
     this.getDryCars(this.username,track);
+    //get imgs
+    this.getTrack();
   }
   private getDryCars(username:string, track:string){
     this.http.getCarsByTrack(username, track, 'dry').subscribe({
@@ -50,7 +64,7 @@ export class AnalyticsComponent implements OnInit{
         console.log(err.message);
       }
     })
-  } //--> api service call
+  } //--> api service call dry
   private getWetCars(username:string, track:string){
     this.http.getCarsByTrack(username, track, 'wet').subscribe({
       next:(response:string[])=>{
@@ -60,9 +74,7 @@ export class AnalyticsComponent implements OnInit{
         console.log(err.message);
       }
     })
-  } //--> api service call
-
-
+  } //--> api service call wet
   private getTimeForCars(){
     this.http.getTimesForTrack(this.username, this.track, 'dry').subscribe({
       next:(response)=>{
@@ -72,23 +84,33 @@ export class AnalyticsComponent implements OnInit{
         console.log(err.message);
       }
     })
+  } //called by getWetTracks
+  private getTrack(){
+    this.http.getSingleTrack(this.track).subscribe({
+      next: (response)=>{
+        const trackDisp:TrackDisplay = response;
+        this.trackImgSrc = trackDisp.imgBackUrl;
+      }, error:(err) =>{
+        console.log(err.message)
+      }
+    })
   }
-
+  //------------------------BTN METHOD----------------------------------------
   showDry() {
     this.wet = false;
     this.dry = true;
   }
-
   showWet(){
     this.dry = false;
     this.wet = true;
   }
-
   //dropdown function
   setCar(car: string) {
       this.car = car;
     this.setCharData();
   }
+
+  //----------------------------------CHART METHODS--------------------------------------
   private setCharData(){
     this.carTimes.forEach(el=>{
         if(el.getCar() === this.car)
