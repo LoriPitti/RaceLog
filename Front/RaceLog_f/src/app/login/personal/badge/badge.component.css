@@ -3,7 +3,7 @@
   border-color: darkred;
   border-style: solid;*/
   min-height: 8vh;
-  z-index: 1;
+  z-index: 4;
   border-radius: 10px;
   margin-top: 1vh;
   display: flex;

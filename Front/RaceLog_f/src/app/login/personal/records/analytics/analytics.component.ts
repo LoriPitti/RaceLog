@@ -60,7 +60,8 @@ export class AnalyticsComponent implements OnInit{
   wetCars:string[] = [];
   car = 'Vettura';
   username='';
-  carTimes:CarTimes[] = [];
+  carTimesDry:CarTimes[] = [];
+  carTimesWet:CarTimes[] = [];
   stringTimes:string[]= [];
   numbTimes:number[] =[];
   trackImgSrc:SafeUrl = '';
@@ -68,12 +69,16 @@ export class AnalyticsComponent implements OnInit{
   bestLap ='1.45.55'
   bestLapAbsolute = '';
   avgLap= '1.50.55'
-  totLaps = 5
-  totAllLaps = 10;
+  totLaps = 0;
+  totAllLaps = 0;
   avgAllLaps = '1.51.33';
   brand = '';
   carBestImgSrc:SafeUrl = '';
   brandBest = '';
+  carBest= '';
+  showAnalytics = false;
+  type = '';
+  type2 = '';
 
   constructor(private http:HttpRequestService, private route:ActivatedRoute, public iconSet:IconSetService, private router:Router ) {
     iconSet.icons = {cilArrowThickFromTop, cilArrowThickFromBottom, cilPlaylistAdd, cilPlus, cilCheck, cilX, cilActionUndo}
@@ -110,22 +115,33 @@ export class AnalyticsComponent implements OnInit{
     this.http.getCarsByTrack(username, track, 'wet').subscribe({
       next:(response:string[])=>{
         this.wetCars = response;
-        this.getTimeForCars();
+        this.getDryTimes();
       },error:(err) =>{
         console.log(err.message);
       }
     })
   } //--> api service call wet
-  private getTimeForCars(){
+  private getDryTimes(){
     this.http.getTimesForTrack(this.username, this.track, 'dry').subscribe({
       next:(response)=>{
-        this.carTimes  = response;
+        this.carTimesDry  = response;
+        this.getWetTimes();
       },
       error:(err)=>{
         console.log(err.message);
       }
     })
-  } //called by getWetTracks
+  }
+  private getWetTimes(){
+    this.http.getTimesForTrack(this.username, this.track, 'wet').subscribe({
+      next:(response)=>{
+        this.carTimesWet  = response;
+      },
+      error:(err)=>{
+        console.log(err.message);
+      }
+    })
+  }
   private getTrack(){
     this.http.getSingleTrack(this.track).subscribe({
       next: (response)=>{
@@ -141,28 +157,42 @@ export class AnalyticsComponent implements OnInit{
   showDry() {
     this.wet = false;
     this.dry = true;
+    this.type ='dry';
   }
   showWet(){
     this.dry = false;
     this.wet = true;
+    this.type ='wet'
   }
   //dropdown function
   setCar(car: string) {
+    this.type2 =this.type;
       this.car = car;
       this.createChart();
       this.apiCar(car, 0);
       this.getBestAbsoluteLap();
+      this.showAnalytics = true;
   }
   private createChart(){
     //extract only times for the car selected
-    this.stringTimes = this.carTimes.filter(obj=>obj.getCar()===this.car).map(item=>item.getTime());
+    console.log(this.type)
+    if(this.type === 'dry')
+      this.stringTimes = this.carTimesDry.filter(obj=>obj.getCar()===this.car).map(item=>item.getTime());
+    else
+      this.stringTimes = this.carTimesWet.filter(obj=>obj.getCar()===this.car).map(item=>item.getTime());
     this.numbTimes= [];
     this.stringTimes.forEach(time=>{
       const parts = time.split('.');
       let minutes = parseInt(parts[0], 10);
       let seconds = parseInt(parts[1], 10);
-      let milliseconds = parseInt(parts[2], 10);
-      //22 33 456-> 2233456
+      let ms = '';
+      if(parts[2].length == 2)  //<---3 cifre per millisecondi
+        ms = parts[2] + '0';
+      else
+        ms = parts[2];
+      let milliseconds = parseInt(ms, 10);
+      //01.50.234
+      //01.40.34
       minutes = minutes* 100000
       seconds= seconds * 1000;
       let tot = minutes+seconds+milliseconds;
@@ -198,17 +228,46 @@ export class AnalyticsComponent implements OnInit{
   }
 
   private getStatistics(){
-    let min = Math.min(...this.numbTimes); //<-- min to string
-    min = min * 100000;
-    this.bestLap = min.toString();
-    this.bestLap = this.bestLap.substring(0,1) + '.'+ this.bestLap.substring(1,3) + '.' + this.bestLap.substring(3,5);
+  let min = 999999;
+  let minString = '';
+  let times:CarTimes[] = [];
+  if(this.type === 'dry')
+    times= this.carTimesDry;
+  else
+    times = this.carTimesWet;
+  times.forEach(item=>{
+    if(item.getCar() === this.car){
+      let time = item.getTime();
+      let minutes = parseInt(time.split('.')[0], 10);
+      let seconds = parseInt(time.split('.')[1], 10);
+      let milliseconds = parseInt(time.split('.')[2], 10);
+      minutes = minutes* 100000
+      seconds= seconds * 1000;
+      let tot = minutes+seconds+milliseconds;
+      //check the min
+      if(tot < min) {
+
+        min = tot;
+        minString = time; //<---min time in absolute
+        }
+      }
+    })
+    this.bestLap = minString;
+    this.totLaps = this.numbTimes.length;
+    this.totAllLaps = times.length
+
+
   }
   private getBestAbsoluteLap(){
     //find the car with the absolute best lab
     let minAbs = 8888888;
     let minAbsString = this.bestLap;
-    this.carTimes.forEach(item=>{
-      console.log(item.getTime())
+    let times:CarTimes[]= [];
+    if(this.type === 'dry')
+      times = this.carTimesDry;
+    else
+      times = this.carTimesWet;
+    times.forEach(item=>{
       let time = item.getTime();
       let minutes = parseInt(time.split('.')[0], 10);
       let seconds = parseInt(time.split('.')[1], 10);
@@ -218,15 +277,18 @@ export class AnalyticsComponent implements OnInit{
       let tot = minutes+seconds+milliseconds;
       //check the min
       if(tot < minAbs) {
-        console.log("t:" + time + "min = "+minAbs)
         minAbs = tot;
         minAbsString = time; //<---min time in absolute
       }
     })
-    let filteredCars= this.carTimes.filter(item=>item.getTime() === minAbsString);
+    let filteredCars= times.filter(item=>item.getTime() === minAbsString);
     //take always the first car (although cars can be more tha one)
     this.bestLapAbsolute = filteredCars[0].getTime();
-    this.apiCar(filteredCars[0].getCar(),1);
+    this.carBest =filteredCars[0].getCar();
+    this.apiCar(this.carBest,1);
+
+  }
+  private getAvgAndLaps(){
 
   }
 
