@@ -166,4 +166,14 @@ public class Service {
         return carRepo.findAll();
     }
 
+    public Car getCarByName(String name) throws TrackException {
+        if(!isCarExist(name))
+            throw  new TrackException("La vettura non esiste");
+        return  carRepo.findByName(name);
+    }
+    public boolean isCarExist(String name){
+        return carRepo.existsByName(name);
+
+    }
+
 }

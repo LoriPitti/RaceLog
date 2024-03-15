@@ -376,6 +376,22 @@ public class Controller {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");
         }
     }
+    @GetMapping("/car/{name}")
+    public String getCarByName(@PathVariable String name)  {
+        Car car = null;
+        try {
+            car = service.getCarByName(name);
+        } catch (TrackException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La vettura non è stata inserita nel database");
+        }
+        byte[] imgBack= car.getImgBack();
+        byte[] imgFront= car.getImgFront();
+        return "{\"name\":\""+car.getName() + "\"," +
+                "\"brand\" : \""+car.getBrand() + "\"," +
+                "\"imgBack\" : \"" +Base64.getEncoder().encodeToString(imgBack)+"\"," +
+                "\"imgFront\" : \""+Base64.getEncoder().encodeToString(imgFront)+"\"," +
+                "\"year\" : \"" +car.getYear()+"\"}";
+    }
 }
 
 

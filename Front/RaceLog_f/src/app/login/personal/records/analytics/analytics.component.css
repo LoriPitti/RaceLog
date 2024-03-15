@@ -1,4 +1,4 @@
-.container-fluid{
+.c-f{
   margin-top: 10vh;
   min-height: 100vh;
   padding: 0;
@@ -8,6 +8,7 @@
 
 }
 .main{
+  margin-top: 4vh;
   padding: 0;
   border-radius: 2vh;
   max-height: 100vh;
@@ -90,7 +91,10 @@ min-width:15vh;
   max-width: 10vh;
 }
 .col-drop{
-  justify-content: center;
+  justify-content: right;
+}
+.r-title{
+  margin-bottom: 2vh;
 }
 p{
   display: flex;
@@ -128,7 +132,7 @@ li{
   align-items: center;
 }
 .img-car{
-  height: 30vh;
+  max-width: 70vh;
 }
 .c-title{
   border-style: solid;
@@ -146,9 +150,10 @@ li{
 /*------------------------------------ANALYTICS-------------------------------*/
 .div-analytics{
   display: block;
+  padding: 0;
 }
 h2{
-  color: red;
+  color: darkred;
   font-size: 4vh;
   display: flex;
   justify-content: center;
@@ -157,9 +162,13 @@ h2{
 .r-car{
   margin-top: 5vh;
 }
+.c-best-img{
+
+}
 .img-car{
-  width: 80vh;
-  border-radius: 2vh;
+  object-fit: cover;
+  width: 100%;
+  border-radius: 1vh;
 }
 h3{
   display: flex;
@@ -173,10 +182,32 @@ h3{
 }
 .best-div{
   border-style: solid;
-  border-color: darkred;
+
   border-width: thick;
   padding: 3vh;
-  border-radius: 2vh;
   background-color: black;
+  margin-top: 5vh;
+}
+
+.chart{
+  margin-top: 2vh;
+}
+.d-icon{
+  width: 3vh;
+  position: fixed;
+  z-index: 4;
+  bottom: 3vh;
+  left: 4vh;
+  cursor: pointer;
+}
+
+#back-icon{
+  color: red;transform: rotate(90deg);
+  transition:  0.5s ease;
+}
+.d-icon:hover #back-icon{
+  color: yellow;
+  transform: scale(1.1);
+
 }
 

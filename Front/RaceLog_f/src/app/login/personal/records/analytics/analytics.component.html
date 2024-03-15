@@ -1,7 +1,10 @@
-<div class="container-fluid">
+<div class="container-fluid c-f">
   <div class="main">
+    <div class="d-icon" (click)="backToRecords()">
+      <svg cIcon name="cilActionUndo" size="sm" id="back-icon" ></svg>
+    </div>icon
     <div class="container div-m">
-      <div class="row"><div class="col c-title"><h1>{{track}}</h1></div></div>
+      <div class="row r-title"><div class="col c-title"><h1>{{track}}</h1></div></div>
       <div class="row r-btn">
         <div class="col col-btn c-d ">
           <button type = button class="btn btn1" (click)="showDry()"  [ngClass]="{backRed : dry}">Dry</button>
@@ -30,8 +33,8 @@
           </div>
         </div>
       </div>
-      <div class="div-chart">
-        <div [chart]="timesChart"> </div>
+      <div class="chart">
+        <apx-chart [series]="series" [chart]="chart" [title]="{text:'Tempi registrati con la vettura ' +car}"></apx-chart>
       </div>
     </div>
     <div class="opaque-filter"></div>
@@ -39,17 +42,18 @@
     </div>
 </div>
 <div class="container-fluid div-analytics">
-  <div class="best-div container">
+  <div class="best-div container-fluid">
     <div class="row"> <h2>Miglior giro su questo tracciato</h2></div>
     <div class="row r-car">
-      <img src="assets/img/imola.jpg"  class="img-car" alt="immagine auto con il giro più veloce">
-    </div>
-    <div class="row r-best">
-      <div class="col">
+      <div class="col c-best-img">
+        <img [src]="carImgSrc"  class="img-car" alt="immagine dell' auto selezionata">
         <h3>{{bestLap}}</h3>
       </div>
+      <div class="col c-best-img">
+        <img [src]="carBestImgSrc"  class="img-car" alt="immagine dell' auto con il giro più veloce">
+        <h3>{{bestLapAbsolute}}</h3>
+      </div>
     </div>
-  </div>
 
   <hr>
   <div class="row">

@@ -1,13 +1,45 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {HttpRequestService} from "../../../../service/httpRequest.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 import {CarTimes} from "../../../../Entity/CarTimes";
-import {Chart} from "angular-highcharts";
-import {DatePipe} from "@angular/common";
 import {TrackDisplay} from "../../../../Entity/TrackDisplay";
 import {SafeUrl} from "@angular/platform-browser";
+import { NgChartjsService } from 'ng-chartjs';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
+
+import {
+  ChartComponent,
+  ApexAxisChartSeries,
+  ApexChart,
+  ApexXAxis,
+  ApexDataLabels,
+  ApexTitleSubtitle,
+  ApexStroke,
+  ApexGrid
+} from "ng-apexcharts";
+import {
+  cilActionUndo,
+  cilArrowThickFromBottom,
+  cilArrowThickFromTop,
+  cilCheck,
+  cilPlaylistAdd,
+  cilPlus,
+  cilX
+} from "@coreui/icons";
+import {IconSetService} from "@coreui/icons-angular";
+import {CarDisplay} from "../../../../Entity/CarDisplay";
+
+export type ChartOptions = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  xaxis: ApexXAxis;
+  dataLabels: ApexDataLabels;
+  grid: ApexGrid;
+  stroke: ApexStroke;
+  title: ApexTitleSubtitle;
+};
 
 @Component({
   selector: 'app-analytics',
@@ -16,7 +48,11 @@ import {SafeUrl} from "@angular/platform-browser";
 })
 export class AnalyticsComponent implements OnInit{
 
-  stringTimes:string[]= [];
+
+  public series: any[] = [];
+  public chart: any = {};
+
+
   wet = false;
   dry = true;
   track = '';
@@ -25,19 +61,23 @@ export class AnalyticsComponent implements OnInit{
   car = 'Vettura';
   username='';
   carTimes:CarTimes[] = [];
-  timesData:number[] = [];
-  timesData2:Date[] = [];
-  timesData3:string[] = [];
-  timesChart = new Chart();
+  stringTimes:string[]= [];
+  numbTimes:number[] =[];
   trackImgSrc:SafeUrl = '';
+  carImgSrc:SafeUrl = '';
   bestLap ='1.45.55'
+  bestLapAbsolute = '';
   avgLap= '1.50.55'
   totLaps = 5
   totAllLaps = 10;
   avgAllLaps = '1.51.33';
+  brand = '';
+  carBestImgSrc:SafeUrl = '';
+  brandBest = '';
 
+  constructor(private http:HttpRequestService, private route:ActivatedRoute, public iconSet:IconSetService, private router:Router ) {
+    iconSet.icons = {cilArrowThickFromTop, cilArrowThickFromBottom, cilPlaylistAdd, cilPlus, cilCheck, cilX, cilActionUndo}
 
-  constructor(private http:HttpRequestService, private route:ActivatedRoute, private datePipe: DatePipe) {
   }
 
   //-----------------------------API CALLS---------------------------------------------
@@ -55,6 +95,7 @@ export class AnalyticsComponent implements OnInit{
     //get imgs
     this.getTrack();
   }
+
   private getDryCars(username:string, track:string){
     this.http.getCarsByTrack(username, track, 'dry').subscribe({
       next:(response:string[])=>{
@@ -95,6 +136,7 @@ export class AnalyticsComponent implements OnInit{
       }
     })
   }
+
   //------------------------BTN METHOD----------------------------------------
   showDry() {
     this.wet = false;
@@ -107,58 +149,104 @@ export class AnalyticsComponent implements OnInit{
   //dropdown function
   setCar(car: string) {
       this.car = car;
-    this.setCharData();
+      this.createChart();
+      this.apiCar(car, 0);
+      this.getBestAbsoluteLap();
   }
+  private createChart(){
+    //extract only times for the car selected
+    this.stringTimes = this.carTimes.filter(obj=>obj.getCar()===this.car).map(item=>item.getTime());
+    this.numbTimes= [];
+    this.stringTimes.forEach(time=>{
+      const parts = time.split('.');
+      let minutes = parseInt(parts[0], 10);
+      let seconds = parseInt(parts[1], 10);
+      let milliseconds = parseInt(parts[2], 10);
+      //22 33 456-> 2233456
+      minutes = minutes* 100000
+      seconds= seconds * 1000;
+      let tot = minutes+seconds+milliseconds;
+      tot = tot/100000;
+      this.numbTimes.push(tot);
+    })
 
-  //----------------------------------CHART METHODS--------------------------------------
-  private setCharData(){
-    this.carTimes.forEach(el=>{
-        if(el.getCar() === this.car)
-          this.stringTimes.push(el.getTime()) //extract time for cars into string
-      }
-    )
-    this.loadChartData()
-  }
-  private convertToMilliseconds(timeString: string): number {
-    const parts = timeString.split(".");
-    const minutes = parseInt(parts[0]);
-    const seconds = parseInt(parts[1]);
-    const tenths = parseInt(parts[2]);
-    return minutes * 60000 + seconds * 1000 + tenths * 100;
-  }
+     this.series = [{
+      name: "Tempo: ",
+      data: this.numbTimes
+    }];
 
-  private loadChartData() {
-
-   this.timesData = this.stringTimes.map(time=> this.convertToMilliseconds(time));
-    this.timesData2 = this.timesData.map(milliseconds => new Date(milliseconds));
-    this.timesData3 = this.timesData2.map(date=> this.formatDate(date))
-   console.log(this.timesData3)
-    this.createChart();
-  }
-  createChart(){
-    this.timesChart =  new Chart({
-      chart: {
-        type: 'line'
-      },
-      title: {
-        text: 'Times'
-      },
-
-      credits: {
+    this.chart = {
+      height: 450,
+      type: "line",
+      zoom: {
         enabled: false
       },
-      series: [
-        {
-          name: 'line1',
-          data: this.timesData
-        } as any
-      ]
-    });
-  }
-  // Funzione per formattare i dati temporali
-  formatDate(date: Date): string {
-    // Formatta la data utilizzando DatePipe con il formato desiderato
-    return this.datePipe.transform(date, 'mm:ss:SSS') || '';
+      animations: {
+        enabled: true,
+        easing: 'ease', // Puoi regolare l'interpolazione secondo le tue preferenze
+        speed: 1000, // Velocità dell'animazione in millisecondi
+        animateGradually: {
+          enabled: false
+        },
+        dynamicAnimation: {
+          enabled: true,
+          speed: 10
+        },
+      },
+    };
+    this.getStatistics();
   }
 
+  private getStatistics(){
+    let min = Math.min(...this.numbTimes); //<-- min to string
+    min = min * 100000;
+    this.bestLap = min.toString();
+    this.bestLap = this.bestLap.substring(0,1) + '.'+ this.bestLap.substring(1,3) + '.' + this.bestLap.substring(3,5);
+  }
+  private getBestAbsoluteLap(){
+    //find the car with the absolute best lab
+    let minAbs = 8888888;
+    let minAbsString = this.bestLap;
+    this.carTimes.forEach(item=>{
+      console.log(item.getTime())
+      let time = item.getTime();
+      let minutes = parseInt(time.split('.')[0], 10);
+      let seconds = parseInt(time.split('.')[1], 10);
+      let milliseconds = parseInt(time.split('.')[2], 10);
+      minutes = minutes* 100000
+      seconds= seconds * 1000;
+      let tot = minutes+seconds+milliseconds;
+      //check the min
+      if(tot < minAbs) {
+        console.log("t:" + time + "min = "+minAbs)
+        minAbs = tot;
+        minAbsString = time; //<---min time in absolute
+      }
+    })
+    let filteredCars= this.carTimes.filter(item=>item.getTime() === minAbsString);
+    //take always the first car (although cars can be more tha one)
+    this.bestLapAbsolute = filteredCars[0].getTime();
+    this.apiCar(filteredCars[0].getCar(),1);
+
+  }
+
+  private apiCar(name:string, type:0|1){
+    //get car info
+    this.http.getSingleCar(name).subscribe({
+      next:(response:CarDisplay) =>{
+        if(type == 0){
+          this.carImgSrc = response.imgFrontUrl;
+          this.brand = response.brand;
+        }
+        else{
+          this.carBestImgSrc = response.imgFrontUrl;
+          this.brandBest = response.brand;
+        }
+
+      }
+    })
+  }
+  backToRecords(){
+    this.router.navigate(['login/'+this.username+'/records'])
+  }
 }

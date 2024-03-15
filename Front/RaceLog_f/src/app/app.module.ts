@@ -30,8 +30,10 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatDialogActions, MatDialogContent} from "@angular/material/dialog";
 import { AnalyticsComponent } from './login/personal/records/analytics/analytics.component';
-import {ChartModule} from 'angular-highcharts';
-import {DatePipe, NgOptimizedImage} from "@angular/common";
+import { NgOptimizedImage} from "@angular/common";
+import {NgApexchartsModule} from "ng-apexcharts";
+
+
 
 
 @NgModule({
@@ -67,13 +69,12 @@ import {DatePipe, NgOptimizedImage} from "@angular/common";
     MatSlideToggleModule,
     MatDialogContent,
     MatDialogActions,
-    ChartModule,
     NgOptimizedImage,
+    NgApexchartsModule,
   ],
   providers: [
     IconSetService,
     provideAnimationsAsync(),
-    DatePipe
 
   ],
   bootstrap: [AppComponent]

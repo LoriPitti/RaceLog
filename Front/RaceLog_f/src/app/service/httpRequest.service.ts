@@ -293,6 +293,22 @@ export class HttpRequestService{
         })
       );
   }
+  getSingleCar(name:string): Observable<any> {
+    return this.http.get<any>("http://localhost:8080/car/" + name )
+      .pipe(
+        map(response=>{
+            let carDisp:CarDisplay = {
+              name : response.name,
+              brand : response.brand,
+              imgBackUrl : this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64,' + response.imgBack),
+              imgFrontUrl : this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64,' + response.imgFront),
+              year : response.year,
+            }
+            return carDisp;
+          }
+        )
+      );
+  }
   //-------------------------------------------SERVICE FOR ADMIN---------------------------
   loadTrack(track: Track){
     let formData = new FormData();
