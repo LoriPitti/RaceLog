@@ -1,6 +1,8 @@
 <div class="container-fluid div_main">
+
   <div class="opaque_filter"></div>
-  <app-header [darkNavBar]="false"></app-header>
+  <app-header (loggedOut) = "logOut($event)" [darkNavBar]="false"></app-header>
+  <app-dialog-logout [exit]="exit"></app-dialog-logout>
   <div class="div container">
     <div class="row r1">
       <div class="col">

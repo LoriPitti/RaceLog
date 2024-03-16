@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="div dialog" *ngIf="showAlert">
+    <div class="row r-dialog"><h2>Sei sicoro di volerti disconnettere?</h2></div>
+    <div class=" row r-dialog">
+      <div class="col">
+        <button type="button" class="btn" (click)="confirmLogOut()">Si</button>
+      </div>
+      <div class="col">
+        <button type="button" class="btn" (click)="abortLogout()">No</button>
+      </div>
+    </div>
+  </div>
+
+</div>

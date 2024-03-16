@@ -8,7 +8,11 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
   fileSelected?:File;
+  exit = false;
 
 
-
+  logOut($event: boolean) {
+    if($event)
+      this.exit = true;
+  }
 }

@@ -32,6 +32,7 @@ import {MatDialogActions, MatDialogContent} from "@angular/material/dialog";
 import { AnalyticsComponent } from './login/personal/records/analytics/analytics.component';
 import { NgOptimizedImage} from "@angular/common";
 import {NgApexchartsModule} from "ng-apexcharts";
+import { DialogLogoutComponent } from './dialog/dialog-logout/dialog-logout.component';
 
 
 
@@ -59,6 +60,7 @@ import {NgApexchartsModule} from "ng-apexcharts";
     CardRecordComponent,
     CarCardRecordComponent,
     AnalyticsComponent,
+    DialogLogoutComponent,
   ],
   imports: [
     BrowserModule,

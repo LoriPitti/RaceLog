@@ -14,7 +14,7 @@ import {AuthService} from "../../service/AuthService";
 })
 export class PersonalComponent implements OnInit{
   user= new User('-', '-', '-', '-','-', 0);
-  showAlert= false;
+  exit= false;
   constructor(  private router:Router,  public iconSet : IconSetService, private  http:HttpRequestService, private route:ActivatedRoute, public  dialog:MatDialog,  private authService:AuthService ) {
     iconSet.icons = {cilArrowThickFromTop, cilArrowThickFromBottom, cilPlaylistAdd, cilPlus}
   }
@@ -33,15 +33,14 @@ export class PersonalComponent implements OnInit{
     });
   }
   logOut($event:boolean) {
+    console.log("event"+ $event)
     if($event){
-      this.showAlert = true;
+      this.exit = true;
     }
+
   }
   confirmLogOut(){
     this.authService.logout();
     this.router.navigate(['']);
-  }
-  abortLogOut(){
-    this.showAlert = false;
   }
 }

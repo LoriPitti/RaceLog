@@ -7,14 +7,14 @@
       <div class="row r-title"><div class="col c-title"><h1>{{track}}</h1></div></div>
       <div class="row r-btn">
         <div class="col col-btn c-d ">
-          <button type = button class="btn btn1" (click)="showDry()"  [ngClass]="{backRed : dry}">Dry</button>
+          <button type = button class="btn btn1" [disabled]="isDryDisabled" (click)="showDry()"  [ngClass]="{backRed : dry}">Dry</button>
         </div>
         <div class="col col-btn c-w ">
-          <button type = button class="btn btn1" (click)="showWet()" [ngClass]="{backRed : wet}">Wet</button>
+          <button type = button class="btn btn1" [disabled]="isWetDisabled" (click)="showWet()" [ngClass]="{backRed : wet}">Wet</button>
         </div>
         <div *ngIf="dry" class="col col-btn col-drop dr">
           <div class="dropdown" >
-            <button class="btn btn-secondary  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button [disabled]="isDropDisabled" class="btn btn-secondary  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               {{ car }}
             </button>
             <ul  class="dropdown-menu dropdown-menu-dark" >
@@ -24,7 +24,7 @@
         </div>
         <div *ngIf="wet" class="col col-btn col-drop wet">
           <div class="dropdown" >
-            <button class="btn btn-secondary  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button [disabled]="isDropDisabled" class="btn btn-secondary  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               {{ car }}
             </button>
             <ul  class="dropdown-menu dropdown-menu-dark" >
@@ -77,12 +77,6 @@
   </div>
   <div class="row">
     <div class="col"><h3>{{totLaps}}</h3></div>
-  </div>
-  <div class="row">
-    <div class="col"><h2>Tempo medio totale</h2></div>
-  </div>
-  <div class="row">
-    <div class="col"><h3>{{avgAllLaps}}</h3></div>
   </div>
   <div class="row">
     <div class="col"><h2>Numero di giri sul tracciato</h2></div>

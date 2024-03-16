@@ -79,6 +79,9 @@ export class AnalyticsComponent implements OnInit{
   showAnalytics = false;
   type = '';
   type2 = '';
+  isDryDisabled = true;
+  isWetDisabled = true;
+  isDropDisabled = true;
 
   constructor(private http:HttpRequestService, private route:ActivatedRoute, public iconSet:IconSetService, private router:Router ) {
     iconSet.icons = {cilArrowThickFromTop, cilArrowThickFromBottom, cilPlaylistAdd, cilPlus, cilCheck, cilX, cilActionUndo}
@@ -125,6 +128,8 @@ export class AnalyticsComponent implements OnInit{
     this.http.getTimesForTrack(this.username, this.track, 'dry').subscribe({
       next:(response)=>{
         this.carTimesDry  = response;
+        if(this.carTimesDry.length >0)
+          this.isDryDisabled = false; //abilita btn dry
         this.getWetTimes();
       },
       error:(err)=>{
@@ -136,6 +141,8 @@ export class AnalyticsComponent implements OnInit{
     this.http.getTimesForTrack(this.username, this.track, 'wet').subscribe({
       next:(response)=>{
         this.carTimesWet  = response;
+        if(this.carTimesWet.length > 0)
+          this.isWetDisabled = false; //abilita btn wet
       },
       error:(err)=>{
         console.log(err.message);
@@ -158,11 +165,13 @@ export class AnalyticsComponent implements OnInit{
     this.wet = false;
     this.dry = true;
     this.type ='dry';
+    this.isDropDisabled = false;
   }
   showWet(){
     this.dry = false;
     this.wet = true;
     this.type ='wet'
+    this.isDropDisabled = false;
   }
   //dropdown function
   setCar(car: string) {
@@ -173,6 +182,8 @@ export class AnalyticsComponent implements OnInit{
       this.getBestAbsoluteLap();
       this.showAnalytics = true;
   }
+
+  //----------------------------STATISTIC SECTION--------------------------
   private createChart(){
     //extract only times for the car selected
     console.log(this.type)
@@ -226,7 +237,6 @@ export class AnalyticsComponent implements OnInit{
     };
     this.getStatistics();
   }
-
   private getStatistics(){
   let min = 999999;
   let minString = '';
@@ -263,6 +273,7 @@ export class AnalyticsComponent implements OnInit{
     let minAbs = 8888888;
     let minAbsString = this.bestLap;
     let times:CarTimes[]= [];
+    let sum = 0;
     if(this.type === 'dry')
       times = this.carTimesDry;
     else
@@ -275,6 +286,7 @@ export class AnalyticsComponent implements OnInit{
       minutes = minutes* 100000
       seconds= seconds * 1000;
       let tot = minutes+seconds+milliseconds;
+      sum+= tot;
       //check the min
       if(tot < minAbs) {
         minAbs = tot;
@@ -285,10 +297,12 @@ export class AnalyticsComponent implements OnInit{
     //take always the first car (although cars can be more tha one)
     this.bestLapAbsolute = filteredCars[0].getTime();
     this.carBest =filteredCars[0].getCar();
+    //calculate avg
+    const avg = (sum/times.length).toString();
+    console.log("avg" + avg)
+    this.avgLap = avg.substring(0,1) + '.' + avg.substring(1,3)+'.' + avg.substring(3,6) ;
     this.apiCar(this.carBest,1);
 
-  }
-  private getAvgAndLaps(){
 
   }
 
