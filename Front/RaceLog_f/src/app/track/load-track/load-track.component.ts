@@ -35,6 +35,7 @@ export class LoadTrackComponent implements OnInit{
   isImg1=false;
 
   isImg2=false;
+  exit = false;
 
 
   constructor(private http: HttpRequestService,private  router:Router, private route:ActivatedRoute) {
@@ -158,6 +159,10 @@ export class LoadTrackComponent implements OnInit{
         })
       });
 
+  }
+  logOut($event: boolean) {
+    if($event)
+      this.exit = true;
   }
 
 

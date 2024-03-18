@@ -1,4 +1,4 @@
-import {Component, inject, Input, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {Component, EventEmitter, inject, Input, Output, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {IconSetService} from "@coreui/icons-angular";
 import {HttpRequestService} from "../../../service/httpRequest.service";
 import {
@@ -14,6 +14,7 @@ import {
 import {DryWet_record} from "../../../Entity/DryWet_record";
 import {CardRecordComponent} from "./card-record/card-record.component";
 import {Router} from "@angular/router";
+import {OverflowService} from "../../../service/overflow.service";
 
 @Component({
   selector: 'app-records',
@@ -54,14 +55,14 @@ export class RecordsComponent implements OnInit{
   timeDryList:string[] = [];
   timeWetList:string[] = [];
   isBtnDeleteDisabled = true;
-
-
+  ovService = inject(OverflowService)
   constructor(   public iconSet : IconSetService, private  http:HttpRequestService, private router:Router) {
     iconSet.icons = {cilArrowThickFromTop, cilArrowThickFromBottom, cilPlaylistAdd, cilPlus, cilCheck, cilX}
 
   }
 
   ngOnInit(): void {
+    localStorage.setItem('overflow', 'true');
     const user = localStorage.getItem('username');
     if(user!=null)
       this.username = user;

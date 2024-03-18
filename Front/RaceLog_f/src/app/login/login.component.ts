@@ -5,6 +5,17 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../service/AuthService";
 import {error} from "@angular/compiler-cli/src/transformers/util";
 import {UserService} from "../service/UserService";
+import {OverflowService} from "../service/overflow.service";
+import {
+  cilArrowThickFromBottom,
+  cilArrowThickFromTop,
+  cilCheck,
+  cilLowVision,
+  cilPlaylistAdd,
+  cilPlus,
+  cilX
+} from "@coreui/icons";
+import {IconSetService} from "@coreui/icons-angular";
 
 @Component({
   selector: 'app-login',
@@ -22,8 +33,10 @@ export class LoginComponent  implements OnInit{
   showAlert=false;
   alertType='danger';
   message:string='';
+  psw_type = 'password';
   constructor(private http:HttpRequestService, private  userService:UserService, private router:Router, private route:ActivatedRoute,
-              private authService:AuthService) {
+              private authService:AuthService, private iconSet: IconSetService) {
+    iconSet.icons = {cilArrowThickFromTop, cilArrowThickFromBottom, cilPlaylistAdd, cilPlus, cilCheck, cilX, cilLowVision}
   }
   ngOnInit(): void {
     //get all usernames
@@ -85,4 +98,18 @@ export class LoginComponent  implements OnInit{
   }
 
 
+  hideShowPasswords() {
+    const icon = document.getElementById("hideShow");
+      if(this.psw_type === 'password'){
+        if(icon)
+          icon.style.color="yellow";
+        this.psw_type = 'text';
+      }
+      else{
+        this.psw_type = 'password'
+        if(icon)
+          icon.style.color="grey";
+      }
+
+  }
 }

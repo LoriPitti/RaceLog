@@ -1,11 +1,12 @@
-.container{
+.container-fluid{
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: red;
-  opacity: 0.6;
+  opacity: 0.9;
   border-radius: 2vh;
   max-width: 40vh;
+  height: auto;
 }
 
 .btn{
@@ -27,6 +28,13 @@
   display: flex;
   justify-content: center;
   height: 5vh;
+  margin-top: 1vh;
+}
+.row{
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .col{
   display: flex;
@@ -35,4 +43,6 @@
 }
 h2{
   color: white;
+
+  margin-top: 2vh;
 }

@@ -2,7 +2,8 @@
   <app-alert *ngIf="showAlert === true"[message]="message" [alertType]="alertType"
              (hideAlert)="onHideChange($event)" ></app-alert>
   <div class="opaque_filter"></div>
-  <app-header  [darkNavBar]="false"></app-header>
+  <app-header  (loggedOut) = "logOut($event)" [darkNavBar]="false"></app-header>
+  <app-dialog-logout [exit]="exit"></app-dialog-logout>
   <div class="container central_div">
     <!--div class="opaque_filter2 container"></div-->
 

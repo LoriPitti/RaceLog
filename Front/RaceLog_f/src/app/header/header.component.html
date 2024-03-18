@@ -24,7 +24,7 @@
         <a  class="a-personal nav-link" [routerLink]="['/login/:id/records']" style="color: red">My records</a>
         <a  class="a-personal nav-link" [routerLink]="['/login/:id/global']"
             [ngClass]="{'font-white': !darkNavBar, 'font-black':darkNavBar}">Global</a>
-        <a  class="a-personal nav-link" (click)="logOut()">Logout</a>
+        <a  class="a-personal nav-link" (click)="logOut()" [ngClass]="{'font-white': !darkNavBar, 'font-black':darkNavBar}">Logout</a>
       </div>
       <div class="personal-navbar" *ngIf="!isLogged">
         <a class="a-personal  nav-link a-log" [routerLink]="['/login']" *ngIf="!isLogged"

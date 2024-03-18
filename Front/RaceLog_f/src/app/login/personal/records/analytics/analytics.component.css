@@ -1,12 +1,9 @@
+
 .c-f{
-  margin-top: 10vh;
   min-height: 100vh;
   padding: 0;
-  display: flex;
   justify-content: center;
   align-items: center;
-
-
 }
 .main{
   margin-top: 2vh;
@@ -141,8 +138,12 @@ li{
   justify-content: center;
   align-items: center;
   padding-top: 1.5vh;
+  margin-top: 4vh;
 }
 
+app-header{
+  z-index: 10;
+}
 /*------------------------------------ANALYTICS-------------------------------*/
 #div-analytics{
   padding: 0;

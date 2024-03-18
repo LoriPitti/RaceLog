@@ -6,7 +6,9 @@
   padding-bottom: 2vh;
   position: relative;
   overflow-x: hidden;
+  overflow-y: hidden;
 }
+
 
 .video_back {
   top: 0;

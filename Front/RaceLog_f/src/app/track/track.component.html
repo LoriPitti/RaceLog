@@ -1,6 +1,7 @@
 
 <div class="container-fluid">
-  <app-header [darkNavBar]="true"></app-header>
+  <app-header [darkNavBar]="true" (loggedOut) = "logOut($event)"></app-header>
+  <app-dialog-logout [exit]="exit"> </app-dialog-logout>
   <div id="arrow" (click)="scrollToTop()"></div>
   <div class="div-search">
     <div class="row">

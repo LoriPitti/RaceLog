@@ -1,6 +1,11 @@
-<div class="container">
+<div class=" container-fluid">
+<div class="container container-fluid">
   <div class="div dialog" *ngIf="showAlert">
-    <div class="row r-dialog"><h2>Sei sicoro di volerti disconnettere?</h2></div>
+    <div class="row ">
+      <div class="col">
+        <h2>Sei sicoro di volerti disconnettere?</h2>
+      </div>
+    </div>
     <div class=" row r-dialog">
       <div class="col">
         <button type="button" class="btn" (click)="confirmLogOut()">Si</button>

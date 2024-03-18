@@ -17,8 +17,11 @@
       </div>
       <div class="col-md-4 c3 me-3">
         <label for="psw_label" class="form-label " >Password</label>
-        <input type="text" class="form-control"  id="psw_label" [(ngModel)]="password"  placeholder="Password" required
+        <input [type]="psw_type" class="form-control"  id="psw_label" [(ngModel)]="password"  placeholder="Password" required
                (input)="onPswChange()"  [ngClass]="isPswValid">
+      </div>
+      <div class="col col-icon" (click)="hideShowPasswords()">
+        <svg  class="icon" cIcon name="cilLowVision" size="sm" title="hide" id="hideShow" ></svg>
       </div>
     </div>
     <div class="row r2">

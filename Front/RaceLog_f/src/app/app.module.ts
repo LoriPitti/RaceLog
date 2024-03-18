@@ -33,6 +33,7 @@ import { AnalyticsComponent } from './login/personal/records/analytics/analytics
 import { NgOptimizedImage} from "@angular/common";
 import {NgApexchartsModule} from "ng-apexcharts";
 import { DialogLogoutComponent } from './dialog/dialog-logout/dialog-logout.component';
+import {OverflowService} from "./service/overflow.service";
 
 
 
@@ -76,7 +77,7 @@ import { DialogLogoutComponent } from './dialog/dialog-logout/dialog-logout.comp
   ],
   providers: [
     IconSetService,
-    provideAnimationsAsync(),
+    provideAnimationsAsync()
 
   ],
   bootstrap: [AppComponent]

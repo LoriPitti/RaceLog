@@ -30,7 +30,7 @@ export class LoadCarComponent  implements OnInit{
   isImg1=false;
 
   isImg2=false;
-
+  exit  =false;
 
   constructor(private http: HttpRequestService,private  router:Router, private route:ActivatedRoute) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false  //TODO --> RESOLVE DEPRECATED METHON
@@ -128,7 +128,10 @@ export class LoadCarComponent  implements OnInit{
           this.displayAlert(msg, 'danger');
         })
       });
+  }
 
-
+  logOut($event: boolean) {
+    if($event)
+      this.exit = true;
   }
 }

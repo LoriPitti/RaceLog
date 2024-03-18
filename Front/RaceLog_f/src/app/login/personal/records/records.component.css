@@ -4,7 +4,6 @@
   width: 100%;
   z-index: 3;
   padding: 0;
-
 }
 
 ul{
@@ -51,6 +50,8 @@ h3{
   transition: 1.0s ease;
 }
 .div_icon{
+  margin-left: 4vh;
+  margin-right: 4vh;
   border-width: medium;
   border-color: lightslategray;
   border-style: solid;

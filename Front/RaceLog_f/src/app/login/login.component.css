@@ -3,12 +3,12 @@
   border-width: thick;
   border-style: solid;*/
   height: 100vh;
-  display: flex;
   justify-content: center;
   align-items: center;
   background-image: url("/assets/img/wlp2.jpg");
   background-size: cover;
   z-index: -1;
+  padding: 0;
 }
 
 .div_signup{
@@ -16,7 +16,7 @@
   border-color: darkred;
   border-width: thick;
   border-style: solid;
-
+  margin-top: 15vh;
   max-width: 110vh;
   border-radius: 20px;
   padding: 5vh;
@@ -119,8 +119,30 @@ h2{
 
 
 app-header {
-  position: fixed;
+
   top: 0;
   width: 100%;
   z-index: 9999; /* Assicura che l'header sia sopra gli altri elementi sulla pagina */
+}
+
+.icon{
+  width: 4vh;
+}
+.col-icon{
+  margin-top: 3vh;
+  max-width: 4vh;
+  padding: 0;
+}
+
+.icon{
+  width: 4vh;
+  transition: 0.5s ease;
+  color: grey;
+}
+
+.col-icon:hover{
+  cursor: pointer;
+}
+.col-icon:hover  .icon{
+  transform: scale(1.2);
 }

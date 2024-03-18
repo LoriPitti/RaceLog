@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {UserService} from "../../../service/UserService";
 import {HttpRequestService} from "../../../service/httpRequest.service";
 import {
@@ -11,6 +11,7 @@ import {
   cilX
 } from "@coreui/icons";
 import {IconSetService} from "@coreui/icons-angular";
+import {OverflowService} from "../../../service/overflow.service";
 
 @Component({
   selector: 'app-my-profile',
@@ -34,6 +35,7 @@ export class MyProfileComponent implements OnInit{
   isValidPassword = '';
   isValidPassword2 = '';
   pswType='password';
+
 
   ngOnInit() {
     let username = localStorage.getItem('username');

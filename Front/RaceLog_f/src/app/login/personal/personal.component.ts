@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, inject, Input, OnInit} from '@angular/core';
 import {cilArrowThickFromBottom, cilArrowThickFromTop, cilPlaylistAdd, cilPlus, cilPowerStandby} from "@coreui/icons";
 import {IconSetService} from "@coreui/icons-angular";
 import {HttpRequestService} from "../../service/httpRequest.service";
@@ -6,6 +6,7 @@ import {User} from "../../Entity/User";
 import {ActivatedRoute, Router, RouterModule} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {AuthService} from "../../service/AuthService";
+import {OverflowService} from "../../service/overflow.service";
 
 @Component({
   selector: 'app-personal',
@@ -15,7 +16,9 @@ import {AuthService} from "../../service/AuthService";
 export class PersonalComponent implements OnInit{
   user= new User('-', '-', '-', '-','-', 0);
   exit= false;
-  constructor(  private router:Router,  public iconSet : IconSetService, private  http:HttpRequestService, private route:ActivatedRoute, public  dialog:MatDialog,  private authService:AuthService ) {
+  hidden= true;
+  ovService = inject(OverflowService);
+  constructor(  private router:Router,  public iconSet : IconSetService, private  http:HttpRequestService, private route:ActivatedRoute, public  dialog:MatDialog,  private authService:AuthService) {
     iconSet.icons = {cilArrowThickFromTop, cilArrowThickFromBottom, cilPlaylistAdd, cilPlus}
   }
 

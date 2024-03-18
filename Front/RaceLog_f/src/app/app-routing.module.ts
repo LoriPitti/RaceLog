@@ -24,9 +24,9 @@ const routes: Routes = [
   {path: 'login/:user', component:PersonalComponent, canActivateChild:[loginGuardGuard], children:[
       {path: 'profile', component: MyProfileComponent},
       {path: 'records', component: RecordsComponent},
-      {path: 'records/analytics/:track', component:AnalyticsComponent},
       {path: 'global', component: GlobalComponent},
     ]},
+  {path: 'records/analytics/:track', component:AnalyticsComponent},
   {path: 'cars', component:CarComponent},
   {path:'cars/load', component:LoadCarComponent, children:[
       {path: 'insert', component : AlertComponent}

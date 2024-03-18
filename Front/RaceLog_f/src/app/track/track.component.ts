@@ -20,6 +20,7 @@ export class TrackComponent implements OnInit{
   tracks:TrackDisplay[] = [];
   elId:string = 'card-list';
   scrollPosition:number= 0;
+  exit = false;
   constructor(private http: HttpRequestService, private sanitizer: DomSanitizer) {
   }
 
@@ -63,6 +64,11 @@ export class TrackComponent implements OnInit{
   scrollToTop(){
     window.scrollTo({top:0, behavior:'smooth'});
   }
+  logOut($event: boolean) {
+    if($event)
+      this.exit = true;
+  }
 
   protected readonly document = document;
+
 }

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, inject, OnInit, Output, ViewChild} from '@angular/core';
 import {HttpRequestService} from "../../../../service/httpRequest.service";
 import {ActivatedRoute, Router} from "@angular/router";
 
@@ -30,6 +30,7 @@ import {
 } from "@coreui/icons";
 import {IconSetService} from "@coreui/icons-angular";
 import {CarDisplay} from "../../../../Entity/CarDisplay";
+import {OverflowService} from "../../../../service/overflow.service";
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -47,7 +48,6 @@ export type ChartOptions = {
   styleUrl: './analytics.component.css'
 })
 export class AnalyticsComponent implements OnInit{
-
 
   public series: any[] = [];
   public chart: any = {};
@@ -83,13 +83,15 @@ export class AnalyticsComponent implements OnInit{
   isWetDisabled = true;
   isDropDisabled = true;
 
-  constructor(private http:HttpRequestService, private route:ActivatedRoute, public iconSet:IconSetService, private router:Router ) {
+
+  constructor(private http:HttpRequestService, private route:ActivatedRoute, public iconSet:IconSetService, private router:Router) {
     iconSet.icons = {cilArrowThickFromTop, cilArrowThickFromBottom, cilPlaylistAdd, cilPlus, cilCheck, cilX, cilActionUndo}
 
   }
 
   //-----------------------------API CALLS---------------------------------------------
   ngOnInit(): void {
+    localStorage.setItem('overflow', 'false');
     let track = this.route.snapshot.paramMap.get('track');
     if(track == null)
       track = '';
