@@ -84,6 +84,7 @@ export class AnalyticsComponent implements OnInit{
   isDropDisabled = true;
 
 
+
   constructor(private http:HttpRequestService, private route:ActivatedRoute, public iconSet:IconSetService, private router:Router) {
     iconSet.icons = {cilArrowThickFromTop, cilArrowThickFromBottom, cilPlaylistAdd, cilPlus, cilCheck, cilX, cilActionUndo}
 
@@ -326,5 +327,8 @@ export class AnalyticsComponent implements OnInit{
   }
   backToRecords(){
     this.router.navigate(['login/'+this.username+'/records'])
+  }
+  navigateToSetup(){
+    this.router.navigate(['setup/'+this.car], { relativeTo: this.route });
   }
 }

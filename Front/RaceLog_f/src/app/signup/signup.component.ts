@@ -3,6 +3,7 @@ import {HttpRequestService} from "../service/httpRequest.service";
 import {error} from "@angular/compiler-cli/src/transformers/util";
 
 import {User} from "../Entity/User";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-signup',
@@ -24,7 +25,7 @@ export class SignupComponent implements OnInit{
   showAlert=false;
   alertType='danger';
   message:string='';
-  constructor(private http:HttpRequestService) {
+  constructor(private http:HttpRequestService, private router:Router) {
   }
   ngOnInit(): void {
     this.http.getAllUsernames().subscribe(data=>{
@@ -71,6 +72,7 @@ export class SignupComponent implements OnInit{
         this.showAlert=true;
         this.alertType='success';
         this.message=response.message;
+        this.sendEmail('lori.pitti.01@gmail.com','prova', 'prova');
       },
       error: (err) => {
         this.showAlert=true;
@@ -80,8 +82,16 @@ export class SignupComponent implements OnInit{
     });
   }
 
-
   onHideChange($event: boolean) {
     this.showAlert=false;
+    if(this.alertType === 'success')
+      this.router.navigate(['/login']);
+  }
+
+  sendEmail(destinatario: string, oggetto: string, testo: string) {
+    const subject = encodeURIComponent(oggetto);
+    const body = encodeURIComponent(testo);
+    const mailtoLink = `mailto:${destinatario}?subject=${subject}&body=${body}`;
+    window.location.href = mailtoLink;
   }
 }

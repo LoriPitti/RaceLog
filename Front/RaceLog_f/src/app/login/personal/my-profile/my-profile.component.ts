@@ -12,6 +12,8 @@ import {
 } from "@coreui/icons";
 import {IconSetService} from "@coreui/icons-angular";
 import {OverflowService} from "../../../service/overflow.service";
+import {convertOutputFile} from "@angular-devkit/build-angular/src/tools/esbuild/utils";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-my-profile',
@@ -20,7 +22,7 @@ import {OverflowService} from "../../../service/overflow.service";
 })
 export class MyProfileComponent implements OnInit{
 
-  constructor(private userService:UserService, private http: HttpRequestService, public iconSet:IconSetService ){
+  constructor(private userService:UserService, private http: HttpRequestService, public iconSet:IconSetService, private router:Router ){
     iconSet.icons = {cilArrowThickFromTop, cilArrowThickFromBottom, cilPlaylistAdd, cilPlus, cilCheck, cilX, cilLowVision}
   }
   name = '';
@@ -35,7 +37,10 @@ export class MyProfileComponent implements OnInit{
   isValidPassword = '';
   isValidPassword2 = '';
   pswType='password';
-
+  showAlert = false;
+  showDigit = false;
+  deleteDigit = '';
+  isBtnConfirmDisabled = true;
 
   ngOnInit() {
     let username = localStorage.getItem('username');
@@ -93,7 +98,17 @@ export class MyProfileComponent implements OnInit{
     this.modify = true;
   }
   saveData(){
-    //TODO-> api to update
+    let username = localStorage.getItem('username');
+    console.log(username)
+    if(username == null)
+      username = '';
+    this.http.updateUser(username, this.name, this.lastname, this.email, this.password).subscribe({
+      next:(response)=>{
+        console.log(response)
+      },error: (err)=>{
+        console.log(err.message);
+    }
+    })
     this.modify = false;
   }
   isSaveDisabled(){
@@ -116,5 +131,38 @@ export class MyProfileComponent implements OnInit{
       if(icon)
         icon.style.color='grey';
     }
+  }
+
+  //-----------------------------ALERT DELETE SECTION---------------
+  delete(){
+    this.showAlert = true;
+    this.modify = false;
+  }
+  displayDigit(){
+
+    this.showDigit = true;
+  }
+  abortDelete(){
+    this.showDigit=false;
+    this.showAlert = false;
+  }
+  onDeleteDigitChange(){
+  let username = localStorage.getItem('username')
+    if(this.deleteDigit){
+      if(this.deleteDigit === username)
+      this.isBtnConfirmDisabled = false;
+    }
+  }
+  deleteUser(){
+    this.showDigit = false;
+     this.showAlert = false;
+     this.http.deleteUser(this.deleteDigit).subscribe({
+       next:(response)=>{
+          localStorage.clear()
+         this.router.navigate(['']);
+       },error:(err)=>{
+          console.log(err.message)
+       }
+     })
   }
 }

@@ -34,6 +34,7 @@ import { NgOptimizedImage} from "@angular/common";
 import {NgApexchartsModule} from "ng-apexcharts";
 import { DialogLogoutComponent } from './dialog/dialog-logout/dialog-logout.component';
 import {OverflowService} from "./service/overflow.service";
+import { SetupComponent } from './login/personal/records/analytics/setup/setup.component';
 
 
 
@@ -62,6 +63,7 @@ import {OverflowService} from "./service/overflow.service";
     CarCardRecordComponent,
     AnalyticsComponent,
     DialogLogoutComponent,
+    SetupComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,8 +1,7 @@
 
-.container-fluid{
-
+.c-body{
   min-height : 80vh;
-  margin-top: 10vh;
+  margin-top: 8vh;
 }
 
 .info{
@@ -14,6 +13,7 @@
   background-color: black;
   opacity: 0.8;
   max-width: 60vh;
+
 }
 .form-label{
   color: white;
@@ -23,21 +23,28 @@
   border-radius: 10px;
 }
 .r-form{
-  margin-top: 2vh;
+  margin-top: 1vh;
   display: flex;
   justify-content: center;
 
+  padding: 0;
+
+}
+
+.c-info{
+  padding-top: 0;
+
+  margin-top: 2vh;
 }
 .col-form{
   max-width: 30vh;
   padding-left: 1vh;
+
 }
 .form-control{
   max-width: 25vh;
 }
-.row{
-  padding: 2vh
-}
+
 
 .btn{
   background-color: darkred; /* Colore di sfondo giallo */
@@ -63,6 +70,9 @@
   padding: 0;
   max-width: 15vh;
   margin-left: 2vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .icon{
   width: 4vh;
@@ -78,4 +88,65 @@
 }
 .col-icon:hover  .icon{
   transform: scale(1.2);
+}
+.col-psw{
+
+  max-width: 30vh;
+  padding-left: 2vh;
+}
+
+.c-delete{
+  margin-top: 2vh;
+}
+
+h2{
+  color: white;
+  font-size: 2.5vh;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  font-weight: bold;
+
+}
+.r-btn-1{
+  margin-top: 10vh;
+}
+
+/*-----------------------------------ALERT*/
+.alert{
+  border-color: darkred;
+  border-width: medium;
+  border-style: solid;
+  background-color: red;
+  border-radius: 1vh;
+  position: absolute;
+  margin-top: 25vh;
+  z-index: 5;
+  max-width: 70vh;
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+.r-alert{
+  justify-content: center;
+  align-items: center;
+}
+.c-bnt-alert{
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+#confirm{
+  background-color: grey;
+}
+#confirm:hover{
+  background-color: gold;
+;
+}
+
+.r-digit-input{
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  margin-bottom: 2vh;
 }

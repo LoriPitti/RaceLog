@@ -1,18 +1,53 @@
-
-<div class="container-fluid">
-  <div class="row r-btn">
-    <div class="col c-btn">
-      <button type="button" *ngIf = "!modify" class="btn" (click)="modifyData()"> Modifica</button>
+<div  *ngIf="showAlert" class="alert container-fluid ">
+  <div class="div-alert-1" *ngIf="!showDigit">
+    <div class="row r-alert">
+      <h2>Sei sicuro? Tutti i tuoi record andranno persi!</h2>
     </div>
+    <div class="row r-alert">
+      <div class="col c-bnt-alert">
+        <button type="button" class="btn" id="confirm" (click)="displayDigit()">Conferma</button>
+      </div>
+      <div class="col c-bnt-alert">
+        <button type="button" class="btn" id="abort" (click)="showAlert = false">Annulla</button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="showDigit" class="digit-alert">
+    <div class="row">
+      <h2>Digita il tuo username</h2>
+    </div>
+    <div class="row r-digit-input">
+      <input type="text" class="form-control" [(ngModel)]="deleteDigit" (input)="onDeleteDigitChange()">
+    </div>
+    <div class="row r-alert">
+      <div class="col c-bnt-alert">
+        <button type="button" class="btn" [disabled]="isBtnConfirmDisabled"  (click)="deleteUser()">Conferma</button>
+      </div>
+      <div class="col c-bnt-alert">
+        <button type="button" class="btn" (click)="abortDelete()" >Annulla</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid c-body">
+  <div class="row r-btn r-btn-1">
     <div class="col c-btn" *ngIf = "modify">
-      <button type="button"  class="btn" [disabled]="isSaveDisabled()" (click)="saveData()"> Salva modifiche</button>
+      <button type="button"  class="btn" [disabled]="isSaveDisabled()" (click)="saveData()"> Salva </button>
     </div>
     <div class="col c-btn" *ngIf = "modify">
       <button type="button"  class="btn"  (click)="modify=!modify">Annulla</button>
     </div>
+    <div class="col c-btn">
+      <button type="button" *ngIf = "!modify" class="btn" (click)="modifyData()" [disabled]="showAlert"> Modifica</button>
+    </div>
+  </div>
+  <div class="row r-btn">
+    <div class="col c-btn c-delete" *ngIf = "modify">
+      <button type="button"  class="btn"  (click)="delete()">Elimina</button>
+    </div>
   </div>
   <div class="row">
-    <div class="col">
+    <div class="col c-info">
       <div class="container info">
         <div class="row r-form">
           <div class="col col-form">
@@ -39,7 +74,7 @@
           </div>
         </div>
         <div class="row r-form">
-          <div class="col col-form">
+          <div class="col col-forme col-psw">
             <label for="password_label" class="form-label">Password</label>
             <input  [type]="pswType"  class="form-control"  id="password_label" [ngClass]="isValidPassword"
                    placeholder="Password"    [(ngModel)]="password"  [value]="password" [disabled]="!modify"

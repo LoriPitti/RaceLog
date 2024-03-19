@@ -10,6 +10,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.synclab.recelog_b.service.Service;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -107,32 +108,28 @@ public class Controller {
 
     }
 
-    @PostMapping("user/delete")
-    public String deleteUser(@RequestBody String json) {
-        objectMapper = new ObjectMapper();
-        LogData logData = null;  //TODO --> merge parsing method
+    @DeleteMapping("user/delete")
+    public ResponseEntity<Integer> deleteUser(@RequestParam("username") String username) {
         try {
-            logData = objectMapper.readValue(json, LogData.class);
-            service.deleteByusername(logData.username(), logData.password());
-            return "UserDeleted";
-        } catch (JsonProcessingException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");
+            service.deleteByUsername(username);
+            return ResponseEntity.ok(200);
         } catch (UserException e) {
-            switch (e.getMessage()) {
-                case "noFound":
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "L' utente non esiste");
-                case "pswWrong":
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La password è errata, riprovare"); //TODO understand which status send
-                default:
-                    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore sconosciuto");
-            }
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PostMapping("/user/update/update")
-    public String updateUser(@RequestBody String json) {
-        //TODO capire come organizzare la fase di update
-        return "/";
+    @PostMapping("/user/update")
+    public ResponseEntity<Integer> updateUser(@RequestParam("username")String username,
+                                              @RequestParam("name")String name,
+                                              @RequestParam("lastname")String lastname,
+                                              @RequestParam("email")String email,
+                                              @RequestParam("password") String password) {
+        try {
+            service.updateUser(username, name, lastname, email, password);
+            return  ResponseEntity.ok(200);
+        } catch (UserException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 
     //----------------------------USER RECORD SECTION----
@@ -144,6 +141,7 @@ public class Controller {
 
             } catch (UserException e) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "L' utente non esiste");
+
             } catch (JsonProcessingException e) {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");
             }

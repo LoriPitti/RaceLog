@@ -215,3 +215,10 @@ h3{
   color: darkred;
   font-size: 4vh;
 }
+p{
+  color: white;
+}
+p:hover{
+  color:yellow;
+  cursor: pointer;
+}

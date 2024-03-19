@@ -7,7 +7,9 @@ import com.synclab.recelog_b.exception.RecordException;
 import com.synclab.recelog_b.exception.TrackException;
 import com.synclab.recelog_b.exception.UserException;
 import com.synclab.recelog_b.repository.*;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,12 +52,10 @@ public class Service {
         }
     }
 
-    public boolean deleteByusername(String username, String password) throws UserException {
-       User user =  login(username, password);
-       userRepo.deleteById(user.getId());
-       return true;
-
-
+    public void deleteByUsername(String username) throws UserException {
+        if(!isUsernameExists(username))
+            throw new UserException("not exist");
+        userRepo.deleteById(userRepo.getUserIdByUsername(username));
     }
 
     public List<UserData> getAllUsers(){
@@ -69,6 +69,15 @@ public class Service {
     }
 
     public User getUserData(String username){return userRepo.findByUsername(username);}
+
+    @Transactional
+    public boolean updateUser(String username, String name, String lastname, String email,String password) throws UserException{
+        if(!isUsernameExists(username))
+            throw new UserException("User not exist");
+        userRepo.updateUser(name, lastname, email, password, username);
+        return true;
+    }
+
     //----------------------------------UER RECORD SECTION--------------------------------------------------------
     public void insertNewDryRecord(Dry_record record) throws Exception {
         if(dryRepo.findRecord(record.getUsername(), record.getTrack(), record.getCar(), record.getTime()) != null)
@@ -80,6 +89,7 @@ public class Service {
             throw new Exception("alreadyInsert");
         wetRepo.save(record);}
     public List<Dry_record> getUserDryRecord(String  username) throws UserException {
+        List<String> list =new ArrayList<>();
         if(isUsernameExists(username)){
                 return dryRepo.findAllByUsername(username);
         }else

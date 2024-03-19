@@ -1,6 +1,6 @@
 
 <div class="container-fluid">
-  <app-alert *ngIf="showAlert === true"[message]="message" [alertType]="alertType"
+  <app-alert *ngIf="showAlert"[message]="message" [alertType]="alertType"
              (hideAlert)="onHideChange($event)" ></app-alert>
   <div class="opaque_filter_back"></div>
   <app-header  [darkNavBar]="false"></app-header>
@@ -61,7 +61,7 @@
     <div class="row r2">
       <div class="col-md-4 c3 me-3">
         <label for="mail_label" class="form-label">Email </label>
-        <input type="text" class="form-control"  id="mail_label" [ngClass]="{'is-valid':email.trim(),
+        <input type="email" class="form-control"  id="mail_label" [ngClass]="{'is-valid':email.trim(),
          'is-invalid':!email.trim()}" placeholder="Email" required [(ngModel)]="email">
       </div>
     </div>

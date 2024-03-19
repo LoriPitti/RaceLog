@@ -10,9 +10,12 @@ import {User} from "../Entity/User";
 import {error} from "@angular/compiler-cli/src/transformers/util";
 import {DryWet_record} from "../Entity/DryWet_record";
 import {CarTimes} from "../Entity/CarTimes";
+import {WebSocketSubject} from "rxjs/internal/observable/dom/WebSocketSubject";
+import {webSocket} from "rxjs/webSocket";
 
 @Injectable({providedIn:'root'})
 export class HttpRequestService{
+
   constructor(private http:HttpClient, private sanitizer: DomSanitizer) {
   }
 
@@ -97,6 +100,58 @@ export class HttpRequestService{
         }
         throw  new Error(msg);
       })
+    )
+  }
+
+  public updateUser(username:string, name:string, lastname:string, email:string, password:string){
+    const params =new HttpParams()
+      .set("username",username)
+      .set("name", name)
+      .set("lastname",lastname)
+      .set("email", email)
+      .set("password", password);
+    console.log(params)
+    return this.http.post("http://localhost:8080/user/update", {},{params:params}).pipe(
+      map(response =>{
+        return "Utente aggiornato";
+      }),catchError(err=> {
+        let msg: string = '';
+        switch (err.status) {
+          case 400:
+            msg = "L' utente non esiste";
+            break;
+          case 500:
+            msg = 'Internal Server Error';
+            break;
+          default:
+            msg = "Errore sconosciuto";
+        }
+        throw  new Error(msg);
+      })
+    )
+  }
+
+  public deleteUser(username:string){
+    const params = new HttpParams()
+      .set("username", username);
+    return this.http.delete<any>("http://localhost:8080/user/delete", {params:params}).pipe(
+      map(response=>{
+        return "Utente Eliminato";
+      }),catchError(err=> {
+        let msg: string = '';
+        switch (err.status) {
+          case 400:
+            msg = "L' utente non esiste";
+            break;
+          case 500:
+            msg = 'Internal Server Error';
+            break;
+          default:
+            msg = "Errore sconosciuto";
+        }
+        throw  new Error(msg);
+      })
+
     )
   }
 
@@ -366,6 +421,15 @@ export class HttpRequestService{
         }));
   }
 
+
+  //-------------------------------SIM HUB CALL--------------------------------------
+  getSimData(){
+    return this.http.get<any>('http://8888/20778').pipe(
+      map(response => {
+        return "ccc"
+      })
+    );
+  }
 
 
 
