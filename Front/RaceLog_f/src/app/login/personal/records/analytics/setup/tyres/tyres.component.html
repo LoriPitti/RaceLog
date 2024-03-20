@@ -1,0 +1,35 @@
+<div class="container c-body">
+  <div class="row r-front">
+    <div class="col c-f-l">
+      <app-tyres-set [title]="'ANTERIORE SX'" [showInc]="true"
+        [psi]="tyrePressure[0]"
+        [campanatura]="tyreCamber[0]"
+        [convergenza]="tyreToe[0]"
+        [incidenza]="tyreCasterL"
+        ></app-tyres-set>
+    </div>
+    <div class="col c-f-r">
+      <app-tyres-set [title]="'ANTERIORE DX'" [showInc]="true"
+                     [psi]="tyrePressure[1]"
+                     [campanatura]="tyreCamber[1]"
+                     [convergenza]="tyreToe[1]"
+                     [incidenza]="tyreCasterL"></app-tyres-set>
+    </div>
+  </div>
+  <div class="row r-back">
+    <div class="col c-b-l">
+      <app-tyres-set [title]="'POSTERIORE SX'" [showInc]="false"
+                     [psi]="tyrePressure[2]"
+                     [campanatura]="tyreCamber[2]"
+                     [convergenza]="tyreToe[2]"
+      ></app-tyres-set>
+    </div>
+    <div class="col c-b-r">
+      <app-tyres-set [title]="'POSTERIORE DX'" [showInc]="false"
+                     [psi]="tyrePressure[3]"
+                     [campanatura]="tyreCamber[3]"
+                     [convergenza]="tyreToe[3]"
+      ></app-tyres-set>
+    </div>
+  </div>
+</div>

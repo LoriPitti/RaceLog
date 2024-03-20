@@ -1,17 +1,17 @@
-.container-fluid{
-  height: 100vh;
+.c-body{
   padding:0;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-y: hidden;
 
 }
 .car-img{
   z-index: 0;
-  width: 100%;
-  height: 100vh;
   object-fit: cover;
   position: absolute;
+  width: 100%;
+  height: 100%;
 }
 .opaque-filter{
   z-index:1;
@@ -22,11 +22,9 @@
   opacity: 0.6;
 }
 .main{
-  border-color: red;
-  border-style: solid;
-  border-width: medium;
-  height: 100vh;
+  padding-top: 2vh;
   z-index: 4;
+  height: 100vh;
 }
 .title{
   color:white;
@@ -43,20 +41,58 @@
 .input-file{
   color: #eeeeee;
   background-color: grey;
-  padding: 1vh;
+  max-width: 55vh;
   border-radius: 1vh;
+  padding: 1vh
 }
 
-.btn{
-  background-color: grey; /* Colore di sfondo giallo */
-  color: white;
-  border: none;
-  padding:1vh 2vh 1vh 2vh;
-  border-radius: 5px; /* Bordo arrotondato */
-  cursor: pointer; /* Cambia il cursore al passaggio */ /* Transizione al cambiamento di colore di sfondo */
-  font-weight: bold;
-  transition: 0.5s ease;
+.setupLabel{
+  font-size: 2vh;
+
 }
-.btn1{
-  font-size: 2.5vh;
+.row{
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.col{
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+/*-------------------------------NAV BAR-------------*/
+.navbar{
+  max-width: 60vh;
+  margin-top: 2vh;
+  border-radius: 2vh;
+}
+.router{
+  margin-top: 4vh;
+  overflow-y: scroll;
+  max-height: 60vh;
+  padding: 4vh;
+  z-index: 2;
+}
+.router::-webkit-scrollbar {
+  display: none; /* Nascondi la barra di scorrimento solo per browser WebKit come Chrome e Safari */
+}
+.d-icon{
+  width: 3vh;
+  position: fixed;
+  z-index: 4;
+  bottom: 3vh;
+  left: 2vh;
+  cursor: pointer;
+}
+
+#back-icon{
+  color: red;transform: rotate(90deg);
+  transition:  0.5s ease;
+}
+.d-icon:hover #back-icon{
+  color: yellow;
+  transform: scale(1.1);}
+a:hover{
+  cursor: pointer;
 }

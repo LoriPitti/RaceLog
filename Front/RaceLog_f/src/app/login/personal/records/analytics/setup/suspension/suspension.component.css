@@ -1,0 +1,40 @@
+.c-body{
+}
+.c-t{
+  border-style: solid;
+  border-color: darkred;
+  border-width: medium;
+  background-color: black;
+}
+.row{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+h2{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+p{
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2vh;
+  margin-top: 1vh;
+}
+
+.c-p{
+  max-width:8vh;
+}
+.col{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1vh;
+}
+.input-psi{
+  max-width: 5vh;
+}

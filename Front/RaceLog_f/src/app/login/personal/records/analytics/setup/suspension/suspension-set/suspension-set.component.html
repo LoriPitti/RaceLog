@@ -1,0 +1,53 @@
+
+<div class="container c-t">
+  <div class="row"><h2>{{title}}</h2></div>
+  <div class="row">
+    <div class="col c-p"><p>compr:</p></div>
+    <div class="col">
+      <input class="input" type="number" [disabled]="false" [(ngModel)]="compressione">
+    </div>
+    <div class="col">
+      <mat-slider  min="20.3" max="35" step="0.1" [displayWith]="setCompressione"  showTickMarks discrete
+                   color="warn">
+        <input matSliderThumb [(ngModel)]="compressione">
+      </mat-slider>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col c-p"><p>compr. vel:</p></div>
+    <div class="col">
+      <input class="input"  type="number" [disabled]="false" [(ngModel)]="compressioneVeloce">
+    </div>
+    <div class="col">
+      <mat-slider id="f-l-psi-conv" min="-0.4" max="0.4" step="0.1" [displayWith]="setCompressioneVeloce"  showTickMarks discrete
+                  color="warn">
+        <input matSliderThumb [(ngModel)]="compressioneVeloce">
+      </mat-slider>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col c-p"><p>estens:</p></div>
+    <div class="col">
+      <input class="input"  type="number" [disabled]="false" [(ngModel)]="estensione">
+    </div>
+    <div class="col">
+      <mat-slider  min="-4" max="-1.5" step="0.1" [displayWith]="setEstensione"  showTickMarks discrete
+                   color="warn">
+        <input matSliderThumb [(ngModel)]="estensione">
+      </mat-slider>
+    </div>
+  </div>
+  <div class="row" >
+    <div class="col c-p"><p>estens. vel:</p></div>
+    <div class="col">
+      <input class="input" type="number" [disabled]="false" [(ngModel)]="estensioneVeloce">
+    </div>
+    <div class="col">
+      <mat-slider min="8.5" max="13.8" step="0.1" [displayWith]="setEstensioneVeloce"  showTickMarks discrete
+                  color="warn">
+        <input matSliderThumb [(ngModel)]="estensioneVeloce">
+      </mat-slider>
+    </div>
+  </div>
+
+</div>

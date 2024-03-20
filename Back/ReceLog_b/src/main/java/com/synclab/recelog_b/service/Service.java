@@ -4,6 +4,7 @@ import com.synclab.recelog_b.cotroller.CarTimes;
 import com.synclab.recelog_b.cotroller.UserData;
 import com.synclab.recelog_b.entity.*;
 import com.synclab.recelog_b.exception.RecordException;
+import com.synclab.recelog_b.exception.SetupException;
 import com.synclab.recelog_b.exception.TrackException;
 import com.synclab.recelog_b.exception.UserException;
 import com.synclab.recelog_b.repository.*;
@@ -27,6 +28,8 @@ public class Service {
     WetRepo wetRepo;
     @Autowired
     DryRepo dryRepo;
+    @Autowired
+    SetupRepo setupRepo;
 
 
     //-----------------------------USER SECTION----------------------------------------
@@ -184,6 +187,16 @@ public class Service {
     public boolean isCarExist(String name){
         return carRepo.existsByName(name);
 
+    }
+
+    //-----------------------------------------SETUP SECTION-------------------------------
+    public void addSetup(String username,String track,String car, int type, String lap, String setup) throws SetupException {
+        if(getSetup(username,track,car,type)!= null)
+            throw  new SetupException("record already exist");
+        setupRepo.save(new Setup(0,username,track,car,lap,type,setup));
+    }
+    public String getSetup(String username,String track,String car, int type){
+        return this.setupRepo.getSetup(username,track,car,type);
     }
 
 }

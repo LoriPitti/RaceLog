@@ -7,11 +7,9 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {Car} from "../Entity/Car";
 import {CarDisplay} from "../Entity/CarDisplay";
 import {User} from "../Entity/User";
-import {error} from "@angular/compiler-cli/src/transformers/util";
 import {DryWet_record} from "../Entity/DryWet_record";
 import {CarTimes} from "../Entity/CarTimes";
-import {WebSocketSubject} from "rxjs/internal/observable/dom/WebSocketSubject";
-import {webSocket} from "rxjs/webSocket";
+import {Setup} from "../Entity/Setup";
 
 @Injectable({providedIn:'root'})
 export class HttpRequestService{
@@ -420,7 +418,33 @@ export class HttpRequestService{
           return throwError(()=>msg);
         }));
   }
-
+  //---------------------------------SETUP-------------------------------------
+  getSetup(username:string, track:string, car:string, type:number){
+    const params = new HttpParams()
+      .set("user", username)
+      .set("track", track)
+      .set("car", car)
+      .set("type",type);
+    return this.http.get<Setup>("http://localhost:8080/setup/get", {params:params}).pipe(
+      map(response=>{
+        return response;
+      }),  catchError(err => {
+        let msg: string = '';
+        switch (err.status) {
+          case 400:
+            msg = 'il setup esiste già';
+            break;
+          case 500:
+            msg = 'Internal Server Error';
+            break;
+          default:
+            msg = 'Errore Sconosciuto';
+            break;
+        }
+        return throwError(() => msg)
+      })
+    )
+  }
 
   //-------------------------------SIM HUB CALL--------------------------------------
   getSimData(){
@@ -430,7 +454,6 @@ export class HttpRequestService{
       })
     );
   }
-
 
 
 }

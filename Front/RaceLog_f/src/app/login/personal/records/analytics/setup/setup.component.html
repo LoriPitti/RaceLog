@@ -1,11 +1,49 @@
-<div class="container-fluid">
+<div class="container-fluid c-body">
+
   <div class="opaque-filter"></div>
   <div class="container main">
-      <h2 class="title">{{car}}</h2>
-    <div class="input-file">
-      <input type="file" class="custom-file-input btn" id="setupFile" lang="pl-Pl">
-      <label class="setupLabel" for="setupFile">Carica il tuo setup</label>
+    <div class="d-icon" (click)="backToRecords()">
+      <svg cIcon name="cilActionUndo" size="sm" id="back-icon" ></svg>
     </div>
+      <h2 class="title">{{car}}</h2>
+      <div class="row r-file">
+        <div class="col c-file">
+          <div class="input-file">
+            <input type="file" class="custom-file-input btn" id="setupFile" lang="pl-Pl"
+                   (change) = "onFileSelected($event)">
+            <label class="setupLabel" for="setupFile">Carica il tuo setup</label>
+          </div>
+        </div>
+      </div>
+      <div class="row r-nav">
+        <nav class="navbar bg-dark navbar-expand-lg "  data-bs-theme="dark">
+          <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="nav nav-pills">
+                <li class="nav-item">
+                  <a class="nav-link"  [ngClass]="{active:isTyreActive}" aria-current="page" (click)="setupPage('tyres')">GOMME</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" aria-current="page"  [ngClass]="{active:isSuspensionActive}"(click)="setupPage('suspensions')">AMMORTIZZATORI</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    <div class="div router">
+      <router-outlet></router-outlet>
+    </div>
+
   </div>
   <img  [src]="frontImgUrl" alt="immagine vettura" class="car-img">
 </div>

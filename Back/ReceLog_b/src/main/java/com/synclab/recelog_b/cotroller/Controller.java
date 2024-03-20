@@ -2,8 +2,10 @@ package com.synclab.recelog_b.cotroller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.tools.jconsole.JConsoleContext;
 import com.synclab.recelog_b.entity.*;
 import com.synclab.recelog_b.exception.RecordException;
+import com.synclab.recelog_b.exception.SetupException;
 import com.synclab.recelog_b.exception.TrackException;
 import com.synclab.recelog_b.exception.UserException;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -389,6 +391,28 @@ public class Controller {
                 "\"imgBack\" : \"" +Base64.getEncoder().encodeToString(imgBack)+"\"," +
                 "\"imgFront\" : \""+Base64.getEncoder().encodeToString(imgFront)+"\"," +
                 "\"year\" : \"" +car.getYear()+"\"}";
+    }
+    //------------------------------------------SETUP
+    @GetMapping("setup/get")
+    public String getSetup(@RequestParam("user")String username,
+                           @RequestParam("track")String track,
+                           @RequestParam("car")String car,
+                           @RequestParam("type")int type){
+        return  service.getSetup(username,track,car,type);
+
+    }
+    @PostMapping("setup/post")
+    public ResponseEntity<Integer> saveSetup(@RequestBody String setup, @RequestParam("username")String username,
+                                             @RequestParam("track")String track,
+                                             @RequestParam("car")String car,
+                                             @RequestParam("type")int type,
+                                             @RequestParam("lap")String lap) throws JsonProcessingException {
+        try {
+            service.addSetup(username,track,car,type,lap,setup);
+        } catch (SetupException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        return ResponseEntity.ok(200);
     }
 }
 

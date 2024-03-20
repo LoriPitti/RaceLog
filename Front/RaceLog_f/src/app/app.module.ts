@@ -35,6 +35,13 @@ import {NgApexchartsModule} from "ng-apexcharts";
 import { DialogLogoutComponent } from './dialog/dialog-logout/dialog-logout.component';
 import {OverflowService} from "./service/overflow.service";
 import { SetupComponent } from './login/personal/records/analytics/setup/setup.component';
+import { TyresComponent } from './login/personal/records/analytics/setup/tyres/tyres.component';
+import {MatSlider, MatSliderThumb} from "@angular/material/slider";
+
+import {TyresSetComponent} from "./login/personal/records/analytics/setup/tyres/tyres-set/tyres-set.component";
+import {SetupService} from "./service/SetupService";
+import { SuspensionComponent } from './login/personal/records/analytics/setup/suspension/suspension.component';
+import { SuspensionSetComponent } from './login/personal/records/analytics/setup/suspension/suspension-set/suspension-set.component';
 
 
 
@@ -64,6 +71,10 @@ import { SetupComponent } from './login/personal/records/analytics/setup/setup.c
     AnalyticsComponent,
     DialogLogoutComponent,
     SetupComponent,
+    TyresComponent,
+    TyresSetComponent,
+    SuspensionComponent,
+    SuspensionSetComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,10 +87,13 @@ import { SetupComponent } from './login/personal/records/analytics/setup/setup.c
     MatDialogActions,
     NgOptimizedImage,
     NgApexchartsModule,
+    MatSlider,
+    MatSliderThumb,
   ],
   providers: [
     IconSetService,
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    SetupService
 
   ],
   bootstrap: [AppComponent]

@@ -17,6 +17,8 @@ import {GlobalComponent} from "./login/personal/global/global.component";
 import {loginGuardGuard} from "./guard/login-guard.guard";
 import {AnalyticsComponent} from "./login/personal/records/analytics/analytics.component";
 import {SetupComponent} from "./login/personal/records/analytics/setup/setup.component";
+import {TyresComponent} from "./login/personal/records/analytics/setup/tyres/tyres.component";
+import {SuspensionComponent} from "./login/personal/records/analytics/setup/suspension/suspension.component";
 
 const routes: Routes = [
   {path:'', component:HomeComponent},
@@ -28,7 +30,10 @@ const routes: Routes = [
       {path: 'global', component: GlobalComponent},
     ]},
   {path: 'records/analytics/:track', component:AnalyticsComponent},
-  {path: 'records/analytics/:track/setup/:car', component:SetupComponent},
+  {path: 'records/analytics/:track/setup/:car', component:SetupComponent, children:[
+      {path: 'tyres', component: TyresComponent},
+      {path: 'suspension', component: SuspensionComponent}
+    ]},
   {path: 'cars', component:CarComponent},
   {path:'cars/load', component:LoadCarComponent, children:[
       {path: 'insert', component : AlertComponent}
