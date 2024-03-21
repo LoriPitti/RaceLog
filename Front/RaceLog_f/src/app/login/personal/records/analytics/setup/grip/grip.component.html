@@ -1,0 +1,30 @@
+
+
+<div class="container c-body">
+  <div class="row r-front">
+    <div class="col c-f">
+      <app-grip-set-2 [title]="'ANTERIORE'" [isFront]="true"></app-grip-set-2>
+    </div>
+  </div>
+  <div class="row r-front">
+    <div class="col c-f-l">
+     <app-grip-set [title]="'ANTERIORE DX'" ></app-grip-set>
+    </div>
+    <div class="col c-f-r">
+      <app-grip-set [title]="'ANTERIORE SX'"></app-grip-set>
+    </div>
+  </div>
+  <div class="row r-front">
+    <div class="col c-f-l">
+      <app-grip-set [title]="'POSTERIORE SX'"></app-grip-set>
+    </div>
+    <div class="col c-f-r">
+      <app-grip-set [title]="'POSTERIORE DX'"></app-grip-set>
+    </div>
+  </div>
+  <div class="row r-back">
+    <div class="col c-b">
+      <app-grip-set-2 [title]="'POSTERIORE'" [isFront]="false">></app-grip-set-2>
+    </div>
+  </div>
+</div>

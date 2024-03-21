@@ -1,0 +1,39 @@
+.c-t{
+  border-style: solid;
+  border-color: darkred;
+  border-width: medium;
+  background-color: black;
+  margin-top: 0.5vh;
+  margin-bottom: 0.5vh;
+}
+.row{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+h2{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+p{
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2vh;
+  margin-top: 1vh;
+}
+
+.c-p{
+  max-width:8vh;
+}
+.col{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.input{
+  max-width: 5vh;
+}

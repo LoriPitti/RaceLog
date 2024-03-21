@@ -42,6 +42,12 @@ import {TyresSetComponent} from "./login/personal/records/analytics/setup/tyres/
 import {SetupService} from "./service/SetupService";
 import { SuspensionComponent } from './login/personal/records/analytics/setup/suspension/suspension.component';
 import { SuspensionSetComponent } from './login/personal/records/analytics/setup/suspension/suspension-set/suspension-set.component';
+import { AerodynamicsComponent } from './login/personal/records/analytics/setup/aerodynamics/aerodynamics.component';
+import { AerodynamicSetComponent } from './login/personal/records/analytics/setup/aerodynamics/aerodynamic-set/aerodynamic-set.component';
+import { GripComponent } from './login/personal/records/analytics/setup/grip/grip.component';
+import { GripSetComponent } from './login/personal/records/analytics/setup/grip/grip-set/grip-set.component';
+import { GripSet2Component } from './login/personal/records/analytics/setup/grip/grip-set-2/grip-set-2.component';
+import {TestService} from "./service/Test.service";
 
 
 
@@ -75,6 +81,11 @@ import { SuspensionSetComponent } from './login/personal/records/analytics/setup
     TyresSetComponent,
     SuspensionComponent,
     SuspensionSetComponent,
+    AerodynamicsComponent,
+    AerodynamicSetComponent,
+    GripComponent,
+    GripSetComponent,
+    GripSet2Component,
   ],
   imports: [
     BrowserModule,
@@ -93,8 +104,8 @@ import { SuspensionSetComponent } from './login/personal/records/analytics/setup
   providers: [
     IconSetService,
     provideAnimationsAsync(),
-    SetupService
-
+    SetupService,
+    TestService
   ],
   bootstrap: [AppComponent]
 })

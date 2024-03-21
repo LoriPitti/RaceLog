@@ -15,12 +15,12 @@ import {
   cilX
 } from "@coreui/icons";
 import {SetupService} from "../../../../../service/SetupService";
-import {relative} from "@angular/compiler-cli";
+import {TestService} from "../../../../../service/Test.service";
 
 @Component({
   selector: 'app-setup',
   templateUrl: './setup.component.html',
-  styleUrl: './setup.component.css'
+  styleUrl: './setup.component.css',
 })
 export class SetupComponent implements OnInit{
   frontImgUrl:SafeUrl = '';
@@ -33,13 +33,22 @@ export class SetupComponent implements OnInit{
   type:0|1 = 0;
   isTyreActive =false;
   isSuspensionActive =false;
+  isAeroActive = false;
+  isGripActive = false;
+  modify = false;
+  isModifyDisabled =true;
+
 
   constructor(private http:HttpRequestService, private route:ActivatedRoute, private router:Router, private iconSet:IconSetService,
-  private setupService:SetupService) {
+  private  setupService:SetupService, private test:TestService) {
     iconSet.icons = {cilArrowThickFromTop, cilArrowThickFromBottom, cilPlaylistAdd, cilPlus, cilCheck, cilX, cilActionUndo}
-
+    console.log('SetupComponent initialized');
   }
   ngOnInit(): void {
+    this.test.setVal(3784657837485)
+    const div_router = document.getElementById("router");
+    if(div_router)
+      div_router.style.visibility="hidden";
     let car = this.route.snapshot.paramMap.get('car');
     if(car == null)
       car = '';
@@ -69,7 +78,6 @@ export class SetupComponent implements OnInit{
         this.setup = response;
         if(this.setup)
           this.setupService.setSetup(this.setup);
-        console.log(this.setupService.getSetup().basicSetup.tyres.tyrePressure[1])
       }, error:(err)=>{
         console.log(err.message);
       }
@@ -80,21 +88,50 @@ export class SetupComponent implements OnInit{
   setupPage(page:string){
     if(page === 'tyres'){
       this.isSuspensionActive = false;
+      this.isAeroActive = false;
       this.isTyreActive = true;
+      this.isGripActive = false;
       this.router.navigate(['records/analytics/'+this.track+'/setup/'+this.car+'/tyres'] );
     }else if(page ==='suspensions'){
       this.isSuspensionActive = true;
       this.isTyreActive = false;
+      this.isGripActive = false;
+      this.isAeroActive = false;
       this.router.navigate(['records/analytics/'+this.track+'/setup/'+this.car+'/suspension']);
+    }else if(page === 'aero'){
+      this.isSuspensionActive = false;
+      this.isTyreActive = false;
+      this.isAeroActive = true;
+      this.isGripActive = false;
+      this.router.navigate(['records/analytics/'+this.track+'/setup/'+this.car+'/aerodynamic']);
+    }else if(page === 'grip'){
+      this.isSuspensionActive = false;
+      this.isTyreActive = false;
+      this.isAeroActive = false;
+      this.isGripActive = true;
+      this.router.navigate(['records/analytics/'+this.track+'/setup/'+this.car+'/grip']);
     }
+
 
   }
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {
-      this.readFile(file);
+      if (this.isFileJson(file)) {
+        this.readFile(file);
+        this.isModifyDisabled = false;
+        const div_router = document.getElementById("router");
+        if(div_router)
+          div_router.style.visibility = "visible";
+      } else {
+        alert("Il file deve essere di tipo .json");
+      }
     }
+
   }
+    isFileJson(file: File): boolean {
+      return file.name.endsWith('.json');
+    }
 
   readFile(file: File) {
     const reader: FileReader = new FileReader();
@@ -110,4 +147,18 @@ export class SetupComponent implements OnInit{
   }
 
 
+  //---------------------------------------BTN METHODS-------------------------
+  enableModify() {
+    this.modify = true;
+    localStorage.setItem('modify', 'true');
+  }
+  abortModify() {
+    this.modify = false;
+    localStorage.setItem('modify', 'false');
+  }
+
+  save() {
+    this.modify = false;
+    localStorage.setItem('modify', 'false');
+  }
 }

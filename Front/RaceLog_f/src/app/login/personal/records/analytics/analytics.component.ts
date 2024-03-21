@@ -30,7 +30,8 @@ import {
 } from "@coreui/icons";
 import {IconSetService} from "@coreui/icons-angular";
 import {CarDisplay} from "../../../../Entity/CarDisplay";
-import {OverflowService} from "../../../../service/overflow.service";
+import {TestService} from "../../../../service/Test.service";
+
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -45,7 +46,8 @@ export type ChartOptions = {
 @Component({
   selector: 'app-analytics',
   templateUrl: './analytics.component.html',
-  styleUrl: './analytics.component.css'
+  styleUrl: './analytics.component.css',
+  providers:[TestService]
 })
 export class AnalyticsComponent implements OnInit{
 
@@ -85,7 +87,7 @@ export class AnalyticsComponent implements OnInit{
 
 
 
-  constructor(private http:HttpRequestService, private route:ActivatedRoute, public iconSet:IconSetService, private router:Router) {
+  constructor(private http:HttpRequestService, private route:ActivatedRoute, public iconSet:IconSetService, private router:Router,) {
     iconSet.icons = {cilArrowThickFromTop, cilArrowThickFromBottom, cilPlaylistAdd, cilPlus, cilCheck, cilX, cilActionUndo}
 
   }

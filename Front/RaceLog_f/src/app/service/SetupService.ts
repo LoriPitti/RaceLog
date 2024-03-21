@@ -12,7 +12,7 @@ export class SetupService {
       basicSetup: {
         tyres: {
           tyreCompound: 0,
-          tyrePressure: [], // Esempio di valori predefiniti
+          tyrePressure: [0,0,0,0], // Esempio di valori predefiniti
         },
         alignment: {
           camber: [], // Esempio di valori predefiniti
@@ -73,10 +73,15 @@ export class SetupService {
     };
   }
   setSetup(s:Setup){
-      this.setup = s;
+    this.setup = s;
+    console.log("SETTED--->"+this.setup.basicSetup.tyres.tyrePressure[1])
+
+
   }
   getSetup(){
+    console.log("GETTED--->"+this.setup.basicSetup.tyres.tyrePressure[1])
     return this.setup;
+
   }
 }
 

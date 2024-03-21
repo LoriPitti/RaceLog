@@ -3,6 +3,7 @@ import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 import {TrackDisplay} from "../Entity/TrackDisplay";
 import {HttpRequestService} from "../service/httpRequest.service";
 import {CarDisplay} from "../Entity/CarDisplay";
+import {TestService} from "../service/Test.service";
 
 @Component({
   selector: 'app-car',

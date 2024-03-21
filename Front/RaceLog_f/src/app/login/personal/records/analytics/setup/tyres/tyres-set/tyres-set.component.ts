@@ -13,6 +13,7 @@ export class TyresSetComponent implements OnInit{
   @Input()showInc = false;
   @Input()title='';
 
+
   ngOnInit() {
     console.log("tyre: psi: "+this.psi + "camp "+this.campanatura +"conv"+this.convergenza + "inc"+this.incidenza)
 

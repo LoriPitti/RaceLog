@@ -1,5 +1,29 @@
+<div class="r-nav container-fluid">
+  <nav class="navbar bg-dark navbar-expand-lg "  data-bs-theme="dark">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="nav nav-tabs justify-content-center">
+          <li class="nav-item">
+            <a class="nav-link"  [ngClass]="{active:isTyreActive}" aria-current="page" (click)="setupPage('tyres')">GOMME</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page"  [ngClass]="{active:isSuspensionActive}"(click)="setupPage('suspensions')">AMMORTIZZATORI</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [ngClass]="{active:isAeroActive}" (click)="setupPage('aero')">AERODINAMICA</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"[ngClass]="{active:isGripActive}" (click)="setupPage('grip')" aria-disabled="true">GRIP MECCANICO</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
 <div class="container-fluid c-body">
-
   <div class="opaque-filter"></div>
   <div class="container main">
     <div class="d-icon" (click)="backToRecords()">
@@ -15,33 +39,17 @@
           </div>
         </div>
       </div>
-      <div class="row r-nav">
-        <nav class="navbar bg-dark navbar-expand-lg "  data-bs-theme="dark">
-          <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-              <ul class="nav nav-pills">
-                <li class="nav-item">
-                  <a class="nav-link"  [ngClass]="{active:isTyreActive}" aria-current="page" (click)="setupPage('tyres')">GOMME</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" aria-current="page"  [ngClass]="{active:isSuspensionActive}"(click)="setupPage('suspensions')">AMMORTIZZATORI</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-      </div>
-    <div class="div router">
+
+    <div class="div router" id="router">
       <router-outlet></router-outlet>
+    </div>
+    <div class="div d-btn">
+      <div class="row">
+        <div class="col" *ngIf="!modify"> <button class="btn" type = button id="modify"
+                                                  [disabled]="isModifyDisabled" (click)="enableModify()">Modifica</button></div>
+        <div class="col" *ngIf="modify"> <button class="btn" type = button id="save" (click)="save()">Salva</button></div>
+        <div class="col" *ngIf="modify"> <button class="btn" type = button id="abort" (click)="abortModify()">Annulla</button></div>
+      </div>
     </div>
 
   </div>

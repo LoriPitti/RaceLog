@@ -63,9 +63,11 @@
 
 /*-------------------------------NAV BAR-------------*/
 .navbar{
-  max-width: 60vh;
-  margin-top: 2vh;
-  border-radius: 2vh;
+  margin-top: 0;
+  width: 100%;
+}
+.r-nav{
+  padding: 0;
 }
 .router{
   margin-top: 4vh;
@@ -93,6 +95,34 @@
 .d-icon:hover #back-icon{
   color: yellow;
   transform: scale(1.1);}
+a{
+  color: white;
+  transition: 0.5s ease;
+  font-size: 1.8vh;
+}
+
 a:hover{
   cursor: pointer;
+  color: red;
+  transform: scale(1.1);
+}
+
+.d-btn{
+  padding-top: 1vh;
+  margin-bottom: 2vh;
+}
+.btn{
+  background-color: darkred; /* Colore di sfondo giallo */
+  color: white; /* Testo bianco */
+  border: none; /* Nessun bordo */
+  padding: 10px 20px; /* Padding per spaziatura */
+  border-radius: 5px; /* Bordo arrotondato */
+  cursor: pointer; /* Cambia il cursore al passaggio */
+  transition: background-color 0.3s ease; /* Transizione al cambiamento di colore di sfondo */
+  font-weight: bold;
+  font-size: 2.5vh;
+
+}
+.btn:hover {
+  background-color: gold;
 }

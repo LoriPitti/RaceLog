@@ -4,6 +4,7 @@ import {User} from "../Entity/User";
 import {Track} from "../Entity/Track";
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser'
 import {TrackDisplay} from "../Entity/TrackDisplay";
+import {TestService} from "../service/Test.service";
 
 
 @Component({
@@ -21,7 +22,7 @@ export class TrackComponent implements OnInit{
   elId:string = 'card-list';
   scrollPosition:number= 0;
   exit = false;
-  constructor(private http: HttpRequestService, private sanitizer: DomSanitizer) {
+  constructor(private http: HttpRequestService, private sanitizer: DomSanitizer,) {
   }
 
   ngOnInit(): void {

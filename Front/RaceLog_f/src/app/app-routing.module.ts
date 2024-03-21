@@ -19,6 +19,8 @@ import {AnalyticsComponent} from "./login/personal/records/analytics/analytics.c
 import {SetupComponent} from "./login/personal/records/analytics/setup/setup.component";
 import {TyresComponent} from "./login/personal/records/analytics/setup/tyres/tyres.component";
 import {SuspensionComponent} from "./login/personal/records/analytics/setup/suspension/suspension.component";
+import {AerodynamicsComponent} from "./login/personal/records/analytics/setup/aerodynamics/aerodynamics.component";
+import {GripComponent} from "./login/personal/records/analytics/setup/grip/grip.component";
 
 const routes: Routes = [
   {path:'', component:HomeComponent},
@@ -32,7 +34,9 @@ const routes: Routes = [
   {path: 'records/analytics/:track', component:AnalyticsComponent},
   {path: 'records/analytics/:track/setup/:car', component:SetupComponent, children:[
       {path: 'tyres', component: TyresComponent},
-      {path: 'suspension', component: SuspensionComponent}
+      {path: 'suspension', component: SuspensionComponent},
+      {path: 'aerodynamic', component: AerodynamicsComponent},
+      {path: 'grip', component: GripComponent}
     ]},
   {path: 'cars', component:CarComponent},
   {path:'cars/load', component:LoadCarComponent, children:[

@@ -2,11 +2,12 @@ import {Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {Setup} from "../../../../../../Entity/Setup";
 import {SetupService} from "../../../../../../service/SetupService";
+import {TestService} from "../../../../../../service/Test.service";
 
 @Component({
   selector: 'app-tyres',
   templateUrl: './tyres.component.html',
-  styleUrl: './tyres.component.css'
+  styleUrl: './tyres.component.css',
 })
 export class TyresComponent implements OnInit{
   setup?:Setup;
@@ -15,12 +16,11 @@ export class TyresComponent implements OnInit{
   tyreToe:number[] = [];
   tyreCasterL =0;
   tyreCasterR:number =0;
-  setupService = inject(SetupService)
-  constructor(private router: Router, private route: ActivatedRoute) {
+  constructor(private router: Router, private route: ActivatedRoute, private setupService : SetupService, private test:TestService) {
+    console.log("tyre started");
   }
   ngOnInit() {
-      console.log("->"+this.setupService.getSetup().basicSetup.tyres.tyrePressure[1])
-
+    console.log("Setup-->"+this.setupService.getSetup().basicSetup.tyres.tyrePressure[1]);
   }
 
 }
