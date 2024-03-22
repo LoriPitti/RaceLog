@@ -33,5 +33,10 @@ p{
   align-items: center;
 }
 .input{
-  max-width: 5vh;
+  max-width: 8vh;
+}
+
+
+mat-progress-bar{
+  width: 10vh;
 }

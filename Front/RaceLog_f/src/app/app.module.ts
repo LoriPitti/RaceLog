@@ -48,6 +48,7 @@ import { GripComponent } from './login/personal/records/analytics/setup/grip/gri
 import { GripSetComponent } from './login/personal/records/analytics/setup/grip/grip-set/grip-set.component';
 import { GripSet2Component } from './login/personal/records/analytics/setup/grip/grip-set-2/grip-set-2.component';
 import {TestService} from "./service/Test.service";
+import {MatProgressBar} from "@angular/material/progress-bar";
 
 
 
@@ -87,20 +88,21 @@ import {TestService} from "./service/Test.service";
     GripSetComponent,
     GripSet2Component,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    IconDirective,
-    MatSlideToggleModule,
-    MatDialogContent,
-    MatDialogActions,
-    NgOptimizedImage,
-    NgApexchartsModule,
-    MatSlider,
-    MatSliderThumb,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule,
+        IconDirective,
+        MatSlideToggleModule,
+        MatDialogContent,
+        MatDialogActions,
+        NgOptimizedImage,
+        NgApexchartsModule,
+        MatSlider,
+        MatSliderThumb,
+        MatProgressBar,
+    ],
   providers: [
     IconSetService,
     provideAnimationsAsync(),

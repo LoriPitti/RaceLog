@@ -7,15 +7,19 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class TyresSetComponent implements OnInit{
   @Input()psi=0;
+  psiBar = 0;
   @Input()campanatura=0;
   @Input()convergenza=0;
+  convBar = 0;
   @Input()incidenza=0;
   @Input()showInc = false;
   @Input()title='';
+  inputDisabled = true;
 
 
   ngOnInit() {
-    console.log("tyre: psi: "+this.psi + "camp "+this.campanatura +"conv"+this.convergenza + "inc"+this.incidenza)
+    this.psiBar = this.convert(this.psi, 20.3,  35.0);
+    this.convBar = this.convert(this.convergenza, -0.4, 0.4);
 
   }
 
@@ -31,4 +35,9 @@ export class TyresSetComponent implements OnInit{
   setConv(val:number){
     return val.toString()
   }
+
+  convert(val:number, min:number, max:number){
+    return (val - min) / (max - min) * 100;
+  }
+
 }

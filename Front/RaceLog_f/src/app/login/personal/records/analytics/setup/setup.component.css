@@ -126,3 +126,11 @@ a:hover{
 .btn:hover {
   background-color: gold;
 }
+
+.div-alert{
+
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

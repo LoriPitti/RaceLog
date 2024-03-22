@@ -406,12 +406,9 @@ public class Controller {
                                              @RequestParam("track")String track,
                                              @RequestParam("car")String car,
                                              @RequestParam("type")int type,
-                                             @RequestParam("lap")String lap) throws JsonProcessingException {
-        try {
+                                             @RequestParam("lap")String lap) throws JsonProcessingException, SetupException {
             service.addSetup(username,track,car,type,lap,setup);
-        } catch (SetupException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
+
         return ResponseEntity.ok(200);
     }
 }

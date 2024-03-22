@@ -36,7 +36,9 @@ export class SetupComponent implements OnInit{
   isAeroActive = false;
   isGripActive = false;
   modify = false;
-  isModifyDisabled =true;
+  isSaveDisabled =true;
+  showAlert = false;
+
 
 
   constructor(private http:HttpRequestService, private route:ActivatedRoute, private router:Router, private iconSet:IconSetService,
@@ -65,14 +67,14 @@ export class SetupComponent implements OnInit{
       next:(response:CarDisplay)=>{
         this.frontImgUrl = response.imgFrontUrl;
         this.backImgUrl = response.imgBackUrl;
-        this.getSetup(); //-< load setup
+        //this.getSetup(); //-< load setup
       },error:(err)=>{
         console.log(err.message);
       }
     })
   }
 
-  getSetup(){
+  /*getSetup(){
     this.http.getSetup(this.user, this.track, this.car, this.type).subscribe({
       next:(response) =>{
         this.setup = response;
@@ -82,7 +84,7 @@ export class SetupComponent implements OnInit{
         console.log(err.message);
       }
     })
-  }
+  }*/
 
   //-------------------------------------SETUP PAGES------------------------
   setupPage(page:string){
@@ -114,30 +116,33 @@ export class SetupComponent implements OnInit{
 
 
   }
-  onFileSelected(event: any) {
+  onFileSelected(event: any): void {
     const file: File = event.target.files[0];
     if (file) {
       if (this.isFileJson(file)) {
         this.readFile(file);
-        this.isModifyDisabled = false;
+        this.isSaveDisabled = false;
         const div_router = document.getElementById("router");
-        if(div_router)
+        if (div_router)
           div_router.style.visibility = "visible";
       } else {
+        this.isSaveDisabled = true;
         alert("Il file deve essere di tipo .json");
       }
     }
-
   }
-    isFileJson(file: File): boolean {
-      return file.name.endsWith('.json');
-    }
 
+  isFileJson(file: File): boolean {
+    return file.name.toLowerCase().endsWith('.json');
+  }
   readFile(file: File) {
     const reader: FileReader = new FileReader();
 
     reader.onload = (e: any) => {
-      const setup:Setup = e.target.result;
+      const setup:Setup = JSON.parse(e.target.result);
+      console.log(setup)
+      this.setupService.setSetup(setup)
+      console.log("kjfnk"+this.setupService.getSetup().basicSetup.tyres.tyrePressure[2])
     };
     reader.readAsText(file);
   }
@@ -148,17 +153,13 @@ export class SetupComponent implements OnInit{
 
 
   //---------------------------------------BTN METHODS-------------------------
-  enableModify() {
-    this.modify = true;
-    localStorage.setItem('modify', 'true');
-  }
-  abortModify() {
-    this.modify = false;
-    localStorage.setItem('modify', 'false');
-  }
+
 
   save() {
     this.modify = false;
-    localStorage.setItem('modify', 'false');
+    this.showAlert  =true;
+  }
+  confirmSave() {
+    this.showAlert  = false;
   }
 }

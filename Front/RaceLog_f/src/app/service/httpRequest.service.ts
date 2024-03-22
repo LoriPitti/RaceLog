@@ -445,6 +445,35 @@ export class HttpRequestService{
       })
     )
   }
+  saveSetup(username:string, track:string, car:string, type:number, lap:string, setup:Setup){
+    const params = new HttpParams()
+      .set("user", username)
+      .set("track", track)
+      .set("car", car)
+      .set("type",type)
+      .set("lap",lap);
+    return this.http.post<Setup>("http://localhost:8080/setup/post", {
+      setup
+    },{params:params}).pipe(
+      map(response=>{
+        return response;
+      }),  catchError(err => {
+        let msg: string = '';
+        switch (err.status) {
+          case 400:
+            msg = 'il setup esiste già';
+            break;
+          case 500:
+            msg = 'Internal Server Error';
+            break;
+          default:
+            msg = 'Errore Sconosciuto';
+            break;
+        }
+        return throwError(() => msg)
+      })
+    )
+  }
 
   //-------------------------------SIM HUB CALL--------------------------------------
   getSimData(){

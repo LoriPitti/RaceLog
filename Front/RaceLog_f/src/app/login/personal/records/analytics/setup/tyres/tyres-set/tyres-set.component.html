@@ -4,49 +4,53 @@
   <div class="row">
     <div class="col c-p"><p>psi:</p></div>
     <div class="col">
-      <input class="input" type="number" [disabled]="false" [(ngModel)]="psi">
+      <input class="input" type="number" [disabled]="inputDisabled" [(ngModel)]="psi">
     </div>
     <div class="col">
-      <mat-slider  min="20.3" max="35" step="0.1" [displayWith]="setPsi"  showTickMarks discrete
+      <!--mat-slider--  min="20.3" max="35" step="0.1" [displayWith]="setPsi"  showTickMarks discrete
                   color="warn">
         <input matSliderThumb [(ngModel)]="psi">
-      </mat-slider>
+      </mat-slider-->
+      <mat-progress-bar  color="warn" mode="determinate" [value]=psiBar></mat-progress-bar>
     </div>
   </div>
   <div class="row">
     <div class="col c-p"><p>conv:</p></div>
     <div class="col">
-      <input class="input"  type="number" [disabled]="false" [(ngModel)]="convergenza">
+      <input class="input"  type="number" [disabled]="inputDisabled" [(ngModel)]="convergenza">
     </div>
     <div class="col">
-      <mat-slider id="f-l-psi-conv" min="-0.4" max="0.4" step="0.1" [displayWith]="setConv"  showTickMarks discrete
+      <!--mat-slider  id="f-l-psi-conv" min="-0.4" max="0.4" step="0.01" [displayWith]="setConv"  showTickMarks discrete
                   color="warn">
         <input matSliderThumb [(ngModel)]="convergenza">
-      </mat-slider>
+      </mat-slider-->
+      <mat-progress-bar  color="warn" mode="determinate" [value]="convBar"></mat-progress-bar>
     </div>
   </div>
   <div class="row">
     <div class="col c-p"><p>camp:</p></div>
     <div class="col">
-      <input class="input"  type="number" [disabled]="false" [(ngModel)]="campanatura">
+      <input class="input"  type="number" [disabled]="inputDisabled" [(ngModel)]="campanatura">
     </div>
     <div class="col">
-      <mat-slider  min="-4" max="-1.5" step="0.1" [displayWith]="setCamp"  showTickMarks discrete
+      <!--mat-slider--  min="-4" max="-1.5" step="0.1" [displayWith]="setCamp"  showTickMarks discrete
                   color="warn">
-        <input matSliderThumb [(ngModel)]="campanatura">
-      </mat-slider>
+        <input matSliderThumb  [(ngModel)]="campanatura">
+      </mat-slider-->
+      <mat-progress-bar  color="warn" mode="determinate" [value]="100*campanatura/-1.5"></mat-progress-bar>
     </div>
   </div>
   <div class="row" *ngIf="showInc">
     <div class="col c-p"><p>incid:</p></div>
     <div class="col">
-      <input class="input" type="number" [disabled]="false" [(ngModel)]="incidenza">
+      <input class="input" type="number" [disabled]="inputDisabled" [(ngModel)]="incidenza">
     </div>
     <div class="col">
-      <mat-slider min="8.5" max="13.8" step="0.1" [displayWith]="setInc"  showTickMarks discrete
+      <!--mat-slider min="6.5" max="12.4" step="0.2" [displayWith]="setInc"  showTickMarks discrete
                   color="warn">
-        <input matSliderThumb [(ngModel)]="incidenza">
-      </mat-slider>
+        <input matSliderThumb [(ngModel)]="incidenza"
+      </mat-slider-->
+      <mat-progress-bar  color="warn" mode="determinate" [value]="100*incidenza/25"></mat-progress-bar>
     </div>
   </div>
 

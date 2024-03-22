@@ -1,3 +1,5 @@
+
+
 <div class="r-nav container-fluid">
   <nav class="navbar bg-dark navbar-expand-lg "  data-bs-theme="dark">
     <div class="container-fluid">
@@ -39,16 +41,20 @@
           </div>
         </div>
       </div>
+    <div class="div-alert" *ngIf="showAlert">
+      <app-alert
+        [message]="'Attenzione, il salvataggio sovrascrive il precedente setup se esiste'"
+        (hideAlert)="showAlert=false">
+      </app-alert>
+    </div>
 
     <div class="div router" id="router">
       <router-outlet></router-outlet>
     </div>
     <div class="div d-btn">
       <div class="row">
-        <div class="col" *ngIf="!modify"> <button class="btn" type = button id="modify"
-                                                  [disabled]="isModifyDisabled" (click)="enableModify()">Modifica</button></div>
-        <div class="col" *ngIf="modify"> <button class="btn" type = button id="save" (click)="save()">Salva</button></div>
-        <div class="col" *ngIf="modify"> <button class="btn" type = button id="abort" (click)="abortModify()">Annulla</button></div>
+        <div *ngIf="!showAlert" class="col" > <button  [disabled]="isSaveDisabled" class="btn" type = button id="save" (click)="save()">Salva</button></div>
+        <div *ngIf="showAlert" class="col" > <button   class="btn" type = button id="confirm" (click)="confirmSave()">Conferma</button></div>
       </div>
     </div>
 

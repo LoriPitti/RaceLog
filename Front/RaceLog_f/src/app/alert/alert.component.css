@@ -2,11 +2,9 @@
  /* border-width: medium;
   border-style: solid;
   border-color: red;*/
-  position: absolute;
+
   top:8vh;
   max-width: 40vh;
-  left: 50%;
-  transform: translateX(-50%);
   height: 5vh;
 
   opacity: 0.6;

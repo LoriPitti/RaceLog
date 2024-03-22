@@ -66,7 +66,7 @@ export class SetupService {
           brakeDuct: [0, 0], // Esempio di valori predefiniti
         },
         drivetrain: {
-          preload: 0, // Esempio di valore predefinito
+          preload: 0, // Esempio di valore predefinitocd race
         },
       },
       trackBopType: 0, // Esempio di valore predefinito

@@ -2,10 +2,17 @@
 <div class="container c-body">
   <div class="row r-front">
     <div class="col c-f-l">
-      <app-aerodynamic-set [title]="'Posteriore'"></app-aerodynamic-set>
+      <app-aerodynamic-set [title]="'Posteriore'"
+                           [spoilerSplitter]="'spoiler'"
+                           [setting]="rearWing"
+                           [condotto]="condottiFreno[0]"
+      ></app-aerodynamic-set>
     </div>
     <div class="col c-f-r">
-      <app-aerodynamic-set [title]="'Anteriore'"></app-aerodynamic-set>
+      <app-aerodynamic-set [title]="'Anteriore'"
+                           [spoilerSplitter]="'splitter'"
+                           [setting]="splitter"
+                           [condotto]="condottiFreno[1]"></app-aerodynamic-set>
     </div>
   </div>
 </div>
