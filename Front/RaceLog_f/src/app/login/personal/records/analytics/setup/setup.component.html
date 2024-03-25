@@ -43,8 +43,9 @@
       </div>
     <div class="div-alert" *ngIf="showAlert">
       <app-alert
-        [message]="'Attenzione, il salvataggio sovrascrive il precedente setup se esiste'"
-        (hideAlert)="showAlert=false">
+        [message]="message"
+        (hideAlert)="showAlert=false"
+        [alertType]="alertType">
       </app-alert>
     </div>
 

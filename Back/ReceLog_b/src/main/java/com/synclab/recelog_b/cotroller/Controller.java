@@ -398,6 +398,7 @@ public class Controller {
                            @RequestParam("track")String track,
                            @RequestParam("car")String car,
                            @RequestParam("type")int type){
+        System.out.println("Get request");
         return  service.getSetup(username,track,car,type);
 
     }
@@ -407,7 +408,7 @@ public class Controller {
                                              @RequestParam("car")String car,
                                              @RequestParam("type")int type,
                                              @RequestParam("lap")String lap) throws JsonProcessingException, SetupException {
-            service.addSetup(username,track,car,type,lap,setup);
+            service.addSetup(username,lap, track,car,type,setup);
 
         return ResponseEntity.ok(200);
     }

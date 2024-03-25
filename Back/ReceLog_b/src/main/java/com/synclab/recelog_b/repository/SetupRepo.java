@@ -11,7 +11,7 @@ public interface SetupRepo extends JpaRepository<Setup, Integer> {
     String getSetup(String username, String track, String car, int type);
 
     @Modifying
-    @Query("UPDATE Setup s SET s.setup = ?1 WHERE s.username = ?2 AND s.track = ?3 AND s.car = ?4  AND s.lap = ?5 AND s.type = ?6 " )
-    int updateSetup(String setup, String user, String track, String car, String lap, int type);
+    @Query("UPDATE Setup s SET s.setup = ?1, s.lap = ?2 WHERE s.username = ?3 AND s.track = ?4 AND s.car = ?5  AND s.type = ?6")
+    int updateSetup(String setup, String lap, String user, String track, String car, int type);
 
 }

@@ -10,6 +10,7 @@ import {User} from "../Entity/User";
 import {DryWet_record} from "../Entity/DryWet_record";
 import {CarTimes} from "../Entity/CarTimes";
 import {Setup} from "../Entity/Setup";
+import {UserData} from "../Entity/UserData";
 
 @Injectable({providedIn:'root'})
 export class HttpRequestService{
@@ -84,6 +85,29 @@ export class HttpRequestService{
       .set("username", username);
     return this.http.get<any>("http://localhost:8080/user", {params:params}).pipe(
       map(response=>{ console.log(response.username); return new User(response.username, response.password, response.email, response.name, response.lastname, response.iconType)}),
+      catchError(err=> {
+        let msg: string = '';
+        switch (err.status) {
+          case 400:
+            msg = "L' utente non esiste";
+            break;
+          case 500:
+            msg = 'Internal Server Error';
+            break;
+          default:
+            msg = "Errore sconosciuto";
+        }
+        throw  new Error(msg);
+      })
+    )
+  }
+  getUsersData(){
+    return this.http.get<any[]>("http://localhost:8080/users").pipe(
+      map(response =>{
+        return response.map(item=>{
+          return new UserData(item.username, item.name, item.lastname, item.icontype);
+        })
+      } ),
       catchError(err=> {
         let msg: string = '';
         switch (err.status) {
@@ -420,6 +444,7 @@ export class HttpRequestService{
   }
   //---------------------------------SETUP-------------------------------------
   getSetup(username:string, track:string, car:string, type:number){
+    console.log(username +' '+ track + ' '+ car + ' '+type)
     const params = new HttpParams()
       .set("user", username)
       .set("track", track)
@@ -447,12 +472,12 @@ export class HttpRequestService{
   }
   saveSetup(username:string, track:string, car:string, type:number, lap:string, setup:Setup){
     const params = new HttpParams()
-      .set("user", username)
+      .set("username", username)
       .set("track", track)
       .set("car", car)
       .set("type",type)
       .set("lap",lap);
-    return this.http.post<Setup>("http://localhost:8080/setup/post", {
+    return this.http.post<any>("http://localhost:8080/setup/post", {
       setup
     },{params:params}).pipe(
       map(response=>{

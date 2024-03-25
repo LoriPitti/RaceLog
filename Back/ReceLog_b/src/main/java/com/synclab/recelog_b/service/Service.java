@@ -190,10 +190,12 @@ public class Service {
     }
 
     //-----------------------------------------SETUP SECTION-------------------------------
-    public void addSetup(String username,String track,String car, int type, String lap, String setup) throws SetupException {
+    @Transactional
+    public void addSetup(String username,String lap, String track,String car, int type, String setup) throws SetupException {
         if(getSetup(username,track,car,type)!= null)
-            setupRepo.updateSetup(setup,username,track,car,lap,type);
-        setupRepo.save(new Setup(0,username,track,car,lap,type,setup));
+            setupRepo.updateSetup(setup,lap, username,track,car, type);
+        else
+         setupRepo.save(new Setup(0,username,track,car,lap,type,setup));
     }
     public String getSetup(String username,String track,String car, int type){
         return this.setupRepo.getSetup(username,track,car,type);

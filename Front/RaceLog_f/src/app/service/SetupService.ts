@@ -5,8 +5,10 @@ import {AdvancedSetup, BasicSetup} from "../Entity/Setup";
 )
 export class SetupService {
   private setup:Setup;
+  private bestLap:string;
 
   constructor() {
+    this.bestLap = '0.0.00';
     this.setup=  {
       carName: 'Nome_auto',
       basicSetup: {
@@ -74,14 +76,17 @@ export class SetupService {
   }
   setSetup(s:Setup){
     this.setup = s;
-    console.log("SETTED--->"+this.setup.basicSetup.tyres.tyrePressure[1])
-
 
   }
   getSetup(){
-    console.log("GETTED--->"+this.setup.basicSetup.tyres.tyrePressure[1])
     return this.setup;
 
+  }
+  getTime(){
+    return this.bestLap;
+  }
+  setTime(lap:string){
+    this.bestLap = lap;
   }
 }
 
@@ -90,4 +95,5 @@ export interface Setup {
   basicSetup: BasicSetup;
   advancedSetup: AdvancedSetup;
   trackBopType: number;
+
 }

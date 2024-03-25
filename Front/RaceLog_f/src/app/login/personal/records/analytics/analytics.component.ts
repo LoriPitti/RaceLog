@@ -4,7 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 
 import {CarTimes} from "../../../../Entity/CarTimes";
 import {TrackDisplay} from "../../../../Entity/TrackDisplay";
-import {SafeUrl} from "@angular/platform-browser";
+import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 import { NgChartjsService } from 'ng-chartjs';
 import { NgApexchartsModule } from 'ng-apexcharts';
 
@@ -31,6 +31,8 @@ import {
 import {IconSetService} from "@coreui/icons-angular";
 import {CarDisplay} from "../../../../Entity/CarDisplay";
 import {TestService} from "../../../../service/Test.service";
+import {SetupService} from "../../../../service/SetupService";
+import {Setup} from "../../../../Entity/Setup";
 
 
 export type ChartOptions = {
@@ -42,6 +44,9 @@ export type ChartOptions = {
   stroke: ApexStroke;
   title: ApexTitleSubtitle;
 };
+
+class JsonService {
+}
 
 @Component({
   selector: 'app-analytics',
@@ -84,10 +89,13 @@ export class AnalyticsComponent implements OnInit{
   isDryDisabled = true;
   isWetDisabled = true;
   isDropDisabled = true;
+  isDownloadDisabled = true;
+  setup?:Setup;
+  fileUrl:SafeUrl = '';
 
 
 
-  constructor(private http:HttpRequestService, private route:ActivatedRoute, public iconSet:IconSetService, private router:Router,) {
+  constructor(private http:HttpRequestService, private route:ActivatedRoute, public iconSet:IconSetService, private router:Router, private setupService:SetupService,private sanitizer:DomSanitizer) {
     iconSet.icons = {cilArrowThickFromTop, cilArrowThickFromBottom, cilPlaylistAdd, cilPlus, cilCheck, cilX, cilActionUndo}
 
   }
@@ -165,6 +173,27 @@ export class AnalyticsComponent implements OnInit{
     })
   }
 
+  getSetup(){
+    let type = 0;
+    if(this.type ==='dry')
+      type = 0
+    else
+      type = 1;
+      this.http.getSetup(this.username, this.track, this.car, type).subscribe({
+      next:(response) =>{
+        console.log("Setup"+ response);
+        if(response != null) {
+          this.setup = response;
+          this.isDownloadDisabled = false;
+        }
+        else
+          this.isDownloadDisabled = true;
+      }, error:(err)=>{
+        console.log(err.message);
+      }
+    })
+  }
+
   //------------------------BTN METHOD----------------------------------------
   showDry() {
     this.wet = false;
@@ -186,6 +215,8 @@ export class AnalyticsComponent implements OnInit{
       this.apiCar(car, 0);
       this.getBestAbsoluteLap();
       this.showAnalytics = true;
+    this.getSetup();
+
   }
 
   //----------------------------STATISTIC SECTION--------------------------
@@ -268,6 +299,7 @@ export class AnalyticsComponent implements OnInit{
       }
     })
     this.bestLap = minString;
+    this.setupService.setTime(this.bestLap);
     this.totLaps = this.numbTimes.length;
     this.totAllLaps = times.length
 
@@ -333,4 +365,29 @@ export class AnalyticsComponent implements OnInit{
   navigateToSetup(){
     this.router.navigate(['setup/'+this.car], { relativeTo: this.route });
   }
+
+
+  downloadSetup() {
+    if (this.setup) {
+      const data = JSON.stringify(this.setup);
+      const blob = new Blob([data], {
+        type: 'application/json'
+      });
+
+      // Create a URL for the blob
+      const fileUrl = URL.createObjectURL(blob);
+
+      // Create an anchor element
+      const anchor = document.createElement('a');
+      anchor.href = fileUrl;
+      anchor.download = this.car+'-setup.json'
+
+      // Programmatically click the anchor element to trigger the download
+      anchor.click();
+
+      // Clean up: revoke the blob URL
+      URL.revokeObjectURL(fileUrl);
+    }
+  }
+
 }

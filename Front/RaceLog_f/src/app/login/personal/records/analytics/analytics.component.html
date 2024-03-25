@@ -56,6 +56,11 @@
           <img [src]="carImgSrc"  class="img-car" alt="immagine dell' auto selezionata">
           <h3>{{bestLap}}</h3>
           <p (click)="navigateToSetup()">Carica setup</p>
+          <div class="row">
+            <div class="col c-btn">   <button class="btn" (click)="downloadSetup()" [disabled]="isDownloadDisabled"> Scarica setup</button>
+            </div>
+
+          </div>
         </div>
       </div>
       <div class="col c-best-img">
@@ -88,6 +93,4 @@
   </div>
 </div>
 </div>
-
-
 

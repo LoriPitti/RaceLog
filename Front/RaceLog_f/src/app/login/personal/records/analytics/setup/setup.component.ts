@@ -38,6 +38,9 @@ export class SetupComponent implements OnInit{
   modify = false;
   isSaveDisabled =true;
   showAlert = false;
+  bestLap:string = '0.0.00';
+  message = '';
+  alertType:'success'|'danger' = 'success'
 
 
 
@@ -58,6 +61,7 @@ export class SetupComponent implements OnInit{
     let track = this.route.snapshot.paramMap.get('track');
     if(track == null)
       track = '';
+    this.track = track;
     let user = localStorage.getItem('username');
     if(user == null)
       user = '';
@@ -74,17 +78,7 @@ export class SetupComponent implements OnInit{
     })
   }
 
-  /*getSetup(){
-    this.http.getSetup(this.user, this.track, this.car, this.type).subscribe({
-      next:(response) =>{
-        this.setup = response;
-        if(this.setup)
-          this.setupService.setSetup(this.setup);
-      }, error:(err)=>{
-        console.log(err.message);
-      }
-    })
-  }*/
+
 
   //-------------------------------------SETUP PAGES------------------------
   setupPage(page:string){
@@ -157,9 +151,25 @@ export class SetupComponent implements OnInit{
 
   save() {
     this.modify = false;
-    this.showAlert  =true;
+    this.setAlert('Attenzione, il salvataggio sovrascrive il precedente setup se esiste', 'danger');
   }
   confirmSave() {
     this.showAlert  = false;
+    this.bestLap = this.setupService.getTime();
+    console.log('best lap: ' + this.bestLap);
+    this.http.saveSetup(this.user, this.track, this.car, this.type, this.bestLap,this.setupService.getSetup()).subscribe({
+    next: (response) =>{
+      this.setAlert('Setup registrato correttamente!', 'success');
+    }, error:(err)=>{
+        this.setAlert(err, 'danger');
+        this.setAlert(err, 'danger');
+      }
+    })
+  }
+
+  setAlert(message:string, type:'success'|'danger'){
+    this.message = message;
+    this.alertType = type;
+    this.showAlert  =true;
   }
 }
