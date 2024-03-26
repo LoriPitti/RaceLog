@@ -81,6 +81,14 @@ public class Service {
         return true;
     }
 
+
+    public List<String> getTracksForUser(String username, String type){
+        if(type.equals("dry")){
+            return this.dryRepo.getTrackForUser(username);
+        }else{
+            return this.wetRepo.getTrackForUser(username);
+        }
+    }
     //----------------------------------UER RECORD SECTION--------------------------------------------------------
     public void insertNewDryRecord(Dry_record record) throws Exception {
         if(dryRepo.findRecord(record.getUsername(), record.getTrack(), record.getCar(), record.getTime()) != null)

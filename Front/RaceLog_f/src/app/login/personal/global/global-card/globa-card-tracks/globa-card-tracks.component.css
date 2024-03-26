@@ -1,0 +1,30 @@
+.row{
+  background-color: gray;
+  min-width: 15vh;
+  border-radius: 0.5vh;
+}
+.row:hover h2{
+  transform: scale(1.1);
+  color: yellow;
+}
+h2{
+  margin-top: 1vh;
+  cursor: pointer;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.5s ease;
+}
+.icon{
+  width: 2vh;
+}
+.col{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.c2{
+  max-width: 5vh;
+  border-radius: 0.5vh;
+}

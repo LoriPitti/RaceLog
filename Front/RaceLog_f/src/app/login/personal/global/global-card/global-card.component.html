@@ -1,0 +1,19 @@
+
+<div class="card text-center">
+  <div class="card-header">
+   <div class="col"><h1>{{username}}</h1></div>
+    <div class="col c-logo"><img class="logo" [src]="logo_src" alt="logo"></div>
+  </div>
+  <div class="card-body">
+    <h2 class="card-text">{{ name }} {{lastname}}</h2>
+    <button  type="button" class="btn btn-primary" (click)="displayTracks()">Analisi dei tempi</button>
+  </div>
+  <div *ngIf="showTracks" class="tracks-list">
+    <ul *ngFor="let track of dryTracks">
+      <li><app-globa-card-tracks (clicked) = gotToAnalytics($event) [track]="track"></app-globa-card-tracks></li>
+    </ul>
+  </div>
+  <div class="card-footer text-body-secondary">
+    2 days ago
+  </div>
+</div>

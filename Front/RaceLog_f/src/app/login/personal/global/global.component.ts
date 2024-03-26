@@ -8,16 +8,20 @@ import {UserData} from "../../../Entity/UserData";
   styleUrl: './global.component.css'
 })
 export class GlobalComponent implements OnInit{
+  username: string = '';
 
   users:UserData[] = [];
       constructor(private http:HttpRequestService) {
       }
 
       ngOnInit() {
+        let user = localStorage.getItem('username');
+        if(user != null)
+          this.username = user;
         this.http.getUsersData().subscribe({
           next:(response) =>{
             this.users = response;
-            console.log(this.users)
+            this.users = this.users.filter(user=>user.getUsername != this.username);
           },error:(err)=> {
             console.log("error");
           }

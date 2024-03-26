@@ -105,7 +105,7 @@ export class HttpRequestService{
     return this.http.get<any[]>("http://localhost:8080/users").pipe(
       map(response =>{
         return response.map(item=>{
-          return new UserData(item.username, item.name, item.lastname, item.icontype);
+          return new UserData(item.username, item.name, item.lastname, item.iconType);
         })
       } ),
       catchError(err=> {
@@ -176,7 +176,31 @@ export class HttpRequestService{
 
     )
   }
-
+  getTracksForUser(username:string ,type:'dry'|'wet'){
+    const params = new HttpParams()
+      .set("username", username)
+      .set("type", type);
+    return this.http.get<string[]>("http://localhost:8080/user/records/tracks",{params:params}).pipe(
+      map(response => {
+        console.log("respinse "+ response)
+        return response
+      }),
+      catchError(err => {
+        let msg: string = '';
+        switch (err.status) {
+          case 400:
+            msg ="Tipo non supportato in input";
+            break;
+          case 500:
+            msg = 'Internal Server Error';
+            break;
+          default:
+            msg  = "Errore sconosciuto";
+        }
+        throw new Error(msg)
+      })
+    )
+  }
   //--------------------------------------USER RECORD---------------------------------------------------------
   getUserDryRecords(username : string, type:'dry'|'wet'){
     const params = new HttpParams()

@@ -49,6 +49,8 @@ import { GripSetComponent } from './login/personal/records/analytics/setup/grip/
 import { GripSet2Component } from './login/personal/records/analytics/setup/grip/grip-set-2/grip-set-2.component';
 import {TestService} from "./service/Test.service";
 import {MatProgressBar} from "@angular/material/progress-bar";
+import { GlobalCardComponent } from './login/personal/global/global-card/global-card.component';
+import { GlobaCardTracksComponent } from './login/personal/global/global-card/globa-card-tracks/globa-card-tracks.component';
 
 
 
@@ -87,6 +89,8 @@ import {MatProgressBar} from "@angular/material/progress-bar";
     GripComponent,
     GripSetComponent,
     GripSet2Component,
+    GlobalCardComponent,
+    GlobaCardTracksComponent,
   ],
     imports: [
         BrowserModule,

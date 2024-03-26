@@ -19,5 +19,8 @@ public interface WetRepo extends JpaRepository<Wet_record, Integer> {
 
     @Query("select car, time from Wet_record  where username =?1 and track=?2")
     List<String> getTimesFromTrack(String username, String track);
+
+    @Query("select distinct track from Wet_record  where username =?1")
+    List<String> getTrackForUser(String username);
 }
 

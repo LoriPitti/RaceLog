@@ -227,6 +227,15 @@ public class Controller {
 
     }
 
+    @GetMapping("user/records/tracks")
+    public List<String> getUsersTrack(@RequestParam("username") String username,
+                                @RequestParam("type")String type){
+        if(!type.equals("dry") && !type.equals("wet"))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"type not supported");
+
+        return service.getTracksForUser(username, type);
+    }
+
 
 
         // --------------------------------------------ADMIN SECTION----------------------------------------------------

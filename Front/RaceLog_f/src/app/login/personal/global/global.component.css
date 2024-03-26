@@ -1,0 +1,10 @@
+.container-fluid{
+  margin-top: 10vh;
+  overflow-y: auto;
+  overflow-x:hidden;
+  max-height: 80vh;
+}
+ul{
+  list-style: none;
+  padding: 0;
+}

@@ -23,4 +23,7 @@ public interface DryRepo extends JpaRepository<Dry_record, Integer> {
     @Query("select car, time from Dry_record  where username =?1 and track=?2")
     List<String> getTimesFromTrack(String username, String track);
 
+    @Query("select distinct track from Dry_record  where username =?1")
+    List<String> getTrackForUser(String username);
+
 }

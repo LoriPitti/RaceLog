@@ -1,0 +1,30 @@
+h1{
+  font-size: 3vh;
+  font-weight: bold;
+
+}
+ul{
+  list-style: none;
+  padding: 0;
+}
+li{
+  margin-bottom: 1vh;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btn{
+  background-color: darkred;
+  border-color: darkred;
+  font-size: 2vh;
+}
+.tracks-list{
+  max-height: 20vh;
+  overflow-y: auto;
+  overflow-x:hidden;
+  margin-bottom: 1vh;
+}
+.logo{
+  border-radius: 0.5vh;
+}

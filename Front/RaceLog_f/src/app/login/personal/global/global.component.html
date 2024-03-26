@@ -1,1 +1,9 @@
-
+<div class="container-fluid">
+  <ul *ngFor="let user of users">
+    <li class="li"> <app-global-card
+    [username]="user.getUsername"
+    [name]="user.getName"
+    [lastname]="user.getLastname"
+    [logo_src]="'assets/icon/'+user.getIconType+'.png'"></app-global-card></li>
+  </ul>
+</div>
