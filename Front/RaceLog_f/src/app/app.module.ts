@@ -90,7 +90,7 @@ import { GlobaCardTracksComponent } from './login/personal/global/global-card/gl
     GripSetComponent,
     GripSet2Component,
     GlobalCardComponent,
-    GlobaCardTracksComponent,
+    GlobaCardTracksComponent
   ],
     imports: [
         BrowserModule,

@@ -14,7 +14,7 @@ import {PersonalComponent} from "./login/personal/personal.component";
 import {MyProfileComponent} from "./login/personal/my-profile/my-profile.component";
 import {RecordsComponent} from "./login/personal/records/records.component";
 import {GlobalComponent} from "./login/personal/global/global.component";
-import {loginGuardGuard} from "./guard/login-guard.guard";
+import {adminGuard, loginGuardGuard} from "./guard/login-guard.guard";
 import {AnalyticsComponent} from "./login/personal/records/analytics/analytics.component";
 import {SetupComponent} from "./login/personal/records/analytics/setup/setup.component";
 import {TyresComponent} from "./login/personal/records/analytics/setup/tyres/tyres.component";
@@ -40,11 +40,11 @@ const routes: Routes = [
       {path: 'grip', component: GripComponent}
     ]},
   {path: 'cars', component:CarComponent},
-  {path:'cars/load', component:LoadCarComponent, children:[
+  {path:'cars/load', component:LoadCarComponent, canActivate:[adminGuard], children:[
       {path: 'insert', component : AlertComponent}
     ]},
   {path:'tracks', component: TrackComponent},
-  {path: 'tracks/load', component: LoadTrackComponent, children :[
+  {path: 'tracks/load', component: LoadTrackComponent,  canActivate:[adminGuard], children :[
       {path: 'insert', component : AlertComponent}
     ]},
   {path:'not-found', component: NotFoundComponent},

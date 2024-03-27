@@ -57,7 +57,7 @@ export class HttpRequestService{
     }).pipe(
       map(response => {
           return new User(username, password, response,
-                          response.name, response.lastname, response.iconType );
+                          response.name, response.lastname, response.iconType, response.userType);
       }),catchError(err => {
         let msg: string = '';
         switch (err.status) {
@@ -84,7 +84,7 @@ export class HttpRequestService{
     const params = new HttpParams()
       .set("username", username);
     return this.http.get<any>("http://localhost:8080/user", {params:params}).pipe(
-      map(response=>{ console.log(response.username); return new User(response.username, response.password, response.email, response.name, response.lastname, response.iconType)}),
+      map(response=>{ console.log(response.username); return new User(response.username, response.password, response.email, response.name, response.lastname, response.iconType, response.userType)}),
       catchError(err=> {
         let msg: string = '';
         switch (err.status) {

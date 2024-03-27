@@ -75,6 +75,7 @@ export class CardRecordComponent implements OnInit{
   goToAnalytics() {
     console.log(this.route.url)
     console.log('is-logged'+ localStorage.getItem('isLogged'))
+    localStorage.setItem("spectator","false");
     this.router.navigate(['records/analytics/'+this.trackName]);
   }
 

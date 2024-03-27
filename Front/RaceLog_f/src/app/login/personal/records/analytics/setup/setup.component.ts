@@ -141,7 +141,6 @@ export class SetupComponent implements OnInit{
     reader.readAsText(file);
   }
   backToRecords(){
-    console.log('rf')
     this.router.navigate(['records/analytics/'+this.track]);
   }
 

@@ -21,5 +21,6 @@ public class User {
     private String name;
     private String lastname;
     private int iconType;  //default value = 0
+    private int userType;
 
 }

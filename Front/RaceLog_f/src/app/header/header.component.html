@@ -13,15 +13,15 @@
            [ngClass]="{'font-white': !darkNavBar, 'font-black':darkNavBar}">Tracks</a>
         <a class="nav-link" [routerLink]="['/cars']"
            [ngClass]="{'font-white': !darkNavBar, 'font-black':darkNavBar}">Cars</a>
-        <a class="nav-link" [routerLink]="['/tracks/load']" [queryParams]="{insert:false}"
+        <a *ngIf="isAdmin" class="nav-link" [routerLink]="['/tracks/load']" [queryParams]="{insert:false}"
            [ngClass]="{'font-white': !darkNavBar, 'font-black':darkNavBar}">Upload tracks</a>
-        <a class="nav-link" [routerLink]="['/cars/load']" [queryParams]="{insert:false}"
+        <a  *ngIf="isAdmin" class="nav-link" [routerLink]="['/cars/load']" [queryParams]="{insert:false}"
            [ngClass]="{'font-white': !darkNavBar, 'font-black':darkNavBar}">Upload cars</a>
       </div>
       <div class="personal-navbar" *ngIf="isLogged">
-        <a  class="a-personal nav-link" [routerLink]="['/login/:id/profile']"
+        <a *ngIf="!isAdmin"  class="a-personal nav-link" [routerLink]="['/login/:id/profile']"
             [ngClass]="{'font-white': !darkNavBar, 'font-black':darkNavBar}">My profile</a>
-        <a  class="a-personal nav-link" [routerLink]="['/login/:id/records']" style="color: red">My records</a>
+        <a *ngIf="!isAdmin" class="a-personal nav-link" [routerLink]="['/login/:id/records']" style="color: red">My records</a>
         <a  class="a-personal nav-link" [routerLink]="['/login/:id/global']"
             [ngClass]="{'font-white': !darkNavBar, 'font-black':darkNavBar}">Global</a>
         <a  class="a-personal nav-link" (click)="logOut()" [ngClass]="{'font-white': !darkNavBar, 'font-black':darkNavBar}">Logout</a>

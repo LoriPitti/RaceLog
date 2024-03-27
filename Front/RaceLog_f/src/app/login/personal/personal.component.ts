@@ -14,7 +14,7 @@ import {OverflowService} from "../../service/overflow.service";
   styleUrl: './personal.component.css'
 })
 export class PersonalComponent implements OnInit{
-  user= new User('-', '-', '-', '-','-', 0);
+  user= new User('-', '-', '-', '-','-', 0, 0);
   exit= false;
   hidden= true;
   ovService = inject(OverflowService);
@@ -24,7 +24,7 @@ export class PersonalComponent implements OnInit{
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.user = new User(params['username'], params['password'], params['email'], params['name'], params['lastname'], params['iconType'])
+      this.user = new User(params['username'], params['password'], params['email'], params['name'], params['lastname'], params['iconType'], params['userType'])
     });
   }
 

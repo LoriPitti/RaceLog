@@ -73,6 +73,7 @@ export class LoginComponent  implements OnInit{
       next: (response) => {
         localStorage.setItem('username', response.getUsername);
         localStorage.setItem('iconType', response.getIconType.toString());
+        localStorage.setItem('userType', response.getUserType.toString());
         this.userService.setUserData({username: response.getUsername, password:response.getPassword,
                                       email:response.getEmail, name:response.getName, lastname:response.getLastname, iconType:response.getIconType })
         this.authService.login();

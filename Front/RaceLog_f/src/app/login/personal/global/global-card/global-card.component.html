@@ -1,19 +1,34 @@
 
-<div class="card text-center">
+<div class="card text-center container-fluid">
   <div class="card-header">
    <div class="col"><h1>{{username}}</h1></div>
     <div class="col c-logo"><img class="logo" [src]="logo_src" alt="logo"></div>
   </div>
   <div class="card-body">
-    <h2 class="card-text">{{ name }} {{lastname}}</h2>
-    <button  type="button" class="btn btn-primary" (click)="displayTracks()">Analisi dei tempi</button>
+   <div class="row">
+     <h2 class="card-text">{{ name }} {{lastname}}</h2>
+   </div>
+    <div class="row r-btn">
+      <button  type="button" class="btn btn-primary" (click)="displayTracks()">Analisi dei tempi</button>
+    </div>
   </div>
   <div *ngIf="showTracks" class="tracks-list">
-    <ul *ngFor="let track of dryTracks">
-      <li><app-globa-card-tracks (clicked) = gotToAnalytics($event) [track]="track"></app-globa-card-tracks></li>
-    </ul>
+    <mat-slide-toggle  [color]="'red'" class="slide" [(ngModel)]="type">
+      <p *ngIf="type">Dry</p>
+      <p *ngIf="!type">Wet</p>
+    </mat-slide-toggle>
+    <div *ngIf="type" class="list">
+      <ul *ngFor="let track of dryTracks">
+        <li><app-globa-card-tracks (clicked) = gotToAnalytics($event) [track]="track"></app-globa-card-tracks></li>
+      </ul>
+    </div>
+    <div *ngIf="!type" class="list">
+      <ul *ngFor="let track of wetTracks">
+        <li><app-globa-card-tracks (clicked) = gotToAnalytics($event) [track]="track"></app-globa-card-tracks></li>
+      </ul>
+    </div>
   </div>
   <div class="card-footer text-body-secondary">
-    2 days ago
+    {{ totTracks }} tracciati corsi
   </div>
 </div>

@@ -9,6 +9,12 @@ export class AuthService{
     localStorage.clear()
   }
 
+  isAdmin(){
+    let type =  localStorage.getItem('userType');
+    console.log("user type "+type)
+    return type === '1';
+  }
+
   isLoggedIn(){
     return localStorage.getItem('isLogged');
   }

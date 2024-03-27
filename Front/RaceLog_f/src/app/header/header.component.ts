@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 })
 export class HeaderComponent implements OnInit{
   isLogged = false;
+  isAdmin = false;
   @Input()darkNavBar = false;
   @Output()loggedOut = new EventEmitter<boolean>();
   authService = inject(AuthService);
@@ -19,6 +20,7 @@ export class HeaderComponent implements OnInit{
 
   ngOnInit(): void {
    this.isLogged = this.authService.isLoggedIn() === 'true';
+   this.isAdmin = this.authService.isAdmin();
 
   }
   logOut() {

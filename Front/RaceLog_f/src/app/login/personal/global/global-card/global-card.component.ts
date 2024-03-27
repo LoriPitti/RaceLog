@@ -22,6 +22,7 @@ export class GlobalCardComponent implements OnInit{
   dryTracks:string[] = [];
   type: 'dry'|'wet' = 'dry';
   showTracks = false;
+  totTracks  = 0;
 
   ngOnInit() {
       this.getDryTracks();
@@ -38,11 +39,15 @@ export class GlobalCardComponent implements OnInit{
   }
   private getWetTracks(){
     this.http.getTracksForUser(this.username, "wet").subscribe({
-      next:(response=> {this.wetTracks = response}),
+      next:(response=> {this.wetTracks = response;this.setTotTracks()}),
       error:(err)=>{console.log(err.message)}
     })
   }
+  setTotTracks(){
+    this.totTracks = this.dryTracks.length + this.wetTracks.length;
+  }
   gotToAnalytics($event:String) {
+    localStorage.setItem("spectator", "true");
     this.router.navigate(['global/'+this.username+'/analytics/'+$event]);
   }
   displayTracks(){

@@ -1,7 +1,7 @@
 
 <div class="container-fluid c-f">
   <div class="main">
-    <div class="d-icon" (click)="backToRecords()">
+    <div class="d-icon" (click)="back()">
       <svg cIcon name="cilActionUndo" size="sm" id="back-icon" ></svg>
     </div>
     <div class="container div-m">
@@ -55,12 +55,11 @@
           <h3 class="car-info ">{{brand}} {{car}}</h3>
           <img [src]="carImgSrc"  class="img-car" alt="immagine dell' auto selezionata">
           <h3>{{bestLap}}</h3>
-          <p (click)="navigateToSetup()">Carica setup</p>
-          <div class="row">
+          <p *ngIf="!spectator" (click)="navigateToSetup()">Carica setup</p>
+          <div class="row row-btn">
             <div class="col c-btn">   <button class="btn" (click)="downloadSetup()" [disabled]="isDownloadDisabled"> Scarica setup</button>
             </div>
-
-
+          </div>
         </div>
       </div>
       <div class="col c-best-img">

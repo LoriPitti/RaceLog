@@ -42,6 +42,12 @@ public class Service {
        else
            throw new UserException("pswWrong");
     }
+
+    public Integer getUserType(String username) throws UserException {
+        if(isUsernameExists(username))
+            return userRepo.getUserType(username);
+        throw new UserException("user not exist");
+    }
     public boolean isUsernameExists(String username) {
         return userRepo.existsByUsername(username);
     }
@@ -63,6 +69,7 @@ public class Service {
 
     public List<UserData> getAllUsers(){
         List<User> users = userRepo.findAll();
+        users = users.stream().filter(user -> user.getUserType() == 0).toList();
          return users.stream().map(user -> new UserData(user.getUsername(), user.getName(), user.getLastname(), user.getIconType()))
                  .collect(Collectors.toList());
     }

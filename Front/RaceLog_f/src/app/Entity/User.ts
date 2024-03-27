@@ -1,6 +1,6 @@
 export class User{
   constructor(private username:string, private password:string, private email:string, private name:string,
-              private lastname:string,  private iconType:number ) {
+              private lastname:string,  private iconType:number, private userType: number) {
   }
   get getUsername(): string {
     return this.username;
@@ -24,5 +24,9 @@ export class User{
 
   get getIconType(): number {
     return this.iconType;
+  }
+
+  get getUserType(): number {
+    return this.userType;
   }
 }

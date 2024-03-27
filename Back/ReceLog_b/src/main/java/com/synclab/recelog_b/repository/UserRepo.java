@@ -20,4 +20,7 @@ public interface UserRepo extends JpaRepository<User, Integer> {
 
     @Query("select username from User")
     List<String> getAllUsernames();
+
+    @Query("select userType from User  where username = ?1")
+    Integer getUserType(String username);
 }

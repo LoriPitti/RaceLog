@@ -92,6 +92,7 @@ export class AnalyticsComponent implements OnInit{
   isDownloadDisabled = true;
   setup?:Setup;
   fileUrl:SafeUrl = '';
+  spectator = true;
 
 
 
@@ -106,10 +107,21 @@ export class AnalyticsComponent implements OnInit{
     let track = this.route.snapshot.paramMap.get('track');
     if(track == null)
       track = '';
-     let username = localStorage.getItem('username');
-    if(username == null)
-      username = '';
-    this.username = username;
+    //check if it s a spectator or the personal analytic component
+    let spectator = localStorage.getItem("spectator");
+    if(spectator == null || spectator === 'false'){ //<-- personal component
+      this.spectator = false;
+      let username = localStorage.getItem('username'); ///<- use the logged username on localStorage
+      if(username == null)
+        username = '';
+      this.username = username;
+    }else if(spectator === 'true'){
+      this.spectator = true;
+      let username = this.route.snapshot.paramMap.get('user');
+      if(username == null)
+        username = '';
+      this.username = username;
+    }
     this.track = track;
     //start getting the tracks
     this.getDryCars(this.username,track);
@@ -359,8 +371,16 @@ export class AnalyticsComponent implements OnInit{
       }
     })
   }
-  backToRecords(){
-    this.router.navigate(['login/'+this.username+'/records'])
+  back(){
+    if(!this.spectator)
+      this.router.navigate(['login/'+this.username+'/records'])
+    else{
+      this.spectator = false;
+      localStorage.setItem("spectator", "true");
+      this.router.navigate(['login/personal/global']);
+
+    }
+
   }
   navigateToSetup(){
     this.router.navigate(['setup/'+this.car], { relativeTo: this.route });
