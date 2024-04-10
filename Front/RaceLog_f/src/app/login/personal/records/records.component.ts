@@ -71,7 +71,7 @@ export class RecordsComponent implements OnInit{
   //------------------HTTP SERVICE----------------------------------------------------------
   private loadDryRecords(){
     //get all dry records for user
-    this.http.getUserDryRecords(this.username,'dry').subscribe( {
+    this.http.getUserRecords(this.username,'dry').subscribe( {
       next:(response: DryWet_record[]) =>{
         this.dryRecords = response;  //<-- assign dry record
         this.loadWetRecords()
@@ -82,7 +82,7 @@ export class RecordsComponent implements OnInit{
   }
   private loadWetRecords(){
     //get all wet records
-    this.http.getUserDryRecords(this.username,'wet').subscribe( {
+    this.http.getUserRecords(this.username,'wet').subscribe( {
       next:(response: DryWet_record[]) =>{
         this.wetRecords = response;  //<-- assign dry record
         this.extractTracks();

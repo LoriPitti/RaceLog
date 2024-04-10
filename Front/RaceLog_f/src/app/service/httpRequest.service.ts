@@ -202,7 +202,7 @@ export class HttpRequestService{
     )
   }
   //--------------------------------------USER RECORD---------------------------------------------------------
-  getUserDryRecords(username : string, type:'dry'|'wet'){
+  getUserRecords(username : string, type:'dry'|'wet'){
     const params = new HttpParams()
       .set("username", username)
       .set("type", type);

@@ -75,7 +75,7 @@ public class Controller {
                 case "noFound":
                     throw new ResponseStatusException(HttpStatus.NOT_FOUND, "L' utente non esiste");
                 case "pswWrong":
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La password è errata, riprovare"); //TODO understand which status send
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La password è errata, riprovare");
                 default:
                     throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore sconosciuto");
             }

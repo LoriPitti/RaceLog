@@ -35,3 +35,6 @@ p{
 .input{
   max-width: 5vh;
 }
+mat-progress-bar{
+  width: 10vh;
+}

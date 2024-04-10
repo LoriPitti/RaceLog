@@ -7,10 +7,11 @@
       <input class="input" type="number" [disabled]="false" [(ngModel)]="altezza">
     </div>
     <div class="col">
-      <mat-slider  min="20.3" max="35" step="0.1" [displayWith]="setAltezza"  showTickMarks discrete
+      <!--mat-slider--  min="20.3" max="35" step="0.1" [displayWith]="setAltezza"  showTickMarks discrete
                    color="warn">
         <input matSliderThumb [(ngModel)]="altezza">
-      </mat-slider>
+      </mat-slider-->
+      <mat-progress-bar  color="warn" mode="determinate" [value]=altezzaVal></mat-progress-bar>
     </div>
   </div>
   <div class="row">
@@ -19,10 +20,11 @@
       <input class="input"  type="number" [disabled]="false" [(ngModel)]="setting">
     </div>
     <div class="col">
-      <mat-slider id="f-l-psi-conv" min="0" max="12" step="1" [displayWith]="setSetting"  showTickMarks discrete
+      <!--mat-slider-- id="f-l-psi-conv" min="0" max="12" step="1" [displayWith]="setSetting"  showTickMarks discrete
                   color="warn">
         <input matSliderThumb [(ngModel)]="setting">
-      </mat-slider>
+      </mat-slider-->
+      <mat-progress-bar  color="warn" mode="determinate" [value]=settingVal></mat-progress-bar>
     </div>
   </div>
   <div class="row">
@@ -31,10 +33,7 @@
       <input class="input"  type="number" [disabled]="false" [(ngModel)]="condotto">
     </div>
     <div class="col">
-      <mat-slider  min="0" max="6" step="1" [displayWith]="setCondott"  showTickMarks discrete
-                   color="warn">
-        <input matSliderThumb [(ngModel)]="condotto">
-      </mat-slider>
+      <mat-progress-bar  color="warn" mode="determinate" [value]=condottoVal></mat-progress-bar>
     </div>
   </div>
 

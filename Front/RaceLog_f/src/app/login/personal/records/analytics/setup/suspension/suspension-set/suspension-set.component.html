@@ -7,10 +7,11 @@
       <input class="input" type="number" [disabled]="false" [(ngModel)]="compressione">
     </div>
     <div class="col">
-      <mat-slider  min="20.3" max="35" step="0.1" [displayWith]="setCompressione"  showTickMarks discrete
+      <!--mat-slider--  min="20.3" max="35" step="0.1" [displayWith]="setCompressione"  showTickMarks discrete
                    color="warn">
         <input matSliderThumb [(ngModel)]="compressione">
-      </mat-slider>
+      </mat-slider-->
+      <mat-progress-bar  color="warn" mode="determinate" [value]=setCompressione></mat-progress-bar>
     </div>
   </div>
   <div class="row">
@@ -19,10 +20,11 @@
       <input class="input"  type="number" [disabled]="false" [(ngModel)]="compressioneVeloce">
     </div>
     <div class="col">
-      <mat-slider id="f-l-psi-conv" min="-0.4" max="0.4" step="0.1" [displayWith]="setCompressioneVeloce"  showTickMarks discrete
+      <!--mat-slider-- id="f-l-psi-conv" min="-0.4" max="0.4" step="0.1" [displayWith]="setCompressioneVeloce"  showTickMarks discrete
                   color="warn">
         <input matSliderThumb [(ngModel)]="compressioneVeloce">
-      </mat-slider>
+      </mat-slider-->
+      <mat-progress-bar  color="warn" mode="determinate" [value]=setCompressioneVeloce></mat-progress-bar>
     </div>
   </div>
   <div class="row">
@@ -31,10 +33,11 @@
       <input class="input"  type="number" [disabled]="false" [(ngModel)]="estensione">
     </div>
     <div class="col">
-      <mat-slider  min="-4" max="-1.5" step="0.1" [displayWith]="setEstensione"  showTickMarks discrete
+      <!--mat-slider--  min="-4" max="-1.5" step="0.1" [displayWith]="setEstensione"  showTickMarks discrete
                    color="warn">
         <input matSliderThumb [(ngModel)]="estensione">
-      </mat-slider>
+      </mat-slider-->
+      <mat-progress-bar  color="warn" mode="determinate" [value]=setEstensione></mat-progress-bar>
     </div>
   </div>
   <div class="row" >
@@ -43,10 +46,11 @@
       <input class="input" type="number" [disabled]="false" [(ngModel)]="estensioneVeloce">
     </div>
     <div class="col">
-      <mat-slider min="8.5" max="13.8" step="0.1" [displayWith]="setEstensioneVeloce"  showTickMarks discrete
+      <!--mat-slider-- min="8.5" max="13.8" step="0.1" [displayWith]="setEstensioneVeloce"  showTickMarks discrete
                   color="warn">
         <input matSliderThumb [(ngModel)]="estensioneVeloce">
-      </mat-slider>
+      </mat-slider-->
+      <mat-progress-bar  color="warn" mode="determinate" [value]=setEstensioneVeloce></mat-progress-bar>
     </div>
   </div>
 
