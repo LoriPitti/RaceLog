@@ -72,7 +72,7 @@ public class Controller {
         try {
             LogData logData = objectMapper.readValue(json, LogData.class);
 
-            return toJson(service.login(logData.username(), logData.password())); //toJson(service.login(logData.username(), logData.password())); //TODO: ritornare la psw non encodata
+            return toJson(service.login(logData.username(), logData.password())); //TODO: ritornare la psw non encodata
 
         } catch (JsonProcessingException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");

@@ -22,5 +22,6 @@ public class User {
     private String lastname;
     private int iconType;  //default value = 0
     private int userType;
+    private String token;
 
 }

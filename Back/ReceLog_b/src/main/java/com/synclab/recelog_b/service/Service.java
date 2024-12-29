@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -51,13 +52,20 @@ public class Service {
      * @return
      * @throws UserException
      */
-    public /*User*/String login(String username, String password) throws UserException {
-      logger.info("Attempt to login with username: {}, password: {}", username, password);
+    public User login(String username, String password) throws UserException {
+      /*  try {
+            jwtTokenUtil.genK();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }*/
+        logger.info("Attempt to login with username: {}, password: {}", username, password);
        User user = userRepo.findByUsername(username);
        if(user==null)
            throw new UserException("noFound");
-       else if(passwordEncoder.matches(password, user.getPassword()))
-           return  jwtTokenUtil.generateToken(username);
+       else if(passwordEncoder.matches(password, user.getPassword())){
+           user.setToken(jwtTokenUtil.generateToken(username));
+           return user;
+       }
        else
            throw new UserException("pswWrong");
     }

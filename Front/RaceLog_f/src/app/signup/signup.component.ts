@@ -66,7 +66,7 @@ export class SignupComponent implements OnInit{
 
   }
   register(): void {
-    const user = JSON.stringify(new User(this.username, this.password, this.email, this.nome, this.cognome, this.iconType, 0));
+    const user = JSON.stringify(new User(this.username, this.password, this.email, this.nome, this.cognome, this.iconType, 0, '-'));
     this.http.signup(user).subscribe({
       next: (response) => {
         this.showAlert=true;
