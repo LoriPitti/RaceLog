@@ -3,14 +3,18 @@ package com.synclab.recelog_b.cotroller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.tools.jconsole.JConsoleContext;
+import com.synclab.recelog_b.Util.JwtTokenUtil;
 import com.synclab.recelog_b.entity.*;
 import com.synclab.recelog_b.exception.RecordException;
 import com.synclab.recelog_b.exception.SetupException;
 import com.synclab.recelog_b.exception.TrackException;
 import com.synclab.recelog_b.exception.UserException;
 import jakarta.persistence.criteria.CriteriaBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.synclab.recelog_b.service.Service;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +35,7 @@ public class Controller {
     private ObjectMapper objectMapper;
     @Autowired
     Service service;
+    private static final Logger logger = LoggerFactory.getLogger(Controller.class);
 
 
     //------------------------------------------USER SECTION-------------------------------------------------------------
@@ -62,11 +67,12 @@ public class Controller {
 
     @PostMapping("/user/login")
     public String logIn(@RequestBody String json) {
+        logger.info("Attempt to login + json  {}", json);
         objectMapper = new ObjectMapper();
         try {
             LogData logData = objectMapper.readValue(json, LogData.class);
 
-            return toJson(service.login(logData.username(), logData.password()));
+            return toJson(service.login(logData.username(), logData.password())); //toJson(service.login(logData.username(), logData.password())); //TODO: ritornare la psw non encodata
 
         } catch (JsonProcessingException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");
@@ -85,7 +91,7 @@ public class Controller {
     @PostMapping("user/signup")
     public String signUp(@RequestBody String json) {
         objectMapper = new ObjectMapper();
-        User user = null;  //TODO --> merge parsing method
+        User user = null;
         UserObj userObj = null;
         try {
             userObj = objectMapper.readValue(json, UserObj.class);

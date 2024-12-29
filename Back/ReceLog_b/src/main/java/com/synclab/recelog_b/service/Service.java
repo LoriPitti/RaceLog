@@ -1,5 +1,6 @@
 package com.synclab.recelog_b.service;
 
+import com.synclab.recelog_b.Util.JwtTokenUtil;
 import com.synclab.recelog_b.cotroller.CarTimes;
 import com.synclab.recelog_b.cotroller.UserData;
 import com.synclab.recelog_b.entity.*;
@@ -11,10 +12,15 @@ import com.synclab.recelog_b.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @org.springframework.stereotype.Service
 public class Service {
@@ -30,15 +36,28 @@ public class Service {
     DryRepo dryRepo;
     @Autowired
     SetupRepo setupRepo;
+    @Autowired
+    JwtTokenUtil jwtTokenUtil;
 
+    private BCryptPasswordEncoder passwordEncoder =   new BCryptPasswordEncoder();
+    private static final Logger logger = LoggerFactory.getLogger(Service.class);
 
     //-----------------------------USER SECTION----------------------------------------
-    public User login(String username, String password) throws UserException {
+
+    /**
+     * login effettuato con  confronto di psw tramite BCryptPasswordEncoder
+     * @param username
+     * @param password
+     * @return
+     * @throws UserException
+     */
+    public /*User*/String login(String username, String password) throws UserException {
+      logger.info("Attempt to login with username: {}, password: {}", username, password);
        User user = userRepo.findByUsername(username);
        if(user==null)
            throw new UserException("noFound");
-       else if(user.getPassword().equals(password))
-           return  user;
+       else if(passwordEncoder.matches(password, user.getPassword()))
+           return  jwtTokenUtil.generateToken(username);
        else
            throw new UserException("pswWrong");
     }
@@ -52,9 +71,14 @@ public class Service {
         return userRepo.existsByUsername(username);
     }
 
+    /**
+     *Metodo di Registrazione Utente*
+     * @param user (Istanza di User)
+     * @return
+     */
     public boolean signUpUser(User user){
         try{
-            userRepo.save(user);
+            userRepo.save(encodePassword(user));
             return true;
         }catch (Exception ex){
             return false;
@@ -84,7 +108,7 @@ public class Service {
     public boolean updateUser(String username, String name, String lastname, String email,String password) throws UserException{
         if(!isUsernameExists(username))
             throw new UserException("User not exist");
-        userRepo.updateUser(name, lastname, email, password, username);
+        userRepo.updateUser(name, lastname, email, passwordEncoder.encode(password), username);
         return true;
     }
 
@@ -96,7 +120,18 @@ public class Service {
             return this.wetRepo.getTrackForUser(username);
         }
     }
-    //----------------------------------UER RECORD SECTION--------------------------------------------------------
+
+    /**
+     * Metodo per hashare psw con  Spring Security (BCryptPasswordEncoder)
+     * @param u (istanza di Utser)
+     * @return
+     */
+    private User encodePassword(User u){
+        String psw = u.getPassword();
+        u.setPassword(passwordEncoder.encode(psw));
+        return  u;
+    }
+    //----------------------------------USER RECORD SECTION--------------------------------------------------------
     public void insertNewDryRecord(Dry_record record) throws Exception {
         if(dryRepo.findRecord(record.getUsername(), record.getTrack(), record.getCar(), record.getTime()) != null)
             throw new Exception("alreadyInsert");
