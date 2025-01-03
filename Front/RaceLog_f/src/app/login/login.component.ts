@@ -76,7 +76,7 @@ export class LoginComponent  implements OnInit{
         localStorage.setItem('userType', response.getUserType.toString());
         this.userService.setUserData({username: response.getUsername, password:response.getPassword,
                                       email:response.getEmail, name:response.getName, lastname:response.getLastname, iconType:response.getIconType });
-        document.cookie  =  `jwt_token=${response.getToken}; HttpOnly; SameSite=Strict; path=/`;
+        document.cookie  =  `jwt_token=${response.getToken}; SameSite=Strict; path=/`;
 
         this.authService.login();
         this.router.navigate(['login/',this.username,'profile']);

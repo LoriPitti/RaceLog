@@ -53,16 +53,12 @@ public class Service {
      * @throws UserException
      */
     public User login(String username, String password) throws UserException {
-      /*  try {
-            jwtTokenUtil.genK();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }*/
         logger.info("Attempt to login with username: {}, password: {}", username, password);
        User user = userRepo.findByUsername(username);
        if(user==null)
            throw new UserException("noFound");
        else if(passwordEncoder.matches(password, user.getPassword())){
+           user.setPassword("");
            user.setToken(jwtTokenUtil.generateToken(username));
            return user;
        }
@@ -110,7 +106,11 @@ public class Service {
         return userRepo.getAllUsernames();
     }
 
-    public User getUserData(String username){return userRepo.findByUsername(username);}
+    public User getUserData(String username){
+        User user=  userRepo.findByUsername(username);
+        user.setPassword("");
+        return user;
+    }
 
     @Transactional
     public boolean updateUser(String username, String name, String lastname, String email,String password) throws UserException{

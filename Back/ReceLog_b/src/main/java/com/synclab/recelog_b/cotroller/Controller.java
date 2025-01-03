@@ -47,7 +47,7 @@ public class Controller {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");
         }
     }
-    @GetMapping("/user") //TODO-- > farlo solo se loggato (spring security)
+    @GetMapping("/user")
     public String getUserData(@RequestParam("username")String username) {
         try {
             return toJson(service.getUserData(username));
@@ -72,7 +72,7 @@ public class Controller {
         try {
             LogData logData = objectMapper.readValue(json, LogData.class);
 
-            return toJson(service.login(logData.username(), logData.password())); //TODO: ritornare la psw non encodata
+            return toJson(service.login(logData.username(), logData.password()));
 
         } catch (JsonProcessingException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel parsing di json");
