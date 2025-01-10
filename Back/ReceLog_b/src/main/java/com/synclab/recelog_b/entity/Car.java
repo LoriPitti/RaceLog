@@ -17,8 +17,10 @@ public class Car {
     private String name;
     private String brand;
     @Lob
+    @Column(name = "img_track", columnDefinition = "LONGBLOB")
     private byte[] imgBack;
     @Lob
+    @Column(name = "img_front", columnDefinition = "LONGBLOB")
     private byte[] imgFront;
     private int year;
     private boolean deleted =  false;

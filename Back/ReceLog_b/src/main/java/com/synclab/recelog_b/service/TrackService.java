@@ -3,6 +3,8 @@ package com.synclab.recelog_b.service;
 import com.synclab.recelog_b.entity.Track;
 import com.synclab.recelog_b.exception.TrackException;
 import com.synclab.recelog_b.repository.TrackRepo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 public class TrackService {
     @Autowired
     TrackRepo   trackRepo;
+    private static final Logger logger = LoggerFactory.getLogger(TrackService.class);
     public List<Track> getAllTracks(){
         List<Track> tracks  =  trackRepo.findAll();
         return new ArrayList<>(tracks.stream().filter(
@@ -33,16 +36,21 @@ public class TrackService {
 
     }
 
-    public void deleteTrack(String name) throws TrackException {
-        if(!isTrackExist(name))
-            throw new TrackException("La pista non esiste");
-        else
-             trackRepo.logicalDelete(name);
+    public void deleteTrack(String name, boolean isLogical) throws TrackException {
+        //Se cancellazione logiva
+        if(isLogical){
+            if(!isTrackExist(name))
+                throw new TrackException("La pista non esiste");
+            else
+                trackRepo.logicalDelete(name);
+        }else //se cancellazione effettiva
+            trackRepo.deleteByName(name);
+
     }
 
     public void insertNewTrack(Track track){
 
-        if(!isTrackExist(track.getName()))
+        if(!isTrackExistButDeleted(track.getName()))
             trackRepo.save(track);
         else{
             Track t = trackRepo.findByName(track.getName());
@@ -55,6 +63,10 @@ public class TrackService {
             trackRepo.save(t);
         }
     }
+    public boolean isTrackExistButDeleted(String name){
+        Track t = trackRepo.findByName(name);
+        return t != null;
+    }
     public boolean isTrackExist(String name){
         Track t = trackRepo.findByName(name);
         if(t==null)
@@ -64,6 +76,12 @@ public class TrackService {
 
     private boolean isDeleted(Track t){
         return t.isDeleted();
+    }
+
+    public List<String> getDeletedTracksName(){
+        logger.info("Called getDeletedTracksName");
+            return  trackRepo.findDeleted();
+
     }
 
 

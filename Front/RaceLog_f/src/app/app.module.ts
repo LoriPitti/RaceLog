@@ -51,6 +51,8 @@ import {TestService} from "./service/Test.service";
 import {MatProgressBar} from "@angular/material/progress-bar";
 import { GlobalCardComponent } from './login/personal/global/global-card/global-card.component';
 import { GlobaCardTracksComponent } from './login/personal/global/global-card/globa-card-tracks/globa-card-tracks.component';
+import { RestoreComponent } from './restore/restore/restore.component';
+import { CardIndexDeletedComponent } from './card/card-index/card-index-deleted/card-index-deleted.component';
 
 
 
@@ -90,7 +92,9 @@ import { GlobaCardTracksComponent } from './login/personal/global/global-card/gl
     GripSetComponent,
     GripSet2Component,
     GlobalCardComponent,
-    GlobaCardTracksComponent
+    GlobaCardTracksComponent,
+    RestoreComponent,
+    CardIndexDeletedComponent
   ],
     imports: [
         BrowserModule,

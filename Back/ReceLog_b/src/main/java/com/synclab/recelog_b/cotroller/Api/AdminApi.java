@@ -3,6 +3,7 @@ package com.synclab.recelog_b.cotroller.Api;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,11 +34,21 @@ public interface AdminApi {
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/admin/car/delete")
     ResponseEntity<Integer> deleteCar(
-            @RequestParam("name")  String name);
+            @RequestParam("name")  String name,
+            @RequestParam("isLogical") Boolean isLogical);
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/admin/track/delete")
     ResponseEntity<Integer> deleteTrack(
-            @RequestParam("name")  String name);
+            @RequestParam("name")  String name,
+            @RequestParam("isLogical") Boolean isLogical);
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admin/extract/car/deleted")
+    String getCarsDeleted();
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admin/extract/track/deleted")
+    String getTracksDeleted();
 
 }

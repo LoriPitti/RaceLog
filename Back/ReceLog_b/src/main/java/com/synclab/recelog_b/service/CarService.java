@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.smartcardio.CardException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class CarService {
 
     public void insertNewCar(Car car){
 
-        if(!isCarExist(car.getName())){
+        if(!isCarExistButDeleted(car.getName())){
             carRepo.save(car);
             logger.info("Inserted new car");
         }
@@ -40,10 +39,17 @@ public class CarService {
         }
     }
 
-    public void deleteCar(String name) throws TrackException {
-        if(!isCarExist(name))
-            throw new CarException("La vettura non  esiste");
-        carRepo.logicalDelete(name);
+    public void deleteCar(String name, Boolean isLogical) throws TrackException {
+        //Se cancellazione logica
+        if(isLogical){
+            if(!isCarExist(name))
+                throw new CarException("La vettura non  esiste");
+            else
+                carRepo.logicalDelete(name);
+        }else{//Se cancellazione effettiva
+            if(isCarExistButDeleted(name))
+                carRepo.deleteByName(name);
+        }
     }
     public List<String> getAllCarsName(){
         List<String>   list = carRepo.getAllCarsName();
@@ -62,6 +68,11 @@ public class CarService {
         return  carRepo.findByName(name);
     }
 
+    public boolean isCarExistButDeleted(String name){
+        Car c = carRepo.findByName(name);
+        return c!= null;
+    }
+
     public boolean isCarExist(String name){
         Car c = carRepo.findByName(name);
         if(c==null)
@@ -71,6 +82,12 @@ public class CarService {
 
     private boolean isDeleted(Car c){
         return c.isDeleted();
+    }
+
+
+    public List<String> getDeletedCarsName(){
+        logger.info("Called getDeletedCarsName");
+        return carRepo.findDeleted();
     }
 
 

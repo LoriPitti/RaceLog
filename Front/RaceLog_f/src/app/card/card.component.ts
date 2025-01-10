@@ -36,7 +36,7 @@ export class CardComponent {
   confirmDelete() {
     this.showAlert2   =  false;
     if(this.type ===  "track"){
-      this.http.deleteTrack(this.title).subscribe({
+      this.http.deleteTrack(this.title, true).subscribe({
         next: (response=>{
           this.displayAlert(response.toString(),'success');
 
@@ -47,10 +47,9 @@ export class CardComponent {
       })
 
     }else {
-      this.http.deleteCar(this.title).subscribe({
+      this.http.deleteCar(this.title, true).subscribe({
         next: (response=>{
           this.displayAlert(response.toString(),'success');
-
         }),
         error:  (msg=>{
           this.displayAlert(msg,  'danger');

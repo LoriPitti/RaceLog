@@ -1,5 +1,6 @@
 package com.synclab.recelog_b.cotroller.controllers;
 
+import com.synclab.recelog_b.Util.GeneralUtil;
 import com.synclab.recelog_b.cotroller.Api.AdminApi;
 import com.synclab.recelog_b.entity.Car;
 import com.synclab.recelog_b.entity.Track;
@@ -30,6 +31,8 @@ public class AdminController implements AdminApi {
     CarService carService;
     @Autowired
     TrackService trackService;
+    @Autowired
+    GeneralUtil generalUtil;
     private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
 
@@ -106,9 +109,9 @@ public class AdminController implements AdminApi {
     }
 
 
-    public ResponseEntity<Integer> deleteCar(String name){
+    public ResponseEntity<Integer> deleteCar(String name,  Boolean isLogical){
         try{
-            carService.deleteCar(name);
+            carService.deleteCar(name,   isLogical);
         }catch(CarException c){
             System.out.println(c.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La vettura " +name  +" non esiste");
@@ -120,10 +123,10 @@ public class AdminController implements AdminApi {
     }
 
 
-    public ResponseEntity<Integer> deleteTrack(String name){
+    public ResponseEntity<Integer> deleteTrack(String name, Boolean isLogical){
         logger.info("deleteTrack called with name {}", name);
         try{
-            trackService.deleteTrack(name);
+            trackService.deleteTrack(name, isLogical);
         }catch(CarException c){
             System.out.println(c.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La pista " +name  +" non esiste");
@@ -132,6 +135,25 @@ public class AdminController implements AdminApi {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nell'eliminazione della pista");
         }
         return  ResponseEntity.ok(200);
+    }
+
+
+    public String getCarsDeleted() {
+        try {
+            logger.info("Contoller: Called getCarsDeleted");
+            return generalUtil.toJson(carService.getDeletedCarsName());
+        }catch (Exception  e){
+           throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel recupero delle vetture");
+        }
+    }
+
+    public String getTracksDeleted() {
+        try {
+            logger.info("Contoller: Called getTracksDeleted");
+            return generalUtil.toJson(trackService.getDeletedTracksName());
+        }catch (Exception  e){
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel recupero deli tracciati");
+        }
     }
 
 }

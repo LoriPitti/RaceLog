@@ -21,6 +21,7 @@ import {TyresComponent} from "./login/personal/records/analytics/setup/tyres/tyr
 import {SuspensionComponent} from "./login/personal/records/analytics/setup/suspension/suspension.component";
 import {AerodynamicsComponent} from "./login/personal/records/analytics/setup/aerodynamics/aerodynamics.component";
 import {GripComponent} from "./login/personal/records/analytics/setup/grip/grip.component";
+import {RestoreComponent} from "./restore/restore/restore.component";
 
 const routes: Routes = [
   {path:'', component:HomeComponent},
@@ -47,6 +48,7 @@ const routes: Routes = [
   {path: 'tracks/load', component: LoadTrackComponent,  canActivate:[adminGuard], children :[
       {path: 'insert', component : AlertComponent}
     ]},
+  {path:'restore',component:  RestoreComponent,  canActivate:[adminGuard]},
   {path:'not-found', component: NotFoundComponent},
   {path: '**', redirectTo: '/not-found'}
 ];

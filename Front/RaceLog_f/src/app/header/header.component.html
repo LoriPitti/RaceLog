@@ -17,6 +17,8 @@
            [ngClass]="{'font-white': !darkNavBar, 'font-black':darkNavBar}">Upload tracks</a>
         <a  *ngIf="isAdmin" class="nav-link" [routerLink]="['/cars/load']" [queryParams]="{insert:false}"
            [ngClass]="{'font-white': !darkNavBar, 'font-black':darkNavBar}">Upload cars</a>
+        <a  *ngIf="isAdmin" class="nav-link" [routerLink]="['/restore']" [queryParams]="{insert:false}"
+            [ngClass]="{'font-white': !darkNavBar, 'font-black':darkNavBar}">Restore</a>
       </div>
       <div class="personal-navbar" *ngIf="isLogged">
         <a *ngIf="!isAdmin"  class="a-personal nav-link" [routerLink]="['/login/:id/profile']"

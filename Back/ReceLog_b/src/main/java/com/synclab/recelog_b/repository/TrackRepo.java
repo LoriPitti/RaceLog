@@ -23,5 +23,14 @@ public interface TrackRepo extends JpaRepository<Track, Integer> {
     @Query("update Track set deleted  = true where name=:name")
     Integer logicalDelete(@Param("name")String name);
 
+    @Query("select t.name from Track t where t.deleted =true")
+    List<String> findDeleted();
+
+
+    @Transactional
+    @Modifying
+    @Query("delete from Track t where t.name =:name")
+    Integer deleteByName(@Param("name")String name);
+
 
 }

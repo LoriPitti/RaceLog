@@ -36,6 +36,22 @@ export class HttpRequestService{
   getAllCarsName(): Observable<string[]> {
     return this.http.get<string[]>("http://localhost:8080/carsname");
   }
+  getAllTracksNameDelete(): Observable<string[]> {
+    const token = this.getCookie('jwt_token');
+    let headers =  new HttpHeaders();
+    if(token){
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+    return this.http.get<string[]>("http://localhost:8080/admin/extract/track/deleted", {headers:headers})
+  }
+  getAllCarsNameDelete(): Observable<string[]> {
+    const token = this.getCookie('jwt_token');
+    let headers =  new HttpHeaders();
+    if(token){
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+    return this.http.get<string[]>("http://localhost:8080/admin/extract/car/deleted", {headers:headers})
+  }
 
   signup(user: string): Observable<any> {
     return this.http.post<string>("http://localhost:8080/user/signup", { user }).pipe(
@@ -502,7 +518,7 @@ export class HttpRequestService{
       );
   }
   //-------------------------------------------SERVICE FOR ADMIN---------------------------
-  public deleteTrack(trackName:string){
+  public deleteTrack(trackName:string, isLogical:boolean){
     //prelevo token e creo   header
     const token = this.getCookie('jwt_token');
     let headers =  new HttpHeaders();
@@ -510,7 +526,8 @@ export class HttpRequestService{
       headers = headers.set('Authorization', `Bearer ${token}`);
     }
     const params = new HttpParams()
-      .set("name", trackName);
+      .set("name", trackName)
+      .set("isLogical",  isLogical);
     return this.http.delete<any>("http://localhost:8080/admin/track/delete", {params:params, headers:  headers}).pipe(
       map(response=>{
         return "Tracciato Eliminato";
@@ -532,7 +549,7 @@ export class HttpRequestService{
     )
   }
 
-  public deleteCar(carName:string){
+  public deleteCar(carName:string, isLogical:boolean){
     //prelevo token e creo   header
     const token = this.getCookie('jwt_token');
     let headers =  new HttpHeaders();
@@ -540,7 +557,8 @@ export class HttpRequestService{
       headers = headers.set('Authorization', `Bearer ${token}`);
     }
     const params = new HttpParams()
-      .set("name", carName);
+      .set("name", carName)
+      .set("isLogical",  isLogical);
     return this.http.delete<any>("http://localhost:8080/admin/car/delete", {params:params, headers:  headers}).pipe(
       map(response=>{
         return "Vettura Eliminata";

@@ -21,4 +21,15 @@ public interface CarRepo extends JpaRepository<Car, Integer> {
     @Modifying
     @Query("update Car set deleted  = true where name=:name")
     Integer logicalDelete(@Param("name")String name);
+
+
+    @Query("select distinct c.name from Car c  where c.deleted =  true")
+    List<String> findDeleted();
+
+    @Transactional
+    @Modifying
+    @Query("delete from Car c where c.name =:name")
+    Integer deleteByName(@Param("name")String name);
+
+
 }
