@@ -15,5 +15,7 @@ public interface TrackRepo extends JpaRepository<Track, Integer> {
 
     Track findByName(String name);
 
+    Integer deleteTrackByName(String name);
+
 
 }

@@ -15,6 +15,7 @@ export class CardComponent {
   @Input()cornerL?:number;
   @Input()cornerR?:number;
   cardHeight: number = 0;
+  @Input()type:"track"|"car" = "track";
 
 
 

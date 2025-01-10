@@ -17,7 +17,9 @@ public class Track {
     private int id;
     private String name;
     private String country;
+    @Lob
     private byte[] imgBack;
+    @Lob
     private byte[] imgFront;
     private int length;
     private int cornerL;

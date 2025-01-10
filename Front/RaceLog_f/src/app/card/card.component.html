@@ -6,7 +6,11 @@
     <div class="card-body c_body">
       <h3 class="card-title" >{{title | uppercase}}</h3>
       <h4 class="card-text" style="color: darkred">{{subtitle}}</h4>
-      <a href="#" class="btn btn-primary">Mostra</a>
+      <h4 class="card-text" style="color: white" *ngIf="type === 'track'">Lunghezza: {{tLength}} m</h4>
+      <h4 class="card-text" style="color: white" *ngIf="type === 'track'">Curve dx: {{cornerR}}</h4>
+      <h4 class="card-text" style="color: white" *ngIf="type === 'track'">Curve sx: {{cornerL}}</h4>
+      <h4 class="card-text" style="color: white" *ngIf="type === 'car'">Anno: {{tLength}} </h4>
+
     </div>
 
   </div>

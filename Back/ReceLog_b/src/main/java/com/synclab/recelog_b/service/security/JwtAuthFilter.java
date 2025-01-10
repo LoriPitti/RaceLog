@@ -1,8 +1,6 @@
 package com.synclab.recelog_b.service.security;
 
 import com.synclab.recelog_b.Util.JwtTokenUtil;
-import com.synclab.recelog_b.service.Service;
-import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,10 +8,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JwtAuthFilter extends OncePerRequestFilter {
     private final JwtTokenUtil jwtTokenUtil;
@@ -29,8 +31,15 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String token = getJwtFromRequest(request);
         logger.info("Token ricevuto: {}", token);
         if (token != null && jwtTokenUtil.validateToken(token, jwtTokenUtil.extractUsername(token))) {
+            String username =   jwtTokenUtil.extractUsername(token);
+            boolean isAdmin= jwtTokenUtil.isAdmin(token);
+
+            //Assegno il  ruolo
+            List<GrantedAuthority> authorities  =  new ArrayList<>();
+            authorities.add(new SimpleGrantedAuthority(isAdmin ? "ROLE_ADMIN" : "ROLE_USER"));
+
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                    jwtTokenUtil.extractUsername(token), null, null); // Il subject è l'username
+              username     , null, authorities); // Il subject è l'username
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 

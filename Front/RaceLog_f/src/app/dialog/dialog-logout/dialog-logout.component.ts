@@ -17,6 +17,7 @@ export class DialogLogoutComponent {
     }
   confirmLogOut() {
     localStorage.clear();
+    document.cookie = `jwt_token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;`;
     this.router.navigate(['']);
   }
 

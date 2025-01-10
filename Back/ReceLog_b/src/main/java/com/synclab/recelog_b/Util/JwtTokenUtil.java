@@ -70,10 +70,11 @@ public class JwtTokenUtil {
      * @param username
      * @return
      */
-    public String generateToken(String username) {
+    public String generateToken(String username, int userType ) {
         PrivateKey pkey =  loadPrivateKey(privateKey);
         return Jwts.builder()
                 .claim("sub", username)
+                .claim("type", userType)
                 .claim("iat", new Date())
                 .claim("exp", new Date(System.currentTimeMillis() + 1000 * 60 * 60))
                 .signWith(SignatureAlgorithm.RS256,  pkey) // Firma con la chiave privata
@@ -81,7 +82,7 @@ public class JwtTokenUtil {
     }
 
     /**
-     * Metodo  per estarre il subject dal JWT
+     * Metodo  per estarre il subject dal JWT (username)
      * @param token
      * @return
      */
@@ -93,6 +94,21 @@ public class JwtTokenUtil {
 
         Claims claims = jwtParser.parseClaimsJws(token).getBody(); // Usa il parser per ottenere i claims
         return claims.getSubject();
+    }
+
+    /**
+     * Metodo  per verificare se l'utente è un admin (1)
+     * @param token
+     * @return
+     */
+    public boolean isAdmin(String token) {
+        PublicKey pkey =  loadPublicKey(publicKey);
+        JwtParser jwtParser = Jwts.parser()
+                .setSigningKey(pkey)  // Imposta la chiave pubblica per la verifica
+                .build();  // Crea un parser
+
+        Claims claims = jwtParser.parseClaimsJws(token).getBody(); // Usa il parser per ottenere i claims
+        return claims.get("type", Integer.class) == 1;  //se 1 =  admin
     }
 
     public boolean validateToken(String token, String username) {
@@ -109,24 +125,6 @@ public class JwtTokenUtil {
         Claims claims = jwtParser.parseClaimsJws(token).getBody();  // Verifica la firma e ottieni i claims
         Date expiration = claims.getExpiration();
         return expiration.before(new Date());  // Controlla se il token è scaduto
-    }
-
-    public void genK() throws NoSuchAlgorithmException {
-        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-
-        // Imposta la lunghezza della chiave, 2048 bit è uno standard sicuro
-        keyPairGenerator.initialize(2048);
-
-        // Genera la coppia di chiavi
-        KeyPair keyPair = keyPairGenerator.generateKeyPair();
-
-        // Ottieni la chiave privata e pubblica
-        PrivateKey privateKey = keyPair.getPrivate();
-        PublicKey publicKey = keyPair.getPublic();
-
-        // Stampa le chiavi (in formato Base64 per facilitarne l'uso in un file o una stringa)
-        System.out.println("Private Key: " + java.util.Base64.getEncoder().encodeToString(privateKey.getEncoded()));
-        System.out.println("Public Key: " + java.util.Base64.getEncoder().encodeToString(publicKey.getEncoded()));
     }
 
 }

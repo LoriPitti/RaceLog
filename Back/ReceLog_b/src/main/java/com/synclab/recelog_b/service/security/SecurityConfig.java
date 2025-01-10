@@ -29,7 +29,9 @@ public class SecurityConfig   {
         http
                 .csrf(AbstractHttpConfigurer::disable). //permette le POST
                 authorizeHttpRequests(auth -> auth
-                .requestMatchers("/user/login", "/user/signup", "/usernames").permitAll()
+                .requestMatchers("/user/login", "/user/signup", "/usernames",
+                                    "/tracksname","/tracks",
+                                     "/cars",  "carsname").permitAll()
                 .anyRequest().authenticated())
                 .addFilterBefore(new JwtAuthFilter(jwtTokenUtil), UsernamePasswordAuthenticationFilter.class);
 

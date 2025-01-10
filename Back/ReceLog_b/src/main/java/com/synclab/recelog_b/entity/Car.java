@@ -16,7 +16,9 @@ public class Car {
     private int id;
     private String name;
     private String brand;
+    @Lob
     private byte[] imgBack;
+    @Lob
     private byte[] imgFront;
     private int year;
 }

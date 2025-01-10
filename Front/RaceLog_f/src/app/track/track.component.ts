@@ -22,6 +22,7 @@ export class TrackComponent implements OnInit{
   elId:string = 'card-list';
   scrollPosition:number= 0;
   exit = false;
+  type:"track"="track";
   constructor(private http: HttpRequestService, private sanitizer: DomSanitizer,) {
   }
 

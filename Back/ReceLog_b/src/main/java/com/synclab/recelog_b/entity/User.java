@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 @Table(name="user")
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
+/**
+ * User:  type 0, Admin: type 1
+ */
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

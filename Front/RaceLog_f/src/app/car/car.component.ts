@@ -19,6 +19,7 @@ export class CarComponent implements OnInit{
   elId:string = 'card-list';
   scrollPosition:number= 0;
   exit = false;
+  type:"car" = "car";
   constructor(private http: HttpRequestService, private sanitizer: DomSanitizer) {
   }
 
@@ -37,13 +38,13 @@ export class CarComponent implements OnInit{
   }
 
   //----------------------------------------SCROLL METHODS------------------------
-  scroll() {  //scroll to a select track
+  scroll() {  //scroll to a select car
     const el = document.getElementById(this.elId);
     if(el) {
       el.scrollIntoView({behavior: 'smooth'});
     }
 
-  }//Scroll to a selected track
+  }//Scroll to a selected car
 
   private  onScroll(){
     const arrow = document.getElementById("arrow");
