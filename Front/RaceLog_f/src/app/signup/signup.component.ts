@@ -72,7 +72,6 @@ export class SignupComponent implements OnInit{
         this.showAlert=true;
         this.alertType='success';
         this.message=response.message;
-        this.sendEmail('lori.pitti.01@gmail.com','prova', 'prova');
       },
       error: (err) => {
         this.showAlert=true;
