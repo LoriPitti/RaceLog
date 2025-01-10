@@ -21,4 +21,5 @@ public class Car {
     @Lob
     private byte[] imgFront;
     private int year;
+    private boolean deleted =  false;
 }

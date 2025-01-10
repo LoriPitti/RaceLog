@@ -502,6 +502,65 @@ export class HttpRequestService{
       );
   }
   //-------------------------------------------SERVICE FOR ADMIN---------------------------
+  public deleteTrack(trackName:string){
+    //prelevo token e creo   header
+    const token = this.getCookie('jwt_token');
+    let headers =  new HttpHeaders();
+    if(token){
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+    const params = new HttpParams()
+      .set("name", trackName);
+    return this.http.delete<any>("http://localhost:8080/admin/track/delete", {params:params, headers:  headers}).pipe(
+      map(response=>{
+        return "Tracciato Eliminato";
+      }),catchError(err=> {
+        let msg: string = '';
+        switch (err.status) {
+          case 400:
+            msg = "Il tracciato non esiste";
+            break;
+          case 500:
+            msg = 'Internal Server Error';
+            break;
+          default:
+            msg = "Errore sconosciuto";
+        }
+        throw  new Error(msg);
+      })
+
+    )
+  }
+
+  public deleteCar(carName:string){
+    //prelevo token e creo   header
+    const token = this.getCookie('jwt_token');
+    let headers =  new HttpHeaders();
+    if(token){
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+    const params = new HttpParams()
+      .set("name", carName);
+    return this.http.delete<any>("http://localhost:8080/admin/car/delete", {params:params, headers:  headers}).pipe(
+      map(response=>{
+        return "Vettura Eliminata";
+      }),catchError(err=> {
+        let msg: string = '';
+        switch (err.status) {
+          case 400:
+            msg = "La vettura non esiste";
+            break;
+          case 500:
+            msg = 'Internal Server Error';
+            break;
+          default:
+            msg = "Errore sconosciuto";
+        }
+        throw  new Error(msg);
+      })
+
+    )
+  }
   loadTrack(track: Track){
      //prelevo token e creo   header
             const token = this.getCookie('jwt_token');

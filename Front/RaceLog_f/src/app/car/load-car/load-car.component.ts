@@ -48,8 +48,8 @@ export class LoadCarComponent  implements OnInit{
   onNameChange() {
     //confronto eliminato anche gli spazi bianchi
     if(this.carsName.filter(name=>name.replace(/\s/g, '').toLowerCase() === this.name.replace(/\s/g, '').toLowerCase()).length !=0){
-      this.displayAlert('Questa pista è già stata inserita', 'danger')
-      this.isValidName='is-invalid';
+      this.displayAlert('Questa vettura è già stata inserita, se procedi sovrascriverai quella attuale', 'danger')
+      this.isValidName = 'is-valid';
     }
     else if(!this.name.trim())
       this.isValidName = 'is-invalid';

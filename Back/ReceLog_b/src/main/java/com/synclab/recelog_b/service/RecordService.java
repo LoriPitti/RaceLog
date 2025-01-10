@@ -21,6 +21,10 @@ public class RecordService {
     DryRepo dryRepo;
     @Autowired
     UserService userService;
+    @Autowired
+    private TrackService trackService;
+    @Autowired
+    private CarService carService;
 
 
     public void insertNewDryRecord(Dry_record record) throws Exception {
@@ -32,16 +36,31 @@ public class RecordService {
         if(wetRepo.findRecord(record.getUsername(), record.getTrack(), record.getCar(), record.getTime()) != null)
             throw new Exception("alreadyInsert");
         wetRepo.save(record);}
+
     public List<Dry_record> getUserDryRecord(String  username) throws UserException {
-        List<String> list =new ArrayList<>();
+        List<Dry_record> list =new ArrayList<>();
+        List<Dry_record> finalList =new ArrayList<>();
         if(userService.isUsernameExists(username)){
-            return dryRepo.findAllByUsername(username);
+            list = dryRepo.findAllByUsername(username);
+            for(Dry_record record : list){
+                if(trackService.isTrackExist(record.getTrack()))
+                    finalList.add(record);
+            }
+            return finalList;
         }else
             throw  new UserException("user not exist");
     }
     public List<Wet_record> getUserWetRecord(String  username) throws UserException {
+        List<Wet_record> list =new ArrayList<>();
+        List<Wet_record> finalList =new ArrayList<>();
         if(userService.isUsernameExists(username)){
-            return wetRepo.findAllByUsername(username);
+            list =  wetRepo.findAllByUsername(username);
+            list = wetRepo.findAllByUsername(username);
+            for(Wet_record record : list){
+                if(trackService.isTrackExist(record.getTrack()))
+                    finalList.add(record);
+            }
+            return finalList;
         }else
             throw  new UserException("user not exist");
     }
@@ -67,6 +86,8 @@ public class RecordService {
     }
 
     public List<CarTimes> getTimesByTrack(String username, String track, String type){
+        if(!trackService.isTrackExist(track))
+            return null;
         List<String> times = new ArrayList<>();
         if(type.equals("dry"))
             times= dryRepo.getTimesFromTrack(username,track);
@@ -82,18 +103,35 @@ public class RecordService {
     }
 
     public List<String> getCarsByTrack(String username, String track, String type){
+        List<String> cars = null;
         if(type.equals("dry"))
-            return dryRepo.getCarsByTrack(username, track);
+            cars =  dryRepo.getCarsByTrack(username, track);
         else
-            return wetRepo.getCarsByTrack(username, track);
+            cars=  wetRepo.getCarsByTrack(username, track);
+        List<String> finaList = new ArrayList<>();
+        for(String t : cars){
+            if(carService.isCarExist(t)) //restituisco solo  se esiste
+                finaList.add(t);
+        }
+        return finaList;
     }
 
     public List<String> getTracksForUser(String username, String type){
+        List<String> userTrack = null;
+
         if(type.equals("dry")){
-            return this.dryRepo.getTrackForUser(username);
+            userTrack=  this.dryRepo.getTrackForUser(username);
+
         }else{
-            return this.wetRepo.getTrackForUser(username);
+            userTrack= this.wetRepo.getTrackForUser(username);
         }
+
+        List<String> finaList = new ArrayList<>();
+        for(String t : userTrack){
+            if(trackService.isTrackExist(t)) //restituisco solo  se esiste
+                finaList.add(t);
+        }
+        return finaList;
     }
 
 

@@ -2,8 +2,8 @@
   /*border-color: blue;
   border-style: solid;
   border-width: medium;*/
-  height: 50vh;
   display: flex;
+  height: 80vh;
   justify-content: center;
   align-items: center;
   overflow: hidden;
@@ -14,8 +14,8 @@
   object-fit: cover;
   height: 100%;
 }
-.img-front{
-
+.img-front{;
+  height: 22vh;
 }
 .img-front:hover{
   transform: scale(1.1);
@@ -26,7 +26,7 @@
  /* border-style: solid;
   border-color: black;
   border-width: medium;*/
-  height: 50vh;
+  height: 80%;
   width: 100%;
   position: absolute;
   background: black;
@@ -52,4 +52,29 @@
 
 .btn:hover {
   background-color: gold;
+}
+
+.delete{
+  border-style: solid;
+  border-color: red;
+  width: 2vh;
+  height: 2vh;
+}
+
+.alert{
+  background-color: black;
+  opacity: 0.7;
+  max-width:40vh;
+  position: absolute;
+  margin-top: 2vh;
+  margin-left: 2vh;
+  justify-content: center;
+  align-items: center;
+}
+.alert-info{
+  color: #eeeeee;
+  opacity: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

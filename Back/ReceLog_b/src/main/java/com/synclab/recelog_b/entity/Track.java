@@ -24,4 +24,5 @@ public class Track {
     private int length;
     private int cornerL;
     private int cornerR;
+    private boolean deleted =  false;
 }

@@ -7,7 +7,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +19,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Configuration
+@EnableWebSecurity
 public class JwtAuthFilter extends OncePerRequestFilter {
     private final JwtTokenUtil jwtTokenUtil;
     private static final Logger logger = LoggerFactory.getLogger(JwtAuthFilter.class);
@@ -37,6 +41,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             //Assegno il  ruolo
             List<GrantedAuthority> authorities  =  new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority(isAdmin ? "ROLE_ADMIN" : "ROLE_USER"));
+            logger.info("Username: {}, Ruolo: {}", username, isAdmin ? "ROLE_ADMIN" : "ROLE_USER");
 
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
               username     , null, authorities); // Il subject è l'username

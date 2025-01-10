@@ -1,10 +1,13 @@
 package com.synclab.recelog_b.Util;
 
+import com.synclab.recelog_b.cotroller.controllers.UserController;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,7 @@ import java.util.Date;
 
 @Service
 public class JwtTokenUtil {
+    private static final Logger logger = LoggerFactory.getLogger(JwtTokenUtil.class);
 
     private String privateKey = "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDS+uT3eICZgOOpVjOF51vjDDcFpDLPVEqWS4gBVu2R6pC9829OmBZM/S+i00Y23D4DzSGPCyeJ8AUjJ/Jh6kPwwHJ5onXEjf9Ak1Itf3rHnQGDy/6Yok81WwIyVEAVVr5//3bmgmyEC3qbvDd570Al1boC2RooP9Kca9NZrh6368JH21vMIIUniveSs9TWW2uzznrzR2wE2vIkGItvaHorULacT5kN9SDBMz34VlrmuFYT6HSA/DF7wugAOTUuauMsEKT8sPBOXt12aGiS1aFyzq8L1w3An+C2s68JRVzNywXh23OrJTxy3bE7aCRLnY0pQ3A7AnrQo210p5qB+NU3AgMBAAECggEAAI9l+Do7rSyobhSqglqA5fNsWfl7oQ1KPWfp7ob6jn6e78Irs3u343BwpfAFqbOf/oaW5jhTXIxklxlODXB/ya3ZH/WMdn8iBFvfxfsmqk0CagUqoeEccLnTIasTmHroepKFEEucWiVlp/Ax/YLjGracjdFhvmWc+4lVwFE0B6z5VQqncGfmpxq+keeUbkBRBM+W6TiMLSW0bOp+Mj5bhJu54+5Lbdn94tc+EBuQqK41q9OEnRLzmS03UzsmCY0N4oNymWCjfZKt6HUOOI/JO4YvxJTNPwNQt++Hau7JXRm0ASKT2gnSKj3Mkji+ggxKPqTH2VK6O10afr25iXhwYQKBgQDiSDIywAbjX9EKSdQAwQZpRsRAsrJd8kP6nCLXxK9FQ0b4bIfayGV+qqR2unvb2eFIRJrXG6CCfzQJp53WMruG5z8Hzh//8uE6h1R6tXO6Y1vvObnIOHC1SbeHx8xAzozBXMstLpUQ1DZUOao0I07HTJF5Vvk21YLVJUybxWFJzwKBgQDusDuUXITysRKuiWO/u/T64didGyA9mh7zrNyGcgAtmbOtCUFUICkH2gv6OIQI/Nl6oWpknefviJnmhAxDeJuXwWMafyLJyw6VfdgUrkqqSDX/bTrzae7UQHuiKaHeXsbw5U+PJMTWMdU/jQxQGGvEfQaSsSpJu16YieHxNUVgGQKBgB/i0ogKPS4/K0LK4n/0s0WUfkUrqSzJ3cBrzhEfmx8ketS43m/6+ypdO22rm5aAXlmDqVoUf4rEB/4wS3KKlZhN77jW1/WGMSzBMytTdGpYY/US6lYHdgJlz+HnSqX7NSRuQgcs4D6N2NYHhi9wpkI5TOqPUfDjJ1uHtQLiTnJLAoGBANWKRUNOIoMdeCE+OUdn2Jw7QZgMlKOIJvjKReDiTNZ/FAhSp2ej/hFQOjb6KOYBkG/tyUmLG91o0Icyy+XxGQKDuS4TYAQ47itAEvktlQ8S23xRNNRgiZLKvdEufep70G/kN3FQ6+jVXHsmrUVbE88OK7tBVRvxzYeak9FAX3jBAoGBAMzlXxy/Uvs6n6gaU+Isli3eRrhTY3pHz5E99ZSiLpmbSeLJx8nUmxY6TZgunOB+1Ycprw35jg5e3wpIrP99VbaSwWMd3gz1RDcHU+3iJQF3usv4hFt0ZJzO7uoidkK8PDxdZPFlkMfub+Y913p55wV4o1Vlh5oNJQciREh5aByG";
     private String publicKey  ="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0vrk93iAmYDjqVYzhedb4ww3BaQyz1RKlkuIAVbtkeqQvfNvTpgWTP0votNGNtw+A80hjwsnifAFIyfyYepD8MByeaJ1xI3/QJNSLX96x50Bg8v+mKJPNVsCMlRAFVa+f/925oJshAt6m7w3ee9AJdW6AtkaKD/SnGvTWa4et+vCR9tbzCCFJ4r3krPU1ltrs85680dsBNryJBiLb2h6K1C2nE+ZDfUgwTM9+FZa5rhWE+h0gPwxe8LoADk1LmrjLBCk/LDwTl7ddmhoktWhcs6vC9cNwJ/gtrOvCUVczcsF4dtzqyU8ct2xO2gkS52NKUNwOwJ60KNtdKeagfjVNwIDAQAB";
@@ -108,7 +112,9 @@ public class JwtTokenUtil {
                 .build();  // Crea un parser
 
         Claims claims = jwtParser.parseClaimsJws(token).getBody(); // Usa il parser per ottenere i claims
-        return claims.get("type", Integer.class) == 1;  //se 1 =  admin
+        boolean b= claims.get("type", Integer.class) == 1;
+        logger.info("isAdmin {}",b);
+        return  b;//se 1 =  admin
     }
 
     public boolean validateToken(String token, String username) {

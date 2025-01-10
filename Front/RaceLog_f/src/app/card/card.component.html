@@ -1,6 +1,24 @@
+<app-alert *ngIf="showAlert" [message]="message" [alertType]="alertType"
+           (hideAlert)="onHideChange($event)" ></app-alert>
+<div class="alert"  *ngIf="showAlert2">
+  <div class="row r-alert">
+    <div class="col c-bnt-aler">
+      <h2 class="alert-info">Attenzione, se prosegui gli utenti assocati a questo elemento non  potranno più visualizzarlo!</h2>
+    </div>
+  </div>
+  <div class="row r-alert">
+    <div class="col c-bnt-alert">
+      <button type="button" class="btn" id="confirm" (click)="confirmDelete()">Conferma</button>
+    </div>
+    <div class="col c-bnt-alert">
+      <button type="button" class="btn" id="abort" (click)="showAlert2 = false">Annulla</button>
+    </div>
+  </div>
+</div>
+
 <div class="container-fluid">
   <img [src]="srcImageBack" alt="Immagine reale della pista" class="img-fluid img-back">
-  <div class="opaque-filter"></div>
+  <!--div class="opaque-filter"></div-->
   <div class="card text-bg-dark text-center div-card">
     <img [src]="srcImageFront" alt="Schema del tracciato" class="img-front">
     <div class="card-body c_body">
@@ -10,7 +28,7 @@
       <h4 class="card-text" style="color: white" *ngIf="type === 'track'">Curve dx: {{cornerR}}</h4>
       <h4 class="card-text" style="color: white" *ngIf="type === 'track'">Curve sx: {{cornerL}}</h4>
       <h4 class="card-text" style="color: white" *ngIf="type === 'car'">Anno: {{tLength}} </h4>
-
+      <button class="btn" id="btn_delete" type="button" (click)="delete()">Elimina</button>
     </div>
 
   </div>

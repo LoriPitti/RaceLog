@@ -2,6 +2,7 @@ package com.synclab.recelog_b.cotroller.Api;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,19 +21,23 @@ public interface AdminApi {
             @RequestParam("cornerR") int cornerR
     );
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/admin/car/load")
     ResponseEntity<Integer> insertNewCar(
             @RequestParam("name") String name,
             @RequestParam("brand") String brand,
             @RequestParam("imgBack") MultipartFile imgBack,
             @RequestParam("imgFront") MultipartFile imgFront,
-            @RequestParam("year") int year
-    );
+            @RequestParam("year") int year);
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/admin/car/delete")
+    @DeleteMapping("/admin/car/delete")
     ResponseEntity<Integer> deleteCar(
+            @RequestParam("name")  String name);
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/admin/track/delete")
+    ResponseEntity<Integer> deleteTrack(
             @RequestParam("name")  String name);
 
 }

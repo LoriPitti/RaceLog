@@ -3,8 +3,11 @@ package com.synclab.recelog_b.cotroller.controllers;
 import com.synclab.recelog_b.cotroller.Api.AdminApi;
 import com.synclab.recelog_b.entity.Car;
 import com.synclab.recelog_b.entity.Track;
+import com.synclab.recelog_b.exception.CarException;
 import com.synclab.recelog_b.service.CarService;
 import com.synclab.recelog_b.service.TrackService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.http.HttpStatus;
@@ -27,7 +30,20 @@ public class AdminController implements AdminApi {
     CarService carService;
     @Autowired
     TrackService trackService;
+    private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
+
+    /**
+     * Admin method to insert new Track:  override if name already  exist
+     * @param name
+     * @param country
+     * @param imgBack
+     * @param imgFront
+     * @param length
+     * @param cornerL
+     * @param cornerR
+     * @return
+     */
     public ResponseEntity<Integer> insertNewTrack(
             String name,
             String country,
@@ -51,10 +67,19 @@ public class AdminController implements AdminApi {
             System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nella lettura dei file");
         }
-        trackService.insertNewTrack(new Track(1,name, country,imgBackContent, imgFrontContent, length, cornerL, cornerR));
+        trackService.insertNewTrack(new Track(1,name, country,imgBackContent, imgFrontContent, length, cornerL, cornerR, false));
         return ResponseEntity.ok(200);
     }
 
+    /**
+     * Admin method to insert new Track:  override if name already  exist
+     * @param name
+     * @param brand
+     * @param imgBack
+     * @param imgFront
+     * @param year
+     * @return
+     */
     public ResponseEntity<Integer> insertNewCar(
             String name,
             String brand,
@@ -62,6 +87,7 @@ public class AdminController implements AdminApi {
             MultipartFile imgFront,
           int year
     ) {
+        logger.info("API Insert new car received");
         byte[] imgBackContent;
         byte[] imgFrontContent;
         if (imgBack.isEmpty() || imgFront.isEmpty()) {
@@ -75,12 +101,36 @@ public class AdminController implements AdminApi {
             System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nella lettura dei file");
         }
-        carService.insertNewCar(new Car(1,name, brand,imgBackContent, imgFrontContent, year));
+        carService.insertNewCar(new Car(1,name, brand,imgBackContent, imgFrontContent, year,false));
         return ResponseEntity.ok(200);
     }
 
 
     public ResponseEntity<Integer> deleteCar(String name){
+        try{
+            carService.deleteCar(name);
+        }catch(CarException c){
+            System.out.println(c.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La vettura " +name  +" non esiste");
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nell'eliminazione della macchina");
+        }
+        return  ResponseEntity.ok(200);
+    }
+
+
+    public ResponseEntity<Integer> deleteTrack(String name){
+        logger.info("deleteTrack called with name {}", name);
+        try{
+            trackService.deleteTrack(name);
+        }catch(CarException c){
+            System.out.println(c.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La pista " +name  +" non esiste");
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nell'eliminazione della pista");
+        }
         return  ResponseEntity.ok(200);
     }
 
