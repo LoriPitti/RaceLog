@@ -5,6 +5,7 @@ import com.synclab.recelog_b.cotroller.Api.AdminApi;
 import com.synclab.recelog_b.entity.Car;
 import com.synclab.recelog_b.entity.Track;
 import com.synclab.recelog_b.exception.CarException;
+import com.synclab.recelog_b.exception.TrackException;
 import com.synclab.recelog_b.service.CarService;
 import com.synclab.recelog_b.service.TrackService;
 import org.slf4j.Logger;
@@ -154,6 +155,30 @@ public class AdminController implements AdminApi {
         }catch (Exception  e){
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel recupero deli tracciati");
         }
+    }
+
+    @Override
+    public ResponseEntity<Integer> restoreTrack(String name) {
+        try{
+            trackService.restoreTrack(name);
+        }catch (TrackException e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel ripristino  del tracciato");
+        }
+        return ResponseEntity.ok(200);
+    }
+
+    @Override
+    public ResponseEntity<Integer> restoreCar(String name) {
+        try{
+            carService.restoreCar(name);
+        }catch (CarException e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Errore nel ripristino  della vettura");
+        }
+        return ResponseEntity.ok(200);
     }
 
 }

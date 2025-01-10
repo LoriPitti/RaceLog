@@ -1,7 +1,6 @@
 package com.synclab.recelog_b.repository;
 
 import com.synclab.recelog_b.entity.Track;
-import com.synclab.recelog_b.entity.User;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -30,7 +29,12 @@ public interface TrackRepo extends JpaRepository<Track, Integer> {
     @Transactional
     @Modifying
     @Query("delete from Track t where t.name =:name")
-    Integer deleteByName(@Param("name")String name);
+    void deleteByName(@Param("name")String name);
+
+    @Transactional
+    @Modifying
+    @Query("update Track set deleted=false where name=:name")
+    void restore(@Param("name")String name);
 
 
 }

@@ -43,7 +43,7 @@ public class RecordService {
         if(userService.isUsernameExists(username)){
             list = dryRepo.findAllByUsername(username);
             for(Dry_record record : list){
-                if(trackService.isTrackExist(record.getTrack()))
+                if(trackService.isTrackExist(record.getTrack()) && carService.isCarExist(record.getCar()))
                     finalList.add(record);
             }
             return finalList;
@@ -57,7 +57,7 @@ public class RecordService {
             list =  wetRepo.findAllByUsername(username);
             list = wetRepo.findAllByUsername(username);
             for(Wet_record record : list){
-                if(trackService.isTrackExist(record.getTrack()))
+                if(trackService.isTrackExist(record.getTrack()) && carService.isCarExist(record.getCar()))
                     finalList.add(record);
             }
             return finalList;
@@ -109,9 +109,10 @@ public class RecordService {
         else
             cars=  wetRepo.getCarsByTrack(username, track);
         List<String> finaList = new ArrayList<>();
-        for(String t : cars){
-            if(carService.isCarExist(t)) //restituisco solo  se esiste
-                finaList.add(t);
+        for(String c : cars){
+            if(carService.isCarExist(c)) { //restituisco solo  se esiste
+                finaList.add(c);
+            }
         }
         return finaList;
     }

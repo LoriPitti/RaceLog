@@ -90,6 +90,13 @@ public class CarService {
         return carRepo.findDeleted();
     }
 
+    public void restoreCar(String name) throws TrackException {
+        if(!isCarExistButDeleted(name))
+            throw new TrackException("La pista non ha eliminazione logica");
+        else
+            carRepo.restore(name);
+    }
+
 
 
 }

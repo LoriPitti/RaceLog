@@ -84,6 +84,13 @@ public class TrackService {
 
     }
 
+    public void restoreTrack(String name) throws TrackException {
+        if(!isTrackExistButDeleted(name))
+            throw new TrackException("La pista non ha eliminazione logica");
+        else
+            trackRepo.restore(name);
+    }
+
 
 
 

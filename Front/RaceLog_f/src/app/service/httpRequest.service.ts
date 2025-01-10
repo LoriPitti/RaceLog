@@ -53,6 +53,66 @@ export class HttpRequestService{
     return this.http.get<string[]>("http://localhost:8080/admin/extract/car/deleted", {headers:headers})
   }
 
+  restoreTrack(name:string): Observable<any> {
+    const params = new HttpParams()
+      .set("name", name);
+    const token = this.getCookie('jwt_token');
+    let headers =  new HttpHeaders();
+    if(token){
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+
+    return this.http.get<any>("http://localhost:8080/admin/restore/track", {params:params, headers:headers}).pipe(
+      map(response =>{console.log(response); return 'Vettura ripristinata'}),
+      catchError(err => {
+        let msg: string = '';
+        switch (err.status) {
+          case 400:
+            msg = 'Errore nel ripristino  del tracciato';
+            break;
+          case 500:
+            msg = 'Internal Server Error';
+            break;
+          default:
+            msg = 'Errore Sconosciuto';
+            break;
+        }
+        return of(msg);
+      })
+    )
+  }
+
+  restoreCar(name:string): Observable<any> {
+    const params = new HttpParams()
+      .set("name", name);
+    const token = this.getCookie('jwt_token');
+    let headers =  new HttpHeaders();
+    if(token){
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+
+    return this.http.get<any>("http://localhost:8080/admin/restore/car", {params:params, headers:headers}).pipe(
+      map(response =>{console.log(response); return 'Vettura ripristinata'}),
+      catchError(err => {
+        let msg: string = '';
+        switch (err.status) {
+          case 400:
+            msg = 'Errore nel ripristino della vettura';
+            break;
+          case 500:
+            msg = 'Internal Server Error';
+            break;
+          default:
+            msg = 'Errore Sconosciuto';
+            break;
+        }
+        return of(msg);
+      })
+    )
+  }
+
+  //user----
+
   signup(user: string): Observable<any> {
     return this.http.post<string>("http://localhost:8080/user/signup", { user }).pipe(
       map(response=> {console.log(response);return response}),

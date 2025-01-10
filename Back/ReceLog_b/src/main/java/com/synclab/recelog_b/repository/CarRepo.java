@@ -1,7 +1,6 @@
 package com.synclab.recelog_b.repository;
 
 import com.synclab.recelog_b.entity.Car;
-import com.synclab.recelog_b.entity.Track;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -29,7 +28,12 @@ public interface CarRepo extends JpaRepository<Car, Integer> {
     @Transactional
     @Modifying
     @Query("delete from Car c where c.name =:name")
-    Integer deleteByName(@Param("name")String name);
+    void deleteByName(@Param("name")String name);
+
+    @Transactional
+    @Modifying
+    @Query("update Car set deleted=false where name=:name")
+    void restore(@Param("name")String name);
 
 
 }

@@ -51,4 +51,12 @@ public interface AdminApi {
     @GetMapping("/admin/extract/track/deleted")
     String getTracksDeleted();
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admin/restore/track")
+    ResponseEntity<Integer> restoreTrack(@RequestParam("name")String name);
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admin/restore/car")
+    ResponseEntity<Integer> restoreCar(@RequestParam("name")String name);
+
 }
