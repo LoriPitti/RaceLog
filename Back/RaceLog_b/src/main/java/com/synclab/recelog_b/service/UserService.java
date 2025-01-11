@@ -1,6 +1,6 @@
 package com.synclab.recelog_b.service;
 
-import com.synclab.recelog_b.Util.JwtTokenUtil;
+import com.synclab.recelog_b.service.security.JwtTokenService;
 import com.synclab.recelog_b.cotroller.UserData;
 import com.synclab.recelog_b.entity.User;
 import com.synclab.recelog_b.exception.UserException;
@@ -21,7 +21,7 @@ public class UserService {
     @Autowired
     UserRepo  userRepo;
     @Autowired
-    JwtTokenUtil jwtTokenUtil;
+    JwtTokenService jwtTokenService;
 
     private BCryptPasswordEncoder passwordEncoder =   new BCryptPasswordEncoder();
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
@@ -40,7 +40,7 @@ public class UserService {
             throw new UserException("noFound");
         else if(passwordEncoder.matches(password, user.getPassword())){
             user.setPassword("");
-            user.setToken(jwtTokenUtil.generateToken(username,  user.getUserType()));
+            user.setToken(jwtTokenService.generateToken(username,  user.getUserType()));
             return user;
         }
         else

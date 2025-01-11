@@ -1,6 +1,5 @@
 package com.synclab.recelog_b.service.security;
 
-import com.synclab.recelog_b.Util.JwtTokenUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,11 +21,11 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 public class JwtAuthFilter extends OncePerRequestFilter {
-    private final JwtTokenUtil jwtTokenUtil;
+    private final JwtTokenService jwtTokenService;
     private static final Logger logger = LoggerFactory.getLogger(JwtAuthFilter.class);
 
-    public JwtAuthFilter(JwtTokenUtil jwtTokenUtil) {
-        this.jwtTokenUtil = jwtTokenUtil;
+    public JwtAuthFilter(JwtTokenService jwtTokenService) {
+        this.jwtTokenService = jwtTokenService;
     }
 
     @Override
@@ -34,9 +33,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         String token = getJwtFromRequest(request);
         logger.info("Token ricevuto: {}", token);
-        if (token != null && jwtTokenUtil.validateToken(token, jwtTokenUtil.extractUsername(token))) {
-            String username =   jwtTokenUtil.extractUsername(token);
-            boolean isAdmin= jwtTokenUtil.isAdmin(token);
+        if (token != null && jwtTokenService.validateToken(token, jwtTokenService.extractUsername(token))) {
+            String username =   jwtTokenService.extractUsername(token);
+            boolean isAdmin= jwtTokenService.isAdmin(token);
 
             //Assegno il  ruolo
             List<GrantedAuthority> authorities  =  new ArrayList<>();
