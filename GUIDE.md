@@ -5,13 +5,24 @@
 
 **Racelog** è stato realizzato con lo scopo di tenere traccia dei migliori tempi  sul giro personali, realizzati sul  simulatore
 di guida *Assetto Corsa Competizione*. Permette il confronto anche tramite grafici con tutti i giocatori registrati.
+### Guida all'avvio ###
+- **DATABASE**:  il progetto è  stato realizzato per interagire con MySQL, dunque effettuare un dump dello schema in locale (/dumps/..).
+  - All'interno del file **application.properties**  modificare `datasource`,  `username`  e `password` riportando rispettivamente la stringa di connessione al db locale e la relativa utenza.
+-  **SERVER**:  necessario avere la corretta versione di Java installata `(JDK23)`.
+  - Posizionarsi nella sottocartella `RaceLog_B` per avviare il  server tomcat tramite mavene springboot.
+-  **CLIENT**: richiede l'utilizzo di angular, dunque è necessaria l'installazione di `NodeJS` prima e della CLI di Angular tramite comando `npm install -g @angular/cli`
+  - Posizionarsi nella sottocartella 'RaceLog_f' (cmd o altra istanza IDE) e digitare `ng serve --open' per avviare direttamente il client sulla porta di default
+  4200`
+  - NOTA BENE: il sistema presenta un unico admin di default e alcuni utenti già presenti:
+    - U: **Admin** Psw: **admin**
+    - U:  **Pitti** Psw:  **1234**
 ### Tecnologia e Struttura
 Il progetto adotta il pattern `MVC`  separando la logica dai dati e dalla visualizzazione.
 
 - **SERVER:**  il  server è realizzato in Java tramite Framework `@Spring`.    
 #### RestController ####
 Esso espone tutte le API tramite le relative 
-interfacce implementate dalle classi adibite alla funzione di **Controller** `@Controller`, così schematizzate:
+interfacce implementate dalle classi adibite alla funzione di **Controller** `@Controller`, così schematizzate:   
 ![schema UML intefacce-controller](img/GuideIMG/interface.png)  
   I metodi delle classi sono preceduti dalle rispettive notazioni Spring per indicare la tipologia di API che costituiscono:  
   - `@GetMapping`
@@ -50,4 +61,5 @@ alle API con ruolo richiesto  =  ADMIN)*
 
 ![schema spring security](img/GuideIMG/SchemaAuth.png)
 
-- **CLIENT** 
+- **CLIENT** :  il client è stato realizzato in typescript tramite il framework `Angular`. Esso comunica con le API del server
+tramite un componente adibto nell'inviare richieste e nel ricevere le relative risposte.
